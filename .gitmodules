@@ -1,0 +1,9 @@
+[submodule "adblockplus"]
+	path = adblockplus
+	url = https://github.com/adblockplus/adblockplus
+[submodule "buildtools"]
+	path = buildtools
+	url = https://github.com/adblockplus/buildtools
+[submodule "adblockplustests"]
+	path = adblockplustests
+	url = https://github.com/adblockplus/adblockplustests
