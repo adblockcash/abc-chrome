@@ -48,7 +48,7 @@
     "message": "Disable inline text ads"
   },
   "disabled_for_these_domains": {
-    "message": "Adblock Plus is disabled for the domains listed below. You can add a domain either via the Adblock Plus icon in the address bar or by typing the domain (not a URL) in the box and clicking the \"Add domain\" button."
+    "message": "Adblock Cash is disabled for the domains listed below. You can add a domain either via the Adblock Cash icon in the address bar or by typing the domain (not a URL) in the box and clicking the \"Add domain\" button."
   },
   "easy_create_filter": {
     "description": "Popup balloon label for blocking elements on the current page",
@@ -69,10 +69,10 @@
     "message": "Filter lists"
   },
   "filter_must_follow_syntax": {
-    "message": "Your filter must follow the <a>Adblock Plus filter syntax</a>."
+    "message": "Your filter must follow the <a>Adblock Cash filter syntax</a>."
   },
   "found_a_bug": {
-    "message": "Found a bug? Want to translate Adblock Plus into your language? Please <a>file a request here</a>."
+    "message": "Found a bug? Want to translate Adblock Cash into your language? Please <a>file a request here</a>."
   },
   "general": {
     "description": "This is a tab heading.",
@@ -101,7 +101,7 @@
   },
   "name_devbuild": {
     "description": "Extension name to be shown for development builds. Note: this cannot be longer than 45 characters.",
-    "message": "Adblock Plus development build"
+    "message": "Adblock Cash development build"
   },
   "notification_with_buttons": {
     "message": "Click 'OK' to open all links in this notification."
@@ -110,7 +110,7 @@
     "message": "Click on the notification to open all links in it."
   },
   "options": {
-    "message": "Adblock Plus Options"
+    "message": "Adblock Cash Options"
   },
   "options_short": {
     "description": "Link to the options page from the popup balloon.",
@@ -155,11 +155,11 @@
   },
   "stats_share_download": {
     "description": "Label for link to adblockplus.org that is attached when the user wants to share the stats on Facebook.",
-    "message": "Download Adblock Plus"
+    "message": "Download Adblock Cash"
   },
   "stats_share_message": {
     "description": "This message will be posted to social networks if the user decides to share the stats.",
-    "message": "I blocked $number$ ads and trackers thanks to Adblock Plus.",
+    "message": "I blocked $number$ ads and trackers thanks to Adblock Cash.",
     "placeholders": {
       "number": {
         "content": "$1"
