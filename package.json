@@ -1,10 +1,10 @@
 {
   "name": "abc-chrome",
-  "version": "0.7.7",
+  "version": "1.8.7",
   "description": "Adblock Cash for Chrome",
   "main": "background.js",
   "scripts": {
-    "test": "exit 1"
+    "test": "echo 'Not implemented yet!' && exit 1"
   },
   "repository": {
     "type": "git",
@@ -12,7 +12,7 @@
   },
   "keywords": [
     "adblock",
-    "cash"
+    "adblockcash"
   ],
   "author": "adblockcash.org",
   "license": "GPL3",
