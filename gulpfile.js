@@ -5,6 +5,7 @@ gulp.task("build-devenv", shell.task("./build.py -t chrome devenv"));
 
 gulp.task("watch", function(){
   gulp.watch([
+    "assets/**",
     "chrome/**",
     "ext/**",
     "lib/**",
