@@ -46,7 +46,6 @@ function loadOptions()
   $("#acceptableAdsLink").attr("href", Prefs.subscriptions_exceptionsurl);
   $("#acceptableAdsDocs").attr("href", Utils.getDocLink("acceptable_ads"));
   setLinks("filter-must-follow-syntax", Utils.getDocLink("filterdoc"));
-  setLinks("found-a-bug", Utils.getDocLink(require("info").application + "_support"));
 
   // Add event listeners
   window.addEventListener("unload", unloadOptions, false);
