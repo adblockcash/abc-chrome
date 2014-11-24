@@ -1,0 +1,27 @@
+{
+  "name": "abc-chrome",
+  "version": "0.7.7",
+  "description": "Adblock Cash for Chrome",
+  "main": "background.js",
+  "scripts": {
+    "test": "exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adblockplus/adblockpluschrome"
+  },
+  "keywords": [
+    "adblock",
+    "cash"
+  ],
+  "author": "adblockcash.org",
+  "license": "GPL3",
+  "bugs": {
+    "url": "https://github.com/adblockplus/adblockpluschrome/issues"
+  },
+  "homepage": "https://github.com/adblockplus/adblockpluschrome",
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-shell": "^0.2.10"
+  }
+}

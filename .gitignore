@@ -4,3 +4,4 @@ devenv
 *.pyc
 *.sh
 *.safariextension
+node_modules
