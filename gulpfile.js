@@ -11,6 +11,7 @@ gulp.task("watch", function(){
     "lib/**",
     "skin/**",
     "*.{html,js}",
+    "metadata.*"
   ], ["build-devenv"]);
 })
 

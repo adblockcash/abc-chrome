@@ -2,7 +2,7 @@
 inherit = metadata.common
 
 [general]
-basename = adblockpluschrome
+basename = adblockcashchrome
 permissions = tabs
   http://*/*
   https://*/*
@@ -12,6 +12,8 @@ permissions = tabs
   webNavigation
   unlimitedStorage
   notifications
+  identity
+key = MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCxGWIIBRUVzQIXITqE6+js1FA24fsZC58G0fxcO1Duwfps+9gip5tedTziErKEpeAQVkgasdT4kk+b6Lw27yp3oysAj6zD9j+j4W+EMArTXqMIc6SMYD7Z8bPcwPb3tC1MUxMSpO6oOVpFE23UhKe91SYnrK92nHI2cmsor5elXQIDAQAB
 options = options.html
 browserAction = icons/abp-19.png icons/abp-38.png popup.html
 icons = icons/abp-16.png icons/abp-32.png icons/abp-48.png icons/abp-128.png
