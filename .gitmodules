@@ -1,9 +1,9 @@
 [submodule "adblockplus"]
-	path = adblockplus
-	url = https://github.com/adblockplus/adblockplus
+  path = adblockplus
+  url = git@github.com:adblockcash/abc-firefox.git
 [submodule "buildtools"]
-	path = buildtools
-	url = https://github.com/adblockplus/buildtools
+  path = buildtools
+  url = git@github.com:adblockcash/abc-buildtools.git
 [submodule "adblockplustests"]
-	path = adblockplustests
-	url = https://github.com/adblockplus/adblockplustests
+  path = adblockplustests
+  url = git@github.com:adblockcash/abc-adblocktests.git
