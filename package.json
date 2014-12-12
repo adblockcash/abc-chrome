@@ -22,6 +22,6 @@
   "homepage": "https://github.com/adblockplus/adblockpluschrome",
   "devDependencies": {
     "gulp": "^3.8.10",
-    "gulp-shell": "^0.2.10"
+    "gulp-shell": "^0.2.11"
   }
 }

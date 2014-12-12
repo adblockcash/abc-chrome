@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Cash <http://adblockcash.org/>,
- * (based on Adblock Plus <http://adblockplush.org/> by Eyeo GmbH)
+ * (based on Adblock Plus <http://adblockplus.org/> by Eyeo GmbH)
  * Copyright (C) Adblock Cash
  *
  * Adblock Cash is free software: you can redistribute it and/or modify
@@ -130,9 +130,9 @@ function refreshIconAndContextMenu(page)
     // There is no grayscale version of the icon for whitelisted pages
     // when using Safari, because icons are grayscale already and icons
     // aren't per page in Safari.
-    iconFilename = "icons/abp-$size-whitelisted.png";
+    iconFilename = "icons/abc-$size-whitelisted.png";
   else
-    iconFilename = "icons/abp-$size.png";
+    iconFilename = "icons/abc-$size.png";
 
   page.browserAction.setIcon(iconFilename);
   iconAnimation.registerPage(page, iconFilename);
@@ -373,7 +373,7 @@ function showNotification(notification)
     var texts = Notification.getLocalizedTexts(notification);
     var title = texts.title || "";
     var message = texts.message ? texts.message.replace(/<\/?(a|strong)>/g, "") : "";
-    var iconUrl = ext.getURL("icons/abp-128.png");
+    var iconUrl = ext.getURL("icons/abc-128.png");
     var hasLinks = activeNotification.links && activeNotification.links.length > 0;
 
     if (canUseChromeNotifications)

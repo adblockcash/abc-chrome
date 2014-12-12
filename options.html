@@ -34,7 +34,7 @@
 <table>
   <tr>
     <td style="padding-right: 8px">
-      <img src="icons/abp-32.png">
+      <img src="icons/abc-32.png">
     </td>
     <td>
       <h1><span class="i18n_options"></span></h1>
@@ -44,13 +44,16 @@
 
 <div id="tabs">
   <ul>
-    <li><a href="#tab-filterlists"><span class="i18n_filter_lists"></span></a></li>
-    <li><a href="#tab-userfilters"><span class="i18n_add_your_own_filters"></span></a></li>
-    <li><a href="#tab-whitelisted"><span class="i18n_whitelisted_domains"></span></a></li>
-    <li><a href="#tab-general"><span class="i18n_general"></span></a></li>
+    <li><a href="#tab-adblocking">Adblocking</a></li>
+    <li><a href="#tab-whitelisting">Whitelisting</a></li>
+    <li><a href="#tab-rewards">Rewards</a></li>
+    <li><a href="#tab-settings">Settings</a></li>
+    <li><a href="#tab-statistics">Statistics</a></li>
+    <li><a href="#tab-faq">FAQ</a></li>
   </ul>
 
-  <div id="tab-filterlists">
+
+  <div id="tab-adblocking">
     <p>
       <span class="i18n_enable_only_the"></span>
     </p>
@@ -103,7 +106,8 @@
     </p>
   </div>
 
-  <div id="tab-whitelisted">
+
+  <div id="tab-whitelisting">
     <p class="i18n_disabled_for_these_domains"></p>
 
     <form id="whitelistForm" action="#">
@@ -129,7 +133,8 @@
     </form>
   </div>
 
-  <div id="tab-userfilters">
+
+  <div id="tab-rewards">
     <p id="filter-must-follow-syntax" class="i18n_filter_must_follow_syntax"></p>
 
     <form id="customFilterForm" action="#">
@@ -169,7 +174,32 @@
     </form>
   </div>
 
-  <div id="tab-general">
+
+  <div id="tab-settings">
+    <p>
+      <div id="shouldShowBlockElementMenuContainer">
+        <input type="checkbox" id="shouldShowBlockElementMenu" /><label for="shouldShowBlockElementMenu" class="i18n_show_block_element_menu"></label>
+      </div>
+      <div id="hidePlaceholdersContainer">
+        <input type="checkbox" id="hidePlaceholders" /><label for="hidePlaceholders" class="i18n_overlay_hideplaceholders_label"></label>
+      </div>
+    </p>
+  </div>
+
+
+  <div id="tab-statistics">
+    <p>
+      <div id="shouldShowBlockElementMenuContainer">
+        <input type="checkbox" id="shouldShowBlockElementMenu" /><label for="shouldShowBlockElementMenu" class="i18n_show_block_element_menu"></label>
+      </div>
+      <div id="hidePlaceholdersContainer">
+        <input type="checkbox" id="hidePlaceholders" /><label for="hidePlaceholders" class="i18n_overlay_hideplaceholders_label"></label>
+      </div>
+    </p>
+  </div>
+
+
+  <div id="tab-faq">
     <p>
       <div id="shouldShowBlockElementMenuContainer">
         <input type="checkbox" id="shouldShowBlockElementMenu" /><label for="shouldShowBlockElementMenu" class="i18n_show_block_element_menu"></label>

@@ -13,6 +13,8 @@ gulp.task("watch", function(){
     "*.{html,js}",
     "metadata.*"
   ], ["build-devenv"]);
-})
+});
+
+gulp.task("generate-icons", shell.task("tasks/generate-icons.sh"));
 
 gulp.task("default", ["build-devenv", "watch"]);
