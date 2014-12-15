@@ -1,0 +1,16 @@
+// NOTE: remember to replace switchery's color in scripts/app.js,
+//       when updating the $main-color.
+$red-color: #c0392b;
+$green-color: #2ecc71;
+$yellow-color: #f1c40f;
+$blue-color: #304986;
+$light-gray-color: #f0f0f0;
+
+$green-low-opacity: rgba(42,204,114,0.7);
+$yellow-low-opacity: rgba(241,196,15,0.7);
+$red-low-opacity: rgba(192,57,43,0.7);
+
+$main-color: $blue-color;
+
+$header-font: 'Slabo 27px', sans-serif;
+$main-font: 'Open Sans', sans-serif;

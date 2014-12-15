@@ -1,0 +1,235 @@
+.afterinstall-page {
+  .header {
+    border-bottom: none;
+  }
+
+  .logo {
+    margin-top: 50px;
+  }
+}
+
+.sample-image {
+  margin: 10px auto;
+  text-align: center;
+  display: block;
+  position: relative;
+
+  @media (max-width: 768px) {
+    max-width: 50%;
+    float: none !important;
+  }
+}
+
+.post-install-information {
+  padding : 30px;
+  display: table;
+
+  & > div {
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
+  }
+}
+
+.sign-in {
+  padding: 30px 10px;
+
+  .sign-in-controls {
+    margin-top: 40px;
+  }
+
+  .btn-default {
+    background: 3px;
+    border-bottom: 3px;
+    border-radius: 0px;
+    background: $main-color;
+    color: #fff;
+    padding: 10px 20px;
+    min-width: 180px;
+    text-align: center;
+  }
+  .sign-in-button {
+    background: #adadad;
+    border-bottom: 3px solid #adadad - #111;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+    &:hover, &:focus, &:active {
+      background: #adadad - #111;
+    }
+  }
+
+  .sign-in-button-gplus {
+    background: $red-color;
+    border-bottom-color: $red-color - #111;
+    &:hover, &:focus, &:active {
+      background: $red-color - #111;
+    }
+  }
+
+  .sign-in-button-facebook {
+    background: #3b5998;
+    border-bottom-color: #3b5998 - #111;
+    &:hover, &:focus, &:active {
+      background: #3b5998 -#111;
+    }
+  }
+}
+
+.full-image-section {
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 70vh;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+
+
+  .inner {
+    width: 900px;
+    min-width: 900px;
+    position: relative;
+    float: none;
+    margin: 0px auto;
+
+    .block {
+      position: relative;
+      float: left;
+      width: 380px;
+      padding: 30px;
+      margin-top: 80px;
+      background: #fff;
+      box-shadow: 2px 0px 5px #999;
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        color: $main-color;
+      }
+    }
+
+    .right-block {
+      float: right;
+    }
+  }
+
+  &.full-image-section-1 {
+    background-image: url(../images/sample-image-2.jpg);
+  }
+  &.full-image-section-2 {
+    background-image: url(../images/sample-image-1.jpg);
+  }
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 10px;
+    top: -10px;
+    box-shadow: 5px 5px 15px #666;
+    display: block;
+    position: absolute;
+  }
+
+  &.no-shaddow:before {
+    content: "";
+    box-shadow: none;
+  }
+}
+
+.footer {
+  background: #f0f0f0;
+  color: #333;
+  padding: 40px 10px;
+  a {
+    color: #666;
+  }
+  .footer-inner {
+    padding: 20px 20px;
+  }
+
+  ul.nav-pills {
+    margin-top: 20px;
+
+    li {
+      border-right: 1px solid #adadad;
+
+      a {
+        padding: 5px 10px 5px 0;
+      }
+
+      + li a {
+        padding-left: 10px;
+      }
+
+      &:last-child {
+        border-right: 0px;
+      }
+    }
+  }
+  .share-icon {
+    padding: 10px;
+    text-align: center;
+  }
+
+}
+
+.header-top {
+  background: #fff;
+  h1 {
+    padding: 40px 0px 60px 0px;
+  }
+}
+
+
+@media (min-width: 900px) {
+  .container {
+    max-width: 980px;
+  }
+  .full-image-section .inner {
+    width: 900px;
+    min-width: 900px;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .sign-in-button {
+    width: 70%;
+    margin: 10px auto;
+  }
+
+  .footer {
+    .text-right {
+      text-align: center;
+    }
+  }
+
+  .full-image-section {
+    min-height: 72vh;
+    height: auto;
+
+    .inner {
+      width: 100%;
+      min-width: 100%;
+      min-height: 70vh;
+      height: auto;
+
+      .left-block, .right-block {
+        text-align: center;
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+        float: none;
+      }
+    }
+  }
+
+  .share {
+    width: 100%;
+    clear: both;
+  }
+}

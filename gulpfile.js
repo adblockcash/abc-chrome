@@ -1,7 +1,40 @@
 var gulp = require("gulp");
 var shell = require("gulp-shell");
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
+var runSequence = require('run-sequence');
 
-gulp.task("build-devenv", shell.task("./build.py -t chrome devenv"));
+var paths = {
+  source: {
+    styles: "app/styles/**/*.{sass,scss}"
+  },
+  destination: {
+    styles: "dist/styles/"
+  }
+};
+
+// USEFUL TASKS
+
+gulp.task("generate-icons", shell.task("tasks/generate-icons.sh"));
+
+// COMPILE TASKS
+gulp.task("bower:install", shell.task("bower install"));
+
+gulp.task("styles", function(){
+  return gulp.src(paths.source.styles)
+    .pipe(sourcemaps.init())
+      .pipe(sass())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(paths.destination.styles));
+});
+
+gulp.task("compile:dist", runSequence(["bower:install", "styles"]));
+
+gulp.task("compile:devenv", shell.task("./build.py -t chrome devenv"));
+
+gulp.task("compile", runSequence(["compile:dist", "compile:devenv"]));
+
+// GENERAL USE TASKS
 
 gulp.task("watch", function(){
   gulp.watch([
@@ -11,10 +44,13 @@ gulp.task("watch", function(){
     "lib/**",
     "skin/**",
     "*.{html,js}",
-    "metadata.*"
-  ], ["build-devenv"]);
+    "metadata.*",
+    paths.destination.styles + "**/*.css"
+  ], ["compile:devenv"]);
+
+  gulp.watch([
+    paths.source.styles
+  ], ["styles"]);
 });
 
-gulp.task("generate-icons", shell.task("tasks/generate-icons.sh"));
-
-gulp.task("default", ["build-devenv", "watch"]);
+gulp.task("default", ["compile", "watch"]);

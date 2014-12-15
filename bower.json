@@ -1,0 +1,14 @@
+{
+  "name": "abc-chrome",
+  "version": "1.8.7",
+  "authors": [
+    "Adblock Ca$h <contact@adblockcash.org>"
+  ],
+  "description": "Adblock Ca$h for Chrome",
+  "license": "GPL3",
+  "private": true,
+  "dependencies": {
+    "bootstrap-sass-official": "~3.3.1",
+    "switchery": "~0.7.0"
+  }
+}
