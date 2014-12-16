@@ -42,7 +42,7 @@
     background: 3px;
     border-bottom: 3px;
     border-radius: 0px;
-    background: $main-color;
+    background: $primary;
     color: #fff;
     padding: 10px 20px;
     min-width: 180px;
@@ -60,10 +60,10 @@
   }
 
   .sign-in-button-gplus {
-    background: $red-color;
-    border-bottom-color: $red-color - #111;
+    background: $red;
+    border-bottom-color: $red - #111;
     &:hover, &:focus, &:active {
-      background: $red-color - #111;
+      background: $red - #111;
     }
   }
 
@@ -107,7 +107,7 @@
       h3 {
         margin-top: 0;
         margin-bottom: 20px;
-        color: $main-color;
+        color: $primary;
       }
     }
 

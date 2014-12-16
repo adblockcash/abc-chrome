@@ -36,6 +36,16 @@ var Prefs = require("prefs").Prefs;
 var Synchronizer = require("synchronizer").Synchronizer;
 var Utils = require("utils").Utils;
 
+function checkElement(element, checked) {
+  if (element.checked !== checked) {
+    element.checked = checked;
+
+    var event = document.createEvent('HTMLEvents');
+    event.initEvent('change', true, true);
+    element.dispatchEvent(event);
+  }
+}
+
 // Loads options from localStorage and sets UI elements accordingly
 function loadOptions()
 {
@@ -51,8 +61,8 @@ function loadOptions()
   window.addEventListener("unload", unloadOptions, false);
   $("#updateFilterLists").click(updateFilterLists);
   $("#startSubscriptionSelection").click(startSubscriptionSelection);
-  $("#subscriptionSelector").change(updateSubscriptionSelection);
-  $("#addSubscription").click(addSubscription);
+  $("#js-subscriptionSelector").change(updateSubscriptionSelection);
+  $("#js-addSubscription").click(addSubscription);
   $("#acceptableAds").click(allowAcceptableAds);
   $("#whitelistForm").submit(addWhitelistDomain);
   $("#removeWhitelist").click(removeSelectedExcludedDomain);
@@ -62,16 +72,19 @@ function loadOptions()
   $("#importRawFilters").click(importRawFiltersText);
   FilterNotifier.addListener(onFilterChange);
 
+  subscriptionTemplate = document.getElementById("js-subscriptionTemplate");
+  subscriptionTemplate.parentNode.removeChild(subscriptionTemplate);
+
   // Display jQuery UI elements
-  $("#tabs").tabs();
-  $("button").button();
-  $(".refreshButton").button("option", "icons", {primary: "ui-icon-refresh"});
-  $(".addButton").button("option", "icons", {primary: "ui-icon-plus"});
-  $(".removeButton").button("option", "icons", {primary: "ui-icon-minus"});
+  // $("#tabs").tabs();
+  // $("button").button();
+  // $(".refreshButton").button("option", "icons", {primary: "ui-icon-refresh"});
+  // $(".addButton").button("option", "icons", {primary: "ui-icon-plus"});
+  // $(".removeButton").button("option", "icons", {primary: "ui-icon-minus"});
 
   // Popuplate option checkboxes
-  initCheckbox("shouldShowBlockElementMenu");
-  initCheckbox("hidePlaceholders");
+  // initCheckbox("shouldShowBlockElementMenu");
+  // initCheckbox("hidePlaceholders");
 
   ext.onMessage.addListener(onMessage);
 
@@ -99,7 +112,7 @@ function onMessage(msg)
 function reloadFilters()
 {
   // Load user filter URLs
-  var container = document.getElementById("filterLists");
+  var container = document.getElementById("js-filterLists");
   while (container.lastChild)
     container.removeChild(container.lastChild);
 
@@ -124,7 +137,7 @@ function reloadFilters()
   // User-entered filters
   var userFilters = backgroundPage.getUserFilters();
   populateList("userFiltersBox", userFilters.filters);
-  populateList("excludedDomainsBox", userFilters.exceptions);
+  // populateList("excludedDomainsBox", userFilters.exceptions);
 }
 
 // Cleans up when the options window is closed
@@ -136,7 +149,7 @@ function unloadOptions()
 function initCheckbox(id)
 {
   var checkbox = document.getElementById(id);
-  checkbox.checked = Prefs[id];
+  checkElement(checkbox, Prefs[id]);
   checkbox.addEventListener("click", function()
   {
     Prefs[id] = checkbox.checked;
@@ -155,7 +168,7 @@ function loadRecommendations()
     var selectedPrefix = null;
     var matchCount = 0;
 
-    var list = document.getElementById("subscriptionSelector");
+    var list = document.getElementById("js-subscriptionSelector");
     var elements = request.responseXML.documentElement.getElementsByTagName("subscription");
     for (var i = 0; i < elements.length; i++)
     {
@@ -213,7 +226,7 @@ function loadRecommendations()
 
 function startSubscriptionSelection(title, url)
 {
-  var list = document.getElementById("subscriptionSelector");
+  var list = document.getElementById("js-subscriptionSelector");
   if (list.length == 0)
   {
     delayedSubscriptionSelection = [title, url];
@@ -223,7 +236,7 @@ function startSubscriptionSelection(title, url)
   $("#tabs").tabs("select", 0);
   $("#addSubscriptionContainer").show();
   $("#addSubscriptionButton").hide();
-  $("#subscriptionSelector").focus();
+  $("#js-subscriptionSelector").focus();
   if (typeof url != "undefined")
   {
     list.selectedIndex = list.length - 1;
@@ -236,7 +249,7 @@ function startSubscriptionSelection(title, url)
 
 function updateSubscriptionSelection()
 {
-  var list = document.getElementById("subscriptionSelector");
+  var list = document.getElementById("js-subscriptionSelector");
   var data = list.options[list.selectedIndex]._data;
   if (data)
     $("#customSubscriptionContainer").hide();
@@ -249,7 +262,7 @@ function updateSubscriptionSelection()
 
 function addSubscription()
 {
-  var list = document.getElementById("subscriptionSelector");
+  var list = document.getElementById("js-subscriptionSelector");
   var data = list.options[list.selectedIndex]._data;
   if (data)
     doAddSubscription(data.url, data.title, data.homepage);
@@ -313,7 +326,7 @@ function allowAcceptableAds(event)
 
 function findSubscriptionElement(subscription)
 {
-  var children = document.getElementById("filterLists").childNodes;
+  var children = document.getElementById("js-filterLists").childNodes;
   for (var i = 0; i < children.length; i++)
     if (children[i]._subscription == subscription)
       return children[i];
@@ -324,7 +337,7 @@ function updateSubscriptionInfo(element)
 {
   var subscription = element._subscription;
 
-  var title = element.getElementsByClassName("subscriptionTitle")[0];
+  var title = element.getElementsByClassName("js-subscriptionTitle")[0];
   title.textContent = subscription.title;
   title.setAttribute("title", subscription.url);
   if (subscription.homepage)
@@ -332,10 +345,10 @@ function updateSubscriptionInfo(element)
   else
     title.href = subscription.url;
 
-  var enabled = element.getElementsByClassName("subscriptionEnabled")[0];
-  enabled.checked = !subscription.disabled;
+  var enabled = element.getElementsByClassName("js-subscriptionEnabled")[0];
+  checkElement(enabled, !subscription.disabled);
 
-  var lastUpdate = element.getElementsByClassName("subscriptionUpdate")[0];
+  var lastUpdate = element.getElementsByClassName("js-subscriptionUpdate")[0];
   lastUpdate.classList.remove("error");
   if (Synchronizer.isExecuting(subscription.url))
     lastUpdate.textContent = i18n.getMessage("filters_subscription_lastDownload_inProgress");
@@ -578,28 +591,26 @@ function updateFilterLists()
   }
 }
 
+var subscriptionTemplate;
+
 // Adds a subscription entry to the UI.
 function addSubscriptionEntry(subscription)
 {
-  var template = document.getElementById("subscriptionTemplate");
-  var element = template.cloneNode(true);
+  var element = subscriptionTemplate.cloneNode(true);
   element.removeAttribute("id");
   element._subscription = subscription;
 
-  var removeButton = element.getElementsByClassName("subscriptionRemoveButton")[0];
+  var removeButton = element.getElementsByClassName("js-subscriptionRemoveButton")[0];
   removeButton.setAttribute("title", removeButton.textContent);
-  removeButton.textContent = "\xD7";
-  removeButton.addEventListener("click", function()
-  {
+  removeButton.addEventListener("click", function() {
     if (!confirm(i18n.getMessage("global_remove_subscription_warning")))
       return;
 
     FilterStorage.removeSubscription(subscription);
   }, false);
 
-  var enabled = element.getElementsByClassName("subscriptionEnabled")[0];
-  enabled.addEventListener("click", function()
-  {
+  var enabled = element.getElementsByClassName("js-subscriptionEnabled")[0];
+  enabled.addEventListener("change", function() {
     if (subscription.disabled == !enabled.checked)
       return;
 
@@ -608,7 +619,9 @@ function addSubscriptionEntry(subscription)
 
   updateSubscriptionInfo(element);
 
-  document.getElementById("filterLists").appendChild(element);
+  document.getElementById("js-filterLists").appendChild(element);
+
+  refreshDOM();
 }
 
 function setLinks(id)
@@ -632,3 +645,100 @@ function setLinks(id)
     }
   }
 }
+
+function initializeSwitchery() {
+  var switchElements = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+  switchElements.forEach(function(element) {
+    if ($(element).data("switchery")) {
+      return;
+    }
+
+    var switchery = new Switchery(element, {
+      'className': 'switchery switchery-small',
+      // $main-color from styles/_vars.scss
+      'color' : '#354b80'
+    });
+
+    // Synchronize 'checked' HTML attribute with .checked in JS - so we can style it in CSS
+    $(element).change(function(){
+      element.checked ? element.setAttribute("checked", "checked") : element.removeAttribute("checked");
+    }).change();
+  });
+}
+
+function refreshDOM() {
+  initializeSwitchery();
+}
+document.addEventListener("DOMContentLoaded", refreshDOM, false);
+
+
+$(document).ready(function(){
+  // Load subscriptions for features
+  var featureSubscriptions = [
+    {
+      feature: "malware",
+      homepage: "http://malwaredomains.com/",
+      title: "Malware Domains",
+      url: "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt"
+    },
+    {
+      feature: "social",
+      homepage: "https://www.fanboy.co.nz/",
+      title: "Fanboy's Social Blocking List",
+      url: "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+    },
+    {
+      feature: "tracking",
+      homepage: "https://easylist.adblockplus.org/",
+      title: "EasyPrivacy",
+      url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+    }
+  ];
+
+  function isSubscriptionEnabled(featureSubscription)
+  {
+    return featureSubscription.url in FilterStorage.knownSubscriptions
+      && !Subscription.fromURL(featureSubscription.url).disabled;
+  }
+
+  // Set up feature buttons linked to subscriptions
+  featureSubscriptions.forEach(function setToggleSubscriptionButton(featureSubscription)
+  {
+    var feature = featureSubscription.feature;
+
+    var checkboxElement = document.querySelector("#js-toggle-" + feature);
+    checkElement(checkboxElement, isSubscriptionEnabled(featureSubscription));
+
+    checkboxElement.addEventListener("change", function(event) {
+      var subscription = Subscription.fromURL(featureSubscription.url);
+
+      if (isSubscriptionEnabled(featureSubscription) && !checkboxElement.checked) {
+        FilterStorage.removeSubscription(subscription);
+      } else if (!isSubscriptionEnabled(featureSubscription) && checkboxElement.checked) {
+        subscription.disabled = false;
+        subscription.title = featureSubscription.title;
+        subscription.homepage = featureSubscription.homepage;
+        FilterStorage.addSubscription(subscription);
+        if (!subscription.lastDownload) {
+          Synchronizer.execute(subscription);
+        }
+      }
+    }, false);
+  });
+
+  function filterListener(action, item) {
+    if (/^subscription\.(added|removed|disabled)$/.test(action)) {
+      for (var i = 0; i < featureSubscriptions.length; i++) {
+        var featureSubscription = featureSubscriptions[i];
+        if (featureSubscription.url === item.url) {
+          var checkboxElement = document.querySelector("#js-toggle-" + featureSubscription.feature);
+          checkElement(checkboxElement, isSubscriptionEnabled(featureSubscription));
+        }
+      }
+    }
+  }
+  FilterNotifier.addListener(filterListener);
+  window.addEventListener("unload", function(event) {
+    FilterNotifier.removeListener(filterListener);
+  }, false);
+});

@@ -16,16 +16,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .avatar {
-  max-width: 90px;
-  max-height: 90px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
 }
 
-.green-color {
-  color: $green-color;
+.green {
+  color: $green;
 }
 
-.yellow-color {
-  color: $yellow-color;
+.yellow {
+  color: $yellow;
 }
 
 .note {
@@ -33,13 +34,32 @@ h1, h2, h3, h4, h5, h6 {
   color: #666;
   margin-bottom: 60px;
   a {
-    color: $main-color;
+    color: $primary;
+  }
+}
+
+.single-question {
+  margin-top: 20px;
+
+  + .single-question {
+    border-top: 1px solid #f0f0f0;
+  }
+}
+
+.usercard {
+  .usercard-avatar {
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+  .usercard-contents {
+    display: inline-block;
   }
 }
 
 // layout
 .header {
-  background: $light-gray-color;
+  background: $gray-light;
   padding: 40px 15px;
   margin: 0px 0px 40px 0px;
   text-align: center;
@@ -49,5 +69,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-  background: $main-color;
+  background: $primary;
 }
+

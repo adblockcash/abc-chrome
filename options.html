@@ -15,23 +15,648 @@
   -
   - You should have received a copy of the GNU General Public License
   - along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
-  -->
+-->
 
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link type="text/css" href="assets/jquery-ui/css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
-  <script type="text/javascript" src="assets/jquery-ui/js/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript" src="assets/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+  <title>Adblock Cash Options</title>
+
+  <link type="text/css" href="dist/styles/main.css" rel="stylesheet"/>
+
+  <script src="assets/bower/jquery/dist/jquery.js"></script>
+  <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script>
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script> -->
+  <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script>
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script> -->
+  <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script>
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script> -->
+  <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script> -->
+  <script src="assets/bower/switchery/dist/switchery.js"></script>
+  <script src="assets/bower/moment/moment.js"></script>
+
+  <!-- <script type="text/javascript" src="assets/jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script> -->
   <script type="text/javascript" src="ext/common.js"></script>
   <script type="text/javascript" src="ext/content.js"></script>
   <script type="text/javascript" src="i18n.js" charset="utf-8"></script>
   <script type="text/javascript" src="options.js" charset="utf-8"></script>
-  <title>Adblock Cash Options</title>
-  <link rel="stylesheet" href="skin/options.css">
 </head>
-<body>
-<table>
+<body class="options-page">
+  <div class="container-fluid header">
+    <div class="row">
+      <div class="col-xs-12 text-center">
+        <img src="assets/images/logo.svg" alt="" height="150" />
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-tabs-container">
+    <div class="container">
+      <ul class="nav nav-justified settings-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#adblocking" aria-controls="adblocking" role="tab" data-toggle="tab">Adblocking</a></li>
+        <li role="presentation"><a href="#whitelisting" aria-controls="whitelisting" role="tab" data-toggle="tab">Whitelisting</a></li>
+        <li role="presentation"><a href="#rewards" aria-controls="rewards" role="tab" data-toggle="tab">Rewards</a></li>
+        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+        <li role="presentation"><a href="#statistics" aria-controls="statistics" role="tab" data-toggle="tab">Statistics</a></li>
+        <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <div role="tabpanel">
+      <div class="tab-content">
+
+        <!-- ADBLOCKING TAB -->
+        <div role="tabpanel" class="tab-pane active" id="adblocking">
+          <div class="settings-section">
+            <h2 class="section-heading"><i class="fa fa-bullhorn fa-section-icon"></i> Ads
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </h2>
+            <p>Block all the ads (images, videos, popups) on the websites you browse</p>
+
+            <h3>Advanced settings</h3>
+            <div class="ad-filters-accordion" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Filter lists
+                    </a>
+                  </h4>
+                </div>
+
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <p>
+                      Enable only the filter lists you need. Too many can make your browser unresponsive.
+                      Out-of-date lists are updated periodically.
+                    </p>
+
+                    <!-- Filter list - elements' container placeholder -->
+                    <ul class="list-group filter-lists" id="js-filterLists">
+                      <!-- Filter list element's template -->
+                      <li id="js-subscriptionTemplate" class="list-group-item">
+                        <a href="#" class="js-subscriptionRemoveButton remove-icon">
+                          <i class="fa fa-times-circle"></i>
+                        </a>
+                        <a class="js-subscriptionTitle">EasyList</a>
+                        <span class="subscription-status">
+                          (<span class="js-subscriptionUpdate"></span>)
+                        </span>
+                        <span class="pull-right">
+                          <input type="checkbox" class="js-switch js-subscriptionEnabled" />
+                        </span>
+                      </li>
+                    </ul>
+
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <select class="form-control" id="js-subscriptionSelector"></select>
+                      </div>
+                      <div class="col-sm-2">
+                        <button id="js-addSubscription" class="btn btn-primary btn-block addButton">Add subscription</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                      Custom filters
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <p>Your filter must follow AdblockCash filter syntax</p>
+
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <input type="text" value="" id="newFilter" class="form-control" placeholder="Your new filter's content" />
+                      </div>
+                      <div class="col-sm-2">
+                        <button class="btn btn-primary btn-block addButton" type="submit">
+                          <span class="i18n_add_filter_button"></span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="row space-20">
+                      <div class="col-sm-10">
+                        <select class="form-control" id="userFiltersBox" size="8" multiple></select>
+
+                        <a id="rawFiltersButton" href="#"><span class="i18n_edit_filters_raw"></span></a>
+                      </div>
+                      <div class="col-sm-2">
+                        <button id="removeCustomFilter" class="btn btn-primary btn-block removeButton">
+                          <span class="i18n_remove_button"></span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="row space-20" id="rawFilters" style="display:none">
+                      <div class="col-sm-10">
+                        <textarea class="form-control" id="rawFiltersText"></textarea>
+                      </div>
+                      <div class="col-sm-2">
+                        <button class="btn btn-primary btn-block" id="importRawFilters">
+                          <span class="i18n_apply_changes"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="settings-section">
+            <h2 class="section-heading"><i class="fa fa-section-icon fa-crosshairs"></i> Tracking
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" id="js-toggle-tracking" />
+              </span>
+            </h2>
+            <p>Protect yourself against advertising companies that would otherwise track every step you take online. </p>
+          </div>
+
+          <div class="settings-section">
+            <h2 class="section-heading"><i class="fa fa-section-icon fa-bug"></i> Malware
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" id="js-toggle-malware" />
+              </span>
+            </h2>
+            <p>Protect yourself against advertising companies that would otherwise track every step you take online. </p>
+          </div>
+
+          <div class="settings-section">
+            <h2 class="section-heading"><i class="fa fa-section-icon fa-thumbs-up"></i> Social media buttons
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" id="js-toggle-social" />
+              </span>
+            </h2>
+            <p>Protect yourself against advertising companies that would otherwise track every step you take online. </p>
+          </div>
+        </div>
+
+        <!-- WHITELISTING TAB -->
+        <div role="tabpanel" class="tab-pane" id="whitelisting">
+          <div class="settings-section">
+            <h2 class="section-heading"><i class="fa fa-section-icon fa-list"></i> Whitelisting
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </h2>
+            <h3>Allow <strong>unobtrusive ads</strong> on whitelisted websites.</h3>
+            <p>Unlock special features and win rewards while browsing them.</p>
+          </div>
+
+          <div class="whitelisted-websites">
+            <h2>Whitelisted websites</h2>
+            <div class="whitelisted-websites-wrapper">
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="whitelisted-websites">
+            <h2>Non-whitelisted websites</h2>
+            <div class="whitelisted-websites-wrapper">
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="single-website">
+                <h4><i class="fa fa-youtube"></i> Youtube</h4>
+                <div class="inner">
+                  <h6>You have whitelisted this website!</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fa fa-plus"></i> you earn 4 Cash Coins (CC) every time you visit it
+                    </li>
+                    <li>
+                      <i class="fa fa-plus"></i>  you read 20 articles for free instead of just 5
+                    </li>
+                  </ul>
+                  <div class="controls">
+                    <h4>Website whitelisting
+                      <span class="pull-right">
+                        <input type="checkbox" class="js-switch pull-right" checked />
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h2 class="section-heading">Custom whitelist filters</h2>
+            <p>Adblock Cash is disabled for the domains listed below. </p>
+            <input class="form-control" type="text" name="" id=""/>
+
+            <select class="form-control space-20" name="" id="" multiple>
+              <option value="" selected>vimeo.com</option>
+              <option value="">youtube.com</option>
+              <option value="">Add another filter list...</option>
+              <option value="">Add another filter list...</option>
+              <option value="">Add another filter list...</option>
+              <option value="">Add another filter list...</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- REWARDS TAB -->
+        <div role="tabpanel" class="tab-pane" id="rewards">
+          <div class="settings-section">
+            <h2 class="section-heading"><i class="fa fa-money fa-section-icon"></i> Your CashCoins balance
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </h2>
+            <h3 class="space-20">You have collected <strong>395 CC</strong> so far this month.</h3>
+            <p>
+              That's <strong>45 CC</strong> less than in the last month (you've collected <strong>440 CC</strong> in April 2014), because during the last 30 days:
+            </p>
+            <ul>
+              <li>you have visited only 5 of your whitelisted websites</li>
+              <li>you have blocked 34 websites, which could be whitelisted instead. <strong>Think about whitelisting them!</strong></li>
+            </ul>
+          </div>
+          <div class="settings-section">
+            <h2 class="section-heading"><i class="fa fa-question-circle fa-section-icon"></i>Sweepstakes</h2>
+            <div class="single-question">
+              <h3>How does it work?</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore necessitatibus quisquam sequi. Aperiam asperiores at blanditiis, cum fugit hic maxime minima minus natus perferendis quam rem, suscipit vel voluptate voluptates. Architecto dicta dolore doloremque eos natus nihil quam, sit ullam!</p>
+            </div>
+            <div class="single-question">
+              <h3>How does it work?</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore necessitatibus quisquam sequi. Aperiam asperiores at blanditiis, cum fugit hic maxime minima minus natus perferendis quam rem, suscipit vel voluptate voluptates. Architecto dicta dolore doloremque eos natus nihil quam, sit ullam!</p>
+            </div>
+            <div class="single-question">
+              <h3>How does it work?</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore necessitatibus quisquam sequi. Aperiam asperiores at blanditiis, cum fugit hic maxime minima minus natus perferendis quam rem, suscipit vel voluptate voluptates. Architecto dicta dolore doloremque eos natus nihil quam, sit ullam!</p>
+            </div>
+            <div class="single-question">
+              <h3>How does it work?</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore necessitatibus quisquam sequi. Aperiam asperiores at blanditiis, cum fugit hic maxime minima minus natus perferendis quam rem, suscipit vel voluptate voluptates. Architecto dicta dolore doloremque eos natus nihil quam, sit ullam!</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div role="tabpanel" class="tab-pane" id="settings">
+          <div class="settings-section">
+            <h2 class="section-heading">
+              <i class="fa fa-user fa-section-icon"></i> Your CashCoins Account
+            </h2>
+
+            <div class="usercard">
+              <img class="img-thumbnail avatar usercard-avatar" src="assets/images/avatar.png" />
+              <div class="usercard-contents">
+                <h4>john.doe@adblockcash.org</h4>
+                <div class="usercard-links">
+                  <a href="#">
+                    <i class="fa fa-lock"></i> Logout
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3 class="section-heading">Notifications</h3>
+            <p>
+              New feature available for whitelisted site
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </p>
+            <p>
+              New feature available for non-whitelisted site
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </p>
+            <p>
+              New rewards for whitelisted site
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </p>
+            <p>
+              New rewards for non-whitelisted site
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </p>
+            <p>
+              Temporary reward increases for whitelisted sites
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </p>
+            <p>
+              Temporary reward increases for non-whitelisted sites
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </p>
+            <p>
+              New whitelisted sites
+              <span class="pull-right">
+                <input type="checkbox" class="js-switch" checked />
+              </span>
+            </p>
+          </div>
+
+          <div class="settings-section">
+            <h3 class="section-heading">Payouts</h3>
+            <p>
+              Currently connected to <strong>john.doe@adblockcash.org paypal </strong> account
+            </p>
+            <button class="btn btn-primary space-20">
+              Turn off PayPal payments
+            </button>
+            <div class="space-20"></div>
+          </div>
+        </div>
+
+        <!-- STATISTICS TAB -->
+        <div id="statistics" role="tabpanel" class="tab-pane" >
+          <div class="settings-section statistics-section">
+            <div class="section-heading">
+              <h2><i class="fa fa-line-chart fa-section-icon"></i> Statistics</h2>
+
+              <ul class="nav nav-tabs nav-justified settings-tabs">
+                <li class="active"><a href="#">Today</a></li>
+                <li><a href="#">Yesterday</a></li>
+                <li><a href="#">This week</a></li>
+                <li><a href="#">This month</a></li>
+                <li><a href="#">This year</a></li>
+              </ul>
+            </div>
+
+            <h3 class="text-center space-20">Blocked ads: <strong>123</strong> </h3>
+
+            <h4>Top 10 websites with blocked ads:</h4>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <td>Website</td>
+                  <td>Number of blocked ads</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+                <tr>
+                  <td>google.com</td>
+                  <td>123</td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+
+        <!-- FAQ TAB -->
+        <div id="faq" role="faq" class="tab-pane">
+          <div class="settings-section">
+            <h2 class="section-heading"><i class="fa fa-question-circle fa-section-icon"></i> FAQ</h2>
+
+            <div class="single-question">
+              <h3>Lorem ipsum?</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus iusto nam obcaecati odio possimus quidem? Esse, repellendus vero? Aperiam doloribus expedita maiores mollitia neque nobis odio praesentium sapiente sint unde.</p>
+            </div>
+
+            <div class="single-question">
+              <h3>Lorem ipsum?</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus iusto nam obcaecati odio possimus quidem? Esse, repellendus vero? Aperiam doloribus expedita maiores mollitia neque nobis odio praesentium sapiente sint unde.</p>
+            </div>
+
+            <div class="single-question">
+              <h3>Lorem ipsum?</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus iusto nam obcaecati odio possimus quidem? Esse, repellendus vero? Aperiam doloribus expedita maiores mollitia neque nobis odio praesentium sapiente sint unde.</p>
+            </div>
+
+            <div class="single-question">
+              <h3>Lorem ipsum?</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus iusto nam obcaecati odio possimus quidem? Esse, repellendus vero? Aperiam doloribus expedita maiores mollitia neque nobis odio praesentium sapiente sint unde.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<!-- <table>
   <tr>
     <td style="padding-right: 8px">
       <img src="icons/abc-32.png">
@@ -61,21 +686,18 @@
       <span class="i18n_out_of_date_lists"></span>
       <button id="updateFilterLists" class="refreshButton"><span class="i18n_update_now"></span></button><br />
 
-      <!-- Subscription entry template -->
-      <div id="subscriptionTemplate" class="subscription">
+      <div id="js-subscriptionTemplate" class="subscription">
         <button class="i18n_filters_subscription_delete_label subscriptionRemoveButton"></button>
         <label class="subscriptionEnabledContainer">
           <input class="subscriptionEnabled" type="checkbox" /> <span class="i18n_filters_subscription_enabled_label"></span>
         </label>
-        <a class="subscriptionTitle"></a>
-        <span class="subscriptionUpdate"></span>
+        <a class="js-subscriptionTitle"></a>
+        <span class="js-subscriptionUpdate"></span>
       </div>
 
-      <!-- Placeholder for list of subscriptions -->
-      <div id="filterLists"></div>
+      <div id="js-filterLists"></div>
       <br />
 
-      <!-- Placeholder for user's filter list URLs -->
       <div id="userFilterLists" style="margin-bottom: 8px"></div>
 
       <p id="addSubscriptionButton">
@@ -83,8 +705,8 @@
       </p>
       <div id="addSubscriptionContainer">
         <span class="i18n_subscriptionSelection_subscriptionSelector_label"></span><br />
-        <select id="subscriptionSelector" style="width:500px"></select>
-        <button id="addSubscription" class="addButton"><span class="i18n_filters_addSubscriptionAdd_label"></span></button>
+        <select id="js-subscriptionSelector" style="width:500px"></select>
+        <button id="js-addSubscription" class="addButton"><span class="i18n_filters_addSubscriptionAdd_label"></span></button>
       </div>
       <div id="customSubscriptionContainer">
         <p>
@@ -209,7 +831,7 @@
       </div>
     </p>
   </div>
-</div>
+</div> -->
 
 </body>
 </html>

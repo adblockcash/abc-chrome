@@ -1,5 +1,5 @@
 $hexagon-width: 35px;
-$hexagon-color:  $green-color;
+$hexagon-color:  $green;
 
 $hexahon-height: $hexagon-width * 173.21/300;
 $hexagon-borders: $hexagon-width *  86.60/300;
@@ -34,40 +34,40 @@ $hexagon-borders: $hexagon-width *  86.60/300;
 }
 
 .hexagon-yellow:before, {
-  border-bottom-color: $yellow-color;
+  border-bottom-color: $yellow;
 }
 
 .hexagon-yellow:after {
-  border-top-color: $yellow-color;
+  border-top-color: $yellow;
 }
 
 .hexagon-yellow {
-  background: $yellow-color;
+  background: $yellow;
 }
 
 .hexagon-red:before, {
-  border-bottom-color: $red-color;
+  border-bottom-color: $red;
 }
 
 .hexagon-red:after {
-  border-top-color: $red-color;
+  border-top-color: $red;
 }
 
 
 .hexagon-red {
-  background: $red-color;
+  background: $red;
 }
 
 
 .green-info {
-  background: $green-low-opacity;
+  background: rgba($green, 0.7);
   color: #fff;
 }
 .yellow-info {
-  background: $yellow-low-opacity;
+  background: rgba($yellow, 0.7);
 }
 .red-info {
-  background: $red-low-opacity;
+  background: rgba($red, 0.7);
 }
 
 .norification-info {

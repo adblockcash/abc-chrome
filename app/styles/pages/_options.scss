@@ -3,7 +3,7 @@
 }
 
 .settings-tabs-container {
-  border-bottom: 1px solid $light-gray-color;
+  border-bottom: 1px solid $gray-light;
 }
 .settings-tabs {
   padding: 0px;
@@ -15,7 +15,7 @@
   }
 
   a {
-    color: $main-color;
+    color: $primary;
   }
 
   li:active, li:hover, li.active {
@@ -23,7 +23,7 @@
 
     a, a:focus, a:active {
       border: none;
-      background: $main-color;
+      background: $primary;
       color: #fff;
       border-radius: 0px;
       margin: 0px;
@@ -35,58 +35,55 @@
   }
 }
 
-.single-settings-section {
-  padding: 40px 0px;
-  .fa-section-icon {
-    font-size: 16px;
-    padding: 15px;
-    color: #fff;
-    background: $main-color;
-    border-radius: 50%;
-    text-align: center;
-    width: 45px;
-    margin: 0px 30px 10px 0px;
-  }
+.fa-section-icon {
+  font-size: 15px;
+  color: #fff;
+  background: #304986;
+  border-radius: 50%;
+  text-align: center;
+  width: 35px;
+  line-height: 35px;
+  margin-right: 15px;
+  float: left;
+  margin-top: 6.5px;
+}
 
-  h2 {
-    border-bottom: 1px solid #f0f0f0;
-    margin-bottom: 20px;
-  }
+.settings-section {
+  margin: 20px 0px;
 
-  &.single-settings-section-statistics {
-    border-bottom: 1px #f0f0f0 solid;
-    padding-bottom: 0px;
-    margin-bottom: 30px;
-    h2 {
-      display: inline-block;
-      border-bottom: 0px;
-      padding-bottom: 0px;
-      margin-bottom: 0px;
-
-    }
-    ul {
-      display: inline-block;
-      max-width: 70%;
-      float: right;
-    }
+  + .settings-section {
+    margin-top: 40px;
   }
 }
 
-
+.section-heading {
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 20px;
+  line-height: $section-heading-height;
+  height: $section-heading-height;
+}
 
 .page-heading {
   text-align: center;
   padding: 20px 10px;
 }
 
+//
+// ADS TAB
+//
+
 .filter-lists {
   a.remove-icon {
-    color: $main-color;
+    color: $primary;
     padding: 10px 5px;
 
     &:hover, &:focus {
-      color: $main-color - #111;
+      color: $primary - #111;
     }
+  }
+
+  .subscription-status {
+    color: $gray;
   }
 }
 
@@ -104,28 +101,28 @@
   width: 100%;
   height: auto;
   clear: both;
-}
-
-.single-question {
-  margin-top: 20px;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 0px 0px 10px 0px;
+  overflow: hidden;
 }
 
 .ad-filters-accordion {
-  padding: 15px 0px;
+  margin: 20px 0px;
+
   .panel-heading {
     background: none;
-      h4.panel-title {
-        font-size: 1.7em;
-        a {
-          display: block;
-          width: 100%;
-        }
+
+    h4.panel-title {
+      font-size: 1.7em;
+      a {
+        display: block;
+        width: 100%;
       }
+    }
   }
 }
 
+//
+// WHITELISTING TAB
+//
 
 .single-website {
   width: 33.3%;
@@ -185,3 +182,29 @@
   }
 }
 
+//
+// STATISTICS TAB
+//
+
+.statistics-section {
+  .section-heading {
+    h2 {
+      display: inline-block;
+      margin: 0;
+      line-height: inherit;
+    }
+
+    .nav-tabs {
+      display: inline-block;
+      max-width: 70%;
+      float: right;
+
+      li a {
+        line-height: inherit;
+        padding-top: 0;
+        padding-bottom: 0;
+        border: none;
+      }
+    }
+  }
+}
