@@ -2,6 +2,8 @@ var gulp = require("gulp");
 var shell = require("gulp-shell");
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
+var notify = require('gulp-notify');
+var plumber = require('gulp-plumber');
 var runSequence = require('run-sequence');
 
 var paths = {
@@ -22,6 +24,7 @@ gulp.task("bower:install", shell.task("bower install"));
 
 gulp.task("styles", function(){
   return gulp.src(paths.source.styles)
+    .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
     .pipe(sourcemaps.init())
       .pipe(sass())
     .pipe(sourcemaps.write())
@@ -38,7 +41,9 @@ gulp.task("compile", runSequence(["compile:dist", "compile:devenv"]));
 
 gulp.task("watch", function(){
   gulp.watch([
+    "_locales/**",
     "assets/**",
+    "adblockplus/{chrome,defaults,lib}/**",
     "chrome/**",
     "ext/**",
     "lib/**",

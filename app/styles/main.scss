@@ -1,8 +1,8 @@
-@import 'vars';
+@import "vars";
 
-@import 'switchery';
-@import 'theme';
+@import "switchery";
+@import "theme";
 
-@import 'pages/settings';
-@import 'pages/afterinstall';
-@import 'pages/notifications';
+@import "pages/settings";
+@import "pages/firstRun";
+@import "pages/notifications";

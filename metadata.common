@@ -30,7 +30,6 @@ subscriptions.xml = adblockplus/chrome/content/ui/subscriptions.xml
 firstRun.html = adblockplus/chrome/content/ui/firstRun.html
 firstRun.js = adblockplus/chrome/content/ui/firstRun.js
 i18n.js = adblockplus/chrome/content/ui/i18n.js
-skin/firstRun.css = adblockplus/chrome/skin/firstRun.css
 skin/abc-icon-big.png = adblockplus/chrome/skin/abc-icon-big.png
 skin/ajax-loader.gif = adblockplus/chrome/skin/ajax-loader.gif
 skin/background.png = adblockplus/chrome/skin/background.png

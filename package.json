@@ -22,6 +22,8 @@
   "homepage": "https://github.com/adblockplus/adblockpluschrome",
   "devDependencies": {
     "gulp": "^3.8.10",
+    "gulp-notify": "^2.1.0",
+    "gulp-plumber": "^0.6.6",
     "gulp-sass": "^1.2.4",
     "gulp-shell": "^0.2.11",
     "gulp-sourcemaps": "^1.2.8",

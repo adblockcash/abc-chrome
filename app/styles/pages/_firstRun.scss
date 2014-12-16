@@ -1,4 +1,4 @@
-.afterinstall-page {
+.firstrun-page {
   .header {
     border-bottom: none;
   }
@@ -80,7 +80,6 @@
   background-position: center bottom;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 70vh;
   width: 100%;
   padding: 0px;
   margin: 0px;
@@ -88,20 +87,20 @@
   position: relative;
   overflow: hidden;
 
-
   .inner {
     width: 900px;
     min-width: 900px;
     position: relative;
     float: none;
     margin: 0px auto;
+    overflow: hidden;
 
     .block {
       position: relative;
       float: left;
       width: 380px;
       padding: 30px;
-      margin-top: 80px;
+      margin: 80px 0;
       background: #fff;
       box-shadow: 2px 0px 5px #999;
 
@@ -118,10 +117,10 @@
   }
 
   &.full-image-section-1 {
-    background-image: url(../images/sample-image-2.jpg);
+    background-image: url(../../assets/images/sample-image-2.jpg);
   }
   &.full-image-section-2 {
-    background-image: url(../images/sample-image-1.jpg);
+    background-image: url(../../assets/images/sample-image-1.jpg);
   }
 
   &:before {
@@ -179,8 +178,11 @@
 
 .header-top {
   background: #fff;
+  padding-top: 60px;
+
   h1 {
-    padding: 40px 0px 60px 0px;
+    padding: 60px 0;
+    margin: 0;
   }
 }
 
