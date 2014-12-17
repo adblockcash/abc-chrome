@@ -19,7 +19,23 @@
 
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="skin/popup.css">
+  <link type="text/css" href="dist/styles/main.css" rel="stylesheet" />
+
+  <script src="assets/bower/jquery/dist/jquery.js"></script>
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/affix.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/alert.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/button.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/carousel.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/dropdown.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script> -->
+  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script> -->
+  <script src="assets/bower/switchery/dist/switchery.js"></script>
+
   <script src="ext/popup.js"></script>
   <script src="i18n.js"></script>
   <script src="popup.js"></script>
@@ -28,9 +44,50 @@
 </head>
 <!-- Set tabindex to work around Chromium issue 304532 -->
 <!-- Set overflow to hidden in order to prevent Safari showing scrollbars while loading -->
-<body tabindex="1" style="overflow: hidden;">
+<body class="notification-page" tabindex="1" style="overflow: hidden;">
 
-<header>
+  <div class="notification-box">
+    <div class="notification-header">
+      <div class="notification-icon">
+        <div class="hexagon hexagon-green">$</div>
+      </div>
+
+      <div class="notification-header-contents">
+        <a href="#" class="settings-link">
+          <i class="fa fa-wrench"></i>
+        </a>
+
+        <div class="adblock-status-name">Whitelisted mode</div>
+        <div class="adblock-status-description">
+          Ads are unblocked.<br/>
+          Whitelisting active.
+        </div>
+      </div>
+    </div>
+
+    <div class="notification-body">
+      2 ads unblocked / 4 CC earned
+    </div>
+
+    <div class="notification-info green-info">
+      <p>
+        <strong>You have whitelisted this website.</strong>
+      </p>
+      <ul>
+        <li>you earn 4 Cash Coins (CC) every time you visit it</li>
+        <li>you read 20 articles for free instead of just 5</li>
+      </ul>
+    </div>
+
+    <div class="notification-controls">
+      <label>
+        Whitelist mode
+        <input class="switchery js-switch" type="checkbox" checked name="" id="" />
+      </label>
+    </div>
+  </div>
+
+<!-- <header>
   <div id="logo"></div>
 </header>
 
@@ -96,7 +153,7 @@
 <footer id="options" role="button">
   <div class="icon"></div>
   <span class="i18n_options_short"></span>
-</footer>
+</footer> -->
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 @import "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";
-@import "http://fonts.googleapis.com/css?family=Slabo+27px|Open+Sans&.css";
+@import "http://fonts.googleapis.com/css?family=Slabo+27px|Open+Sans:400,700&.css";
 @import "http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css";
 
 body {
@@ -24,9 +24,21 @@ h1, h2, h3, h4, h5, h6 {
 .green {
   color: $green;
 }
-
 .yellow {
   color: $yellow;
+}
+.red {
+  color: $red;
+}
+
+.green-info {
+  background: lighten($green, 35%);
+}
+.yellow-info {
+  background: lighten($yellow, 25%);
+}
+.red-info {
+  background: lighten($red, 35%);
 }
 
 .note {

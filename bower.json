@@ -9,7 +9,6 @@
   "private": true,
   "dependencies": {
     "bootstrap-sass-official": "~3.3.1",
-    "switchery": "~0.7.0",
-    "moment": "~2.8.4"
+    "switchery": "~0.7.0"
   }
 }

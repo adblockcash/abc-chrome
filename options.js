@@ -137,7 +137,7 @@ function reloadFilters()
   // User-entered filters
   var userFilters = backgroundPage.getUserFilters();
   populateList("userFiltersBox", userFilters.filters);
-  // populateList("excludedDomainsBox", userFilters.exceptions);
+  populateList("excludedDomainsBox", userFilters.exceptions);
 }
 
 // Cleans up when the options window is closed

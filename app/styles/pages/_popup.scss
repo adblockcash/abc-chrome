@@ -1,0 +1,154 @@
+$notification-box-padding: 10px;
+
+$notification-box-header-height: 80px;
+$notification-box-header-padding: $notification-box-padding;
+
+$hexagon-height: 40px;
+$hexagon-width: $hexagon-height / 2 / 173.21 * 300;
+$hexagon-borders: $hexagon-width *  86.60/300;
+
+$notification-controls-height: 42px;
+$notification-controls-padding: $notification-box-padding;
+
+.hexagon {
+  position: relative;
+  width: $hexagon-width;
+  height: $hexagon-height / 2;
+  background-color: $red;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  margin-top: $hexagon-borders;
+
+  &:before, &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 0;
+    border-left: $hexagon-width/2 solid transparent;
+    border-right: $hexagon-width/2 solid transparent;
+  }
+
+  &:before {
+    bottom: 100%;
+    border-bottom: $hexagon-borders solid $red;
+  }
+
+  &:after {
+    top: 100%;
+    width: 0;
+    border-top: $hexagon-borders solid $red;
+  }
+
+  &.hexagon-yellow {
+    background: $yellow;
+
+    &:before {
+      border-bottom-color: $yellow;
+    }
+
+    &:after {
+      border-top-color: $yellow;
+    }
+  }
+
+  &.hexagon-green {
+    background: $green;
+
+    &:before {
+      border-bottom-color: $green;
+    }
+
+    &:after {
+      border-top-color: $green;
+    }
+  }
+}
+
+.notification-box {
+  width: 250px;
+  line-height: 1.5;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: $notification-controls-height;
+
+  .notification-header {
+    width: 100%;
+    height: $notification-box-header-height;
+    padding: $notification-box-header-padding;
+    border-bottom: 1px solid #f0f0f0;
+    overflow: hidden;
+    position: relative;
+
+    .notification-icon {
+      display: inline-block;
+      position: absolute;
+      // margin: (($notification-box-header-height - $hexagon-height - $notification-box-header-padding) / 2) 0;
+      margin: 2px 15px 0 0;
+    }
+
+    .notification-header-contents {
+      margin-left: $hexagon-width + 15px;
+    }
+
+    .adblock-status-name {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .adblock-status-description {
+      color: #999;
+      font-size: 12px;
+    }
+
+    .settings-link {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 16px;
+      color: #999;
+
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+
+  .notification-body {
+    padding: $notification-box-padding;
+    font-size: 12px;
+    color: #999;
+  }
+
+  .notification-info {
+    padding: $notification-box-padding;
+    font-size: 12px;
+
+    ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+  }
+
+  .notification-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f0f0f0;
+    line-height: $notification-controls-height - 2 * $notification-controls-padding;
+    padding: $notification-controls-padding;
+
+    label {
+      font-weight: normal;
+      margin: 0;
+      display: block;
+      color: #666;
+    }
+
+    .switchery {
+      float: right;
+    }
+  }
+}

@@ -134,3 +134,30 @@ function toggleCollapse(event)
   Prefs[collapser.dataset.option] = !Prefs[collapser.dataset.option];
   collapser.parentNode.classList.toggle("collapsed");
 }
+
+
+
+function initializeSwitchery() {
+  var switchElements = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+  switchElements.forEach(function(element) {
+    if ($(element).data("switchery")) {
+      return;
+    }
+
+    var switchery = new Switchery(element, {
+      'className': 'switchery switchery-small',
+      // $main-color from styles/_vars.scss
+      'color' : '#354b80'
+    });
+
+    // Synchronize 'checked' HTML attribute with .checked in JS - so we can style it in CSS
+    $(element).change(function(){
+      element.checked ? element.setAttribute("checked", "checked") : element.removeAttribute("checked");
+    }).change();
+  });
+}
+
+function refreshDOM() {
+  initializeSwitchery();
+}
+document.addEventListener("DOMContentLoaded", refreshDOM, false);
