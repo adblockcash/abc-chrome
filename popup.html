@@ -49,27 +49,42 @@
   <div class="notification-box">
     <div class="notification-header">
       <div class="notification-icon">
-        <div class="hexagon hexagon-green">$</div>
+        <div class="hexagon hexagon-green dnone js-whitelisted">$</div>
+        <div class="hexagon hexagon-yellow dnone js-nonwhitelisted">$</div>
+        <div class="hexagon hexagon-red dnone js-adblocked">$</div>
+        <div class="hexagon hexagon-gray dnone js-nonadblocked">$</div>
       </div>
 
       <div class="notification-header-contents">
-        <a href="#" class="settings-link">
+        <a href="#" class="options-link" id="js-open-options">
           <i class="fa fa-wrench"></i>
         </a>
 
-        <div class="adblock-status-name">Whitelisted mode</div>
-        <div class="adblock-status-description">
+        <div class="adblock-status-name dnone js-whitelisted js-nonadblocked">Whitelist mode</div>
+        <div class="adblock-status-name dnone js-nonwhitelisted">Non-whitelist mode</div>
+        <div class="adblock-status-name dnone js-adblocked">Adblock mode</div>
+        <div class="adblock-status-description dnone js-whitelisted">
           Ads are unblocked.<br/>
           Whitelisting active.
+        </div>
+        <div class="adblock-status-description dnone js-nonwhitelisted">
+          Ads are blocked.<br/>
+          Whitelisting inactive.
+        </div>
+        <div class="adblock-status-description dnone js-adblocked">
+          Ads are blocked.
+        </div>
+        <div class="adblock-status-description dnone js-nonadblocked">
+          Ads are unblocked.
         </div>
       </div>
     </div>
 
     <div class="notification-body">
-      2 ads unblocked / 4 CC earned
+      <span id="stats-page"></span> / <strong>0</strong> CC earned
     </div>
 
-    <div class="notification-info green-info">
+    <div class="notification-info green-info dnone js-whitelisted">
       <p>
         <strong>You have whitelisted this website.</strong>
       </p>
@@ -79,10 +94,20 @@
       </ul>
     </div>
 
+    <div class="notification-info yellow-info dnone js-nonwhitelisted">
+      <p>
+        <strong>Activate whitelisting for this website!</strong>
+      </p>
+      <ul>
+        <li>earn 4 Cash Coins (CC) every time you visit it</li>
+        <li>read 20 articles for free instead of just 5</li>
+      </ul>
+    </div>
+
     <div class="notification-controls">
       <label>
         Whitelist mode
-        <input class="switchery js-switch" type="checkbox" checked name="" id="" />
+        <input class="switchery js-switch" type="checkbox" checked id="js-toggle-whitemode" />
       </label>
     </div>
   </div>

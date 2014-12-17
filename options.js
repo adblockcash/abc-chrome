@@ -36,16 +36,6 @@ var Prefs = require("prefs").Prefs;
 var Synchronizer = require("synchronizer").Synchronizer;
 var Utils = require("utils").Utils;
 
-function checkElement(element, checked) {
-  if (element.checked !== checked) {
-    element.checked = checked;
-
-    var event = document.createEvent('HTMLEvents');
-    event.initEvent('change', true, true);
-    element.dispatchEvent(event);
-  }
-}
-
 // Loads options from localStorage and sets UI elements accordingly
 function loadOptions()
 {
@@ -149,7 +139,7 @@ function unloadOptions()
 function initCheckbox(id)
 {
   var checkbox = document.getElementById(id);
-  checkElement(checkbox, Prefs[id]);
+  Utils.checkElement(checkbox, Prefs[id]);
   checkbox.addEventListener("click", function()
   {
     Prefs[id] = checkbox.checked;
@@ -346,7 +336,7 @@ function updateSubscriptionInfo(element)
     title.href = subscription.url;
 
   var enabled = element.getElementsByClassName("js-subscriptionEnabled")[0];
-  checkElement(enabled, !subscription.disabled);
+  Utils.checkElement(enabled, !subscription.disabled);
 
   var lastUpdate = element.getElementsByClassName("js-subscriptionUpdate")[0];
   lastUpdate.classList.remove("error");
@@ -707,7 +697,7 @@ $(document).ready(function(){
     var feature = featureSubscription.feature;
 
     var checkboxElement = document.querySelector("#js-toggle-" + feature);
-    checkElement(checkboxElement, isSubscriptionEnabled(featureSubscription));
+    Utils.checkElement(checkboxElement, isSubscriptionEnabled(featureSubscription));
 
     checkboxElement.addEventListener("change", function(event) {
       var subscription = Subscription.fromURL(featureSubscription.url);
@@ -732,7 +722,7 @@ $(document).ready(function(){
         var featureSubscription = featureSubscriptions[i];
         if (featureSubscription.url === item.url) {
           var checkboxElement = document.querySelector("#js-toggle-" + featureSubscription.feature);
-          checkElement(checkboxElement, isSubscriptionEnabled(featureSubscription));
+          Utils.checkElement(checkboxElement, isSubscriptionEnabled(featureSubscription));
         }
       }
     }

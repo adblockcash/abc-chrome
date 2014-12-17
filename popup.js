@@ -40,49 +40,44 @@ function init()
     else if (!backgroundPage.htmlPages.has(page))
       document.body.classList.add("nohtml");
 
-    // Ask content script whether clickhide is active. If so, show cancel button.
-    // If that isn't the case, ask background.html whether it has cached filters. If so,
-    // ask the user whether she wants those filters.
-    // Otherwise, we are in default state.
     if (page)
     {
-      if (isWhitelisted(page.url))
-        document.getElementById("enabled").classList.add("off");
-
-      page.sendMessage({type: "get-clickhide-state"}, function(response)
-      {
-        if (response && response.active)
-          document.body.classList.add("clickhide-active");
-      });
+      Utils.checkElement(document.getElementById("js-toggle-whitemode"), isWhitelisted(page.url));
     }
   });
 
   // Attach event listeners
-  document.getElementById("enabled").addEventListener("click", toggleEnabled, false);
-  document.getElementById("clickhide").addEventListener("click", activateClickHide, false);
-  document.getElementById("clickhide-cancel").addEventListener("click", cancelClickHide, false);
-  document.getElementById("options").addEventListener("click", function()
+  document.getElementById("js-toggle-whitemode").addEventListener("change", toggleEnabled, false);
+  document.getElementById("js-open-options").addEventListener("click", function()
   {
     ext.showOptions();
   }, false);
-
-  // Set up collapsing of menu items
-  var collapsers = document.getElementsByClassName("collapse");
-  for (var i = 0; i < collapsers.length; i++)
-  {
-    var collapser = collapsers[i];
-    collapser.addEventListener("click", toggleCollapse, false);
-    if (!Prefs[collapser.dataset.option])
-      document.getElementById(collapser.dataset.collapsable).classList.add("collapsed");
-  }
 }
 window.addEventListener("DOMContentLoaded", init, false);
 
+function getAdblockStatus() {
+  var toggleWhitemodeCheckbox = document.getElementById("js-toggle-whitemode");
+  var isWhitelistMode = toggleWhitemodeCheckbox.checked;
+  var isWhitelistModeAvailable = page.url.indexOf("facebook.com") !== -1;
+
+  switch(true) {
+    case (isWhitelistMode && isWhitelistModeAvailable):
+      return "whitelisted";
+    case (!isWhitelistMode && isWhitelistModeAvailable):
+      return "nonwhitelisted";
+    case (isWhitelistMode && !isWhitelistModeAvailable):
+      return "adblocked";
+    case (!isWhitelistMode && !isWhitelistModeAvailable):
+      return "nonadblocked";
+  }
+}
+
 function toggleEnabled()
 {
-  var enabledButton = document.getElementById("enabled")
-  var disabled = enabledButton.classList.toggle("off");
-  if (disabled)
+  $(".js-whitelisted, .js-nonwhitelisted, .js-adblocked, .js-nonadblocked").hide();
+
+  var adblockStatus = getAdblockStatus();
+  if (adblockStatus === "whitelisted" || adblockStatus === "nonadblocked")
   {
     var host = extractHostFromURL(page.url).replace(/^www\./, "");
     var filter = Filter.fromText("@@||" + host + "^$document");
@@ -93,6 +88,8 @@ function toggleEnabled()
       filter.disabled = false;
       FilterStorage.addFilter(filter);
     }
+
+    $(".js-" + adblockStatus).show();
   }
   else
   {
@@ -105,34 +102,9 @@ function toggleEnabled()
         filter.disabled = true;
       filter = isWhitelisted(page.url);
     }
+
+    $(".js-" + adblockStatus).show();
   }
-}
-
-function activateClickHide()
-{
-  document.body.classList.add("clickhide-active");
-  page.sendMessage({type: "clickhide-activate"});
-
-  // Close the popup after a few seconds, so user doesn't have to
-  activateClickHide.timeout = window.setTimeout(ext.closePopup, 5000);
-}
-
-function cancelClickHide()
-{
-  if (activateClickHide.timeout)
-  {
-    window.clearTimeout(activateClickHide.timeout);
-    activateClickHide.timeout = null;
-  }
-  document.body.classList.remove("clickhide-active");
-  page.sendMessage({type: "clickhide-deactivate"});
-}
-
-function toggleCollapse(event)
-{
-  var collapser = event.currentTarget;
-  Prefs[collapser.dataset.option] = !Prefs[collapser.dataset.option];
-  collapser.parentNode.classList.toggle("collapsed");
 }
 
 
