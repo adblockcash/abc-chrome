@@ -7,3 +7,4 @@ devenv
 node_modules
 assets/bower
 dist
+certificates/*

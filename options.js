@@ -42,24 +42,19 @@ function loadOptions()
   // Set page title to i18n version of "Adblock Cash Options"
   document.title = i18n.getMessage("options");
 
-  // Set links
-  $("#acceptableAdsLink").attr("href", Prefs.subscriptions_exceptionsurl);
-  $("#acceptableAdsDocs").attr("href", Utils.getDocLink("acceptable_ads"));
-  setLinks("filter-must-follow-syntax", Utils.getDocLink("filterdoc"));
-
   // Add event listeners
   window.addEventListener("unload", unloadOptions, false);
   $("#updateFilterLists").click(updateFilterLists);
   $("#startSubscriptionSelection").click(startSubscriptionSelection);
   $("#js-subscriptionSelector").change(updateSubscriptionSelection);
   $("#js-addSubscription").click(addSubscription);
-  $("#acceptableAds").click(allowAcceptableAds);
-  $("#whitelistForm").submit(addWhitelistDomain);
-  $("#removeWhitelist").click(removeSelectedExcludedDomain);
-  $("#customFilterForm").submit(addTypedFilter);
-  $("#removeCustomFilter").click(removeSelectedFilters);
-  $("#rawFiltersButton").click(toggleFiltersInRawFormat);
-  $("#importRawFilters").click(importRawFiltersText);
+  $("#js-acceptableAds").change(allowAcceptableAds);
+  $("#js-whitelistForm").submit(addWhitelistDomain);
+  $("#js-removeWhitelist").click(removeSelectedExcludedDomain);
+  $("#js-customFilterForm").submit(addTypedFilter);
+  $("#js-removeCustomFilter").click(removeSelectedFilters);
+  $("#js-rawFiltersButton").click(toggleFiltersInRawFormat);
+  $("#js-importRawFilters").click(importRawFiltersText);
   FilterNotifier.addListener(onFilterChange);
 
   subscriptionTemplate = document.getElementById("js-subscriptionTemplate");
@@ -122,12 +117,12 @@ function reloadFilters()
     addSubscriptionEntry(subscription);
   }
 
-  $("#acceptableAds").prop("checked", hasAcceptable);
+  Utils.setCheckboxValue($("#js-acceptableAds")[0], hasAcceptable);
 
   // User-entered filters
   var userFilters = backgroundPage.getUserFilters();
-  populateList("userFiltersBox", userFilters.filters);
-  populateList("excludedDomainsBox", userFilters.exceptions);
+  populateList("js-userFiltersBox", userFilters.filters);
+  populateList("js-excludedDomainsBox", userFilters.exceptions);
 }
 
 // Cleans up when the options window is closed
@@ -139,7 +134,7 @@ function unloadOptions()
 function initCheckbox(id)
 {
   var checkbox = document.getElementById(id);
-  Utils.checkElement(checkbox, Prefs[id]);
+  Utils.setCheckboxValue(checkbox, Prefs[id]);
   checkbox.addEventListener("click", function()
   {
     Prefs[id] = checkbox.checked;
@@ -304,7 +299,7 @@ function allowAcceptableAds(event)
 
   subscription.disabled = false;
   subscription.title = "Allow non-intrusive advertising";
-  if ($("#acceptableAds").prop("checked"))
+  if ($("#js-acceptableAds").prop("checked"))
   {
     FilterStorage.addSubscription(subscription);
     if (subscription instanceof DownloadableSubscription && !subscription.lastDownload)
@@ -312,6 +307,8 @@ function allowAcceptableAds(event)
   }
   else
     FilterStorage.removeSubscription(subscription);
+
+  console.debug("allowAcceptableAds", event, subscription);
 }
 
 function findSubscriptionElement(subscription)
@@ -336,7 +333,7 @@ function updateSubscriptionInfo(element)
     title.href = subscription.url;
 
   var enabled = element.getElementsByClassName("js-subscriptionEnabled")[0];
-  Utils.checkElement(enabled, !subscription.disabled);
+  Utils.setCheckboxValue(enabled, !subscription.disabled);
 
   var lastUpdate = element.getElementsByClassName("js-subscriptionUpdate")[0];
   lastUpdate.classList.remove("error");
@@ -388,7 +385,7 @@ function onFilterChange(action, item, param1, param2)
           onFilterChange("filter.added", item.filters[i]);
       }
       else if (item.url == Prefs.subscriptions_exceptionsurl)
-        $("#acceptableAds").prop("checked", true);
+        Utils.setCheckboxValue($("#js-acceptableAds")[0], true);
       else if (!findSubscriptionElement(item))
         addSubscriptionEntry(item);
       break;
@@ -399,7 +396,7 @@ function onFilterChange(action, item, param1, param2)
           onFilterChange("filter.removed", item.filters[i]);
       }
       else if (item.url == Prefs.subscriptions_exceptionsurl)
-        $("#acceptableAds").prop("checked", false);
+        Utils.setCheckboxValue($("#js-acceptableAds")[0], false);
       else
       {
         var element = findSubscriptionElement(item);
@@ -409,15 +406,15 @@ function onFilterChange(action, item, param1, param2)
       break;
     case "filter.added":
       if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text))
-        appendToListBox("excludedDomainsBox", RegExp.$1);
+        appendToListBox("js-excludedDomainsBox", RegExp.$1);
       else
-        appendToListBox("userFiltersBox", item.text);
+        appendToListBox("js-userFiltersBox", item.text);
       break;
     case "filter.removed":
       if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text))
-        removeFromListBox("excludedDomainsBox", RegExp.$1);
+        removeFromListBox("js-excludedDomainsBox", RegExp.$1);
       else
-        removeFromListBox("userFiltersBox", item.text);
+        removeFromListBox("js-userFiltersBox", item.text);
       break;
   }
 }
@@ -486,7 +483,7 @@ function addTypedFilter(event)
 // Removes currently selected whitelisted domains
 function removeSelectedExcludedDomain()
 {
-  var excludedDomainsBox = document.getElementById("excludedDomainsBox");
+  var excludedDomainsBox = document.getElementById("js-excludedDomainsBox");
   var remove = [];
   for (var i = 0; i < excludedDomainsBox.length; i++)
     if (excludedDomainsBox.options[i].selected)
@@ -501,7 +498,7 @@ function removeSelectedExcludedDomain()
 // Removes all currently selected filters
 function removeSelectedFilters()
 {
-  var userFiltersBox = document.getElementById("userFiltersBox");
+  var userFiltersBox = document.getElementById("js-userFiltersBox");
   var remove = [];
   for (var i = 0; i < userFiltersBox.length; i++)
     if (userFiltersBox.options[i].selected)
@@ -521,7 +518,7 @@ function toggleFiltersInRawFormat(event)
   $("#rawFilters").toggle();
   if ($("#rawFilters").is(":visible"))
   {
-    var userFiltersBox = document.getElementById("userFiltersBox");
+    var userFiltersBox = document.getElementById("js-userFiltersBox");
     var text = "";
     for (var i = 0; i < userFiltersBox.length; i++)
       text += userFiltersBox.options[i].value + "\n";
@@ -593,9 +590,6 @@ function addSubscriptionEntry(subscription)
   var removeButton = element.getElementsByClassName("js-subscriptionRemoveButton")[0];
   removeButton.setAttribute("title", removeButton.textContent);
   removeButton.addEventListener("click", function() {
-    if (!confirm(i18n.getMessage("global_remove_subscription_warning")))
-      return;
-
     FilterStorage.removeSubscription(subscription);
   }, false);
 
@@ -697,7 +691,7 @@ $(document).ready(function(){
     var feature = featureSubscription.feature;
 
     var checkboxElement = document.querySelector("#js-toggle-" + feature);
-    Utils.checkElement(checkboxElement, isSubscriptionEnabled(featureSubscription));
+    Utils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
 
     checkboxElement.addEventListener("change", function(event) {
       var subscription = Subscription.fromURL(featureSubscription.url);
@@ -722,7 +716,7 @@ $(document).ready(function(){
         var featureSubscription = featureSubscriptions[i];
         if (featureSubscription.url === item.url) {
           var checkboxElement = document.querySelector("#js-toggle-" + featureSubscription.feature);
-          Utils.checkElement(checkboxElement, isSubscriptionEnabled(featureSubscription));
+          Utils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
         }
       }
     }

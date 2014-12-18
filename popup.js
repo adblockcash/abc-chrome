@@ -42,7 +42,7 @@ function init()
 
     if (page)
     {
-      Utils.checkElement(document.getElementById("js-toggle-whitemode"), isWhitelisted(page.url));
+      Utils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(page.url));
     }
   });
 
@@ -55,29 +55,12 @@ function init()
 }
 window.addEventListener("DOMContentLoaded", init, false);
 
-function getAdblockStatus() {
-  var toggleWhitemodeCheckbox = document.getElementById("js-toggle-whitemode");
-  var isWhitelistMode = toggleWhitemodeCheckbox.checked;
-  var isWhitelistModeAvailable = page.url.indexOf("facebook.com") !== -1;
-
-  switch(true) {
-    case (isWhitelistMode && isWhitelistModeAvailable):
-      return "whitelisted";
-    case (!isWhitelistMode && isWhitelistModeAvailable):
-      return "nonwhitelisted";
-    case (isWhitelistMode && !isWhitelistModeAvailable):
-      return "adblocked";
-    case (!isWhitelistMode && !isWhitelistModeAvailable):
-      return "nonadblocked";
-  }
-}
-
 function toggleEnabled()
 {
   $(".js-whitelisted, .js-nonwhitelisted, .js-adblocked, .js-nonadblocked").hide();
 
-  var adblockStatus = getAdblockStatus();
-  if (adblockStatus === "whitelisted" || adblockStatus === "nonadblocked")
+  var toggleWhitemodeCheckbox = document.getElementById("js-toggle-whitemode");
+  if (toggleWhitemodeCheckbox.checked)
   {
     var host = extractHostFromURL(page.url).replace(/^www\./, "");
     var filter = Filter.fromText("@@||" + host + "^$document");
@@ -88,8 +71,6 @@ function toggleEnabled()
       filter.disabled = false;
       FilterStorage.addFilter(filter);
     }
-
-    $(".js-" + adblockStatus).show();
   }
   else
   {
@@ -102,9 +83,10 @@ function toggleEnabled()
         filter.disabled = true;
       filter = isWhitelisted(page.url);
     }
-
-    $(".js-" + adblockStatus).show();
   }
+
+  var adblockStatus = Utils.getAdblockStatus(page);
+  $(".js-" + adblockStatus).show();
 }
 
 
@@ -125,7 +107,7 @@ function initializeSwitchery() {
     // Synchronize 'checked' HTML attribute with .checked in JS - so we can style it in CSS
     $(element).change(function(){
       element.checked ? element.setAttribute("checked", "checked") : element.removeAttribute("checked");
-    }).change();
+    });
   });
 }
 

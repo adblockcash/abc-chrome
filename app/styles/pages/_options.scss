@@ -16,6 +16,7 @@
 
   a {
     color: $primary;
+    padding: 15px !important;
   }
 
   li:active, li:hover, li.active {
@@ -61,6 +62,7 @@
   margin-bottom: 20px;
   line-height: $section-heading-height;
   height: $section-heading-height;
+  position: relative;
 }
 
 .page-heading {
@@ -196,15 +198,34 @@
 
     .nav-tabs {
       display: inline-block;
-      max-width: 70%;
+      max-width: 570px;
       float: right;
+      position: absolute;
+      right: 0;
+      bottom: 0;
 
       li a {
-        line-height: inherit;
+        line-height: 30px;
         padding-top: 0;
         padding-bottom: 0;
-        border: none;
+        border: none !important;
       }
     }
+  }
+}
+
+.statgroups {
+  text-align: center;
+}
+.statgroup {
+  display: inline-block;
+  margin: 30px 40px;
+  width: 200px;
+
+  .statgroup-title {
+    font-size: 16px;
+  }
+  .statgroup-number {
+    font-size: 24px;
   }
 }

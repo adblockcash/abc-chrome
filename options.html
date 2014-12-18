@@ -79,7 +79,7 @@
                 <input type="checkbox" class="js-switch" checked />
               </span>
             </h2>
-            <p>Block all the ads (images, videos, popups) on the websites you browse</p>
+            <p>Block all the ads (images, videos, popups) on all non-whitelisted websites you browse.</p>
 
             <h3>Advanced settings</h3>
             <div class="ad-filters-accordion" id="accordion" role="tablist" aria-multiselectable="true">
@@ -138,40 +138,42 @@
                   <div class="panel-body">
                     <p>Your filter must follow AdblockCash filter syntax</p>
 
-                    <div class="row">
-                      <div class="col-sm-10">
-                        <input type="text" value="" id="newFilter" class="form-control" placeholder="Your new filter's content" />
+                    <form id="js-customFilterForm" action="#">
+                      <div class="row">
+                        <div class="col-sm-10">
+                          <input type="text" value="" id="newFilter" class="form-control" placeholder="Your new filter's content" />
+                        </div>
+                        <div class="col-sm-2">
+                          <button class="btn btn-primary btn-block addButton" type="submit">
+                            <span class="i18n_add_filter_button"></span>
+                          </button>
+                        </div>
                       </div>
-                      <div class="col-sm-2">
-                        <button class="btn btn-primary btn-block addButton" type="submit">
-                          <span class="i18n_add_filter_button"></span>
-                        </button>
-                      </div>
-                    </div>
 
-                    <div class="row space-20">
-                      <div class="col-sm-10">
-                        <select class="form-control" id="userFiltersBox" size="8" multiple></select>
+                      <div class="row space-20">
+                        <div class="col-sm-10">
+                          <select class="form-control" id="js-userFiltersBox" size="8" multiple></select>
 
-                        <a id="rawFiltersButton" href="#"><span class="i18n_edit_filters_raw"></span></a>
+                          <a id="js-rawFiltersButton" href="#"><span class="i18n_edit_filters_raw"></span></a>
+                        </div>
+                        <div class="col-sm-2">
+                          <button id="js-removeCustomFilter" class="btn btn-primary btn-block removeButton">
+                            <span class="i18n_remove_button"></span>
+                          </button>
+                        </div>
                       </div>
-                      <div class="col-sm-2">
-                        <button id="removeCustomFilter" class="btn btn-primary btn-block removeButton">
-                          <span class="i18n_remove_button"></span>
-                        </button>
-                      </div>
-                    </div>
 
-                    <div class="row space-20" id="rawFilters" style="display:none">
-                      <div class="col-sm-10">
-                        <textarea class="form-control" id="rawFiltersText"></textarea>
+                      <div class="row space-20" id="rawFilters" style="display:none">
+                        <div class="col-sm-10">
+                          <textarea class="form-control" id="rawFiltersText"></textarea>
+                        </div>
+                        <div class="col-sm-2">
+                          <button class="btn btn-primary btn-block" id="js-importRawFilters">
+                            <span class="i18n_apply_changes"></span>
+                          </button>
+                        </div>
                       </div>
-                      <div class="col-sm-2">
-                        <button class="btn btn-primary btn-block" id="importRawFilters">
-                          <span class="i18n_apply_changes"></span>
-                        </button>
-                      </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -210,9 +212,10 @@
         <!-- WHITELISTING TAB -->
         <div role="tabpanel" class="tab-pane" id="whitelisting">
           <div class="settings-section">
-            <h2 class="section-heading"><i class="fa fa-section-icon fa-list"></i> Whitelisting
+            <h2 class="section-heading">
+              <i class="fa fa-section-icon fa-list"></i> Whitelisting
               <span class="pull-right">
-                <input type="checkbox" class="js-switch" checked />
+                <input type="checkbox" class="js-switch" checked id="js-acceptableAds" />
               </span>
             </h2>
             <p>
@@ -224,7 +227,7 @@
           </div>
 
           <div class="whitelisted-websites">
-            <h2>Whitelisted websites</h2>
+            <h2>Whitelisted websites (34)</h2>
             <div class="whitelisted-websites-wrapper">
               <div class="single-website">
                 <h4><i class="fa fa-youtube"></i> Youtube</h4>
@@ -356,7 +359,7 @@
           </div>
 
           <div class="whitelisted-websites">
-            <h2>Non-whitelisted websites</h2>
+            <h2>Non-whitelisted websites (3)</h2>
             <div class="whitelisted-websites-wrapper">
               <div class="single-website">
                 <h4><i class="fa fa-youtube"></i> Youtube</h4>
@@ -425,13 +428,13 @@
           </div>
 
           <div class="settings-section">
-            <h2 class="section-heading">Custom whitelist filters</h2>
-            <p>Adblock Cash is disabled for the domains listed below.</p>
+            <h2 class="section-heading">Whitelist other domains</h2>
+            <p>Adblock Ca$h will be disabled for the domains listed below.</p>
 
-            <form id="whitelistForm" action="#">
+            <form id="js-whitelistForm" action="#">
               <div class="row">
                 <div class="col-xs-10">
-                  <input class="form-control" type="text" value="" id="newWhitelistDomain" placeholder="Add new filter..." />
+                  <input class="form-control" type="text" value="" id="newWhitelistDomain" placeholder="f.e. adblockcash.org" />
                 </div>
                 <div class="col-xs-2">
                   <button class="btn btn-primary btn-block addButton" type="submit">
@@ -442,10 +445,10 @@
 
               <div class="row space-20">
                 <div class="col-xs-10">
-                  <select id="excludedDomainsBox" size="8" multiple class="form-control"></select>
+                  <select id="js-excludedDomainsBox" size="8" multiple class="form-control"></select>
                 </div>
                 <div class="col-xs-2">
-                  <button id="removeWhitelist" class="removeButton btn btn-primary btn-block">
+                  <button id="js-removeWhitelist" class="removeButton btn btn-primary btn-block">
                     <span class="i18n_remove_button"></span>
                   </button>
                 </div>
@@ -462,7 +465,10 @@
                 <input type="checkbox" class="js-switch" checked />
               </span>
             </h2>
-            <h3 class="space-20">You have collected <strong>395 CC</strong> so far this month.</h3>
+            <h4 class="pull-right">Your current category: Category2</h4>
+            <h3 class="space-20">You have collected <strong>395 CashCoins</strong> so far this month.</h3>
+            <h4>Collect <strong>40 more CC</strong>, and you'll advance from category 3 to category 4!</h4>
+            <h4>Next sweepstake: 14th January - your nearest chance to win 450$!</h4>
             <p>
               That's <strong>45 CC</strong> less than in the last month (you've collected <strong>440 CC</strong> in April 2014), because during the last 30 days:
             </p>
@@ -470,7 +476,40 @@
               <li>you have visited only 5 of your whitelisted websites</li>
               <li>you have blocked 34 websites, which could be whitelisted instead. <strong>Think about whitelisting them!</strong></li>
             </ul>
+
+            <h3>Top 5 websites by earned CashCoins</h3>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Website</th>
+                  <th>Earned CC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>xxx</td>
+                  <td>xxx</td>
+                </tr>
+                <tr>
+                  <td>xxx</td>
+                  <td>xxx</td>
+                </tr>
+                <tr>
+                  <td>xxx</td>
+                  <td>xxx</td>
+                </tr>
+                <tr>
+                  <td>xxx</td>
+                  <td>xxx</td>
+                </tr>
+                <tr>
+                  <td>xxx</td>
+                  <td>xxx</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+
           <div class="settings-section">
             <h2 class="section-heading"><i class="fa fa-question-circle fa-section-icon"></i>Sweepstakes</h2>
             <div class="single-question">
@@ -513,45 +552,21 @@
           </div>
 
           <div class="settings-section">
-            <h3 class="section-heading">Notifications</h3>
+            <h3 class="section-heading">Notify me about</h3>
             <p>
-              New feature available for whitelisted site
+              New features
               <span class="pull-right">
                 <input type="checkbox" class="js-switch" checked />
               </span>
             </p>
             <p>
-              New feature available for non-whitelisted site
+              Special rewards
               <span class="pull-right">
                 <input type="checkbox" class="js-switch" checked />
               </span>
             </p>
             <p>
-              New rewards for whitelisted site
-              <span class="pull-right">
-                <input type="checkbox" class="js-switch" checked />
-              </span>
-            </p>
-            <p>
-              New rewards for non-whitelisted site
-              <span class="pull-right">
-                <input type="checkbox" class="js-switch" checked />
-              </span>
-            </p>
-            <p>
-              Temporary reward increases for whitelisted sites
-              <span class="pull-right">
-                <input type="checkbox" class="js-switch" checked />
-              </span>
-            </p>
-            <p>
-              Temporary reward increases for non-whitelisted sites
-              <span class="pull-right">
-                <input type="checkbox" class="js-switch" checked />
-              </span>
-            </p>
-            <p>
-              New whitelisted sites
+              New whitelisted websites
               <span class="pull-right">
                 <input type="checkbox" class="js-switch" checked />
               </span>
@@ -585,9 +600,49 @@
               </ul>
             </div>
 
-            <h3 class="text-center space-20">Blocked ads: <strong>123</strong> </h3>
+            <h3>General statistics</h3>
+            <div class="statgroups">
+              <div class="statgroup">
+                <div class="statgroup-title">
+                  Blocked ads
+                  <br>
+                  on all websites
+                </div>
+                <div class="statgroup-number">583</div>
+              </div>
+              <div class="statgroup">
+                <div class="statgroup-title">
+                  Whitelisted ads
+                  <br>
+                  on whitelisted websites
+                </div>
+                <div class="statgroup-number">57</div>
+              </div>
+              <div class="statgroup">
+                <div class="statgroup-title">
+                  Blocked ads
+                  <br>
+                  on non-whitelisted websites
+                </div>
+                <div class="statgroup-number">23</div>
+              </div>
+            </div>
+            <div class="statgroups">
+              <div class="statgroup">
+                <!-- <div class="statgroup-title">Earned CashCoins</div> -->
+                <!-- <div class="statgroup-number">0 CC</div> -->
+              </div>
+              <div class="statgroup">
+                <div class="statgroup-title">Earned CashCoins</div>
+                <div class="statgroup-number">57</div>
+              </div>
+              <div class="statgroup">
+                <div class="statgroup-title">Missed CashCoins</div>
+                <div class="statgroup-number">24 CC</div>
+              </div>
+            </div>
 
-            <h4>Top 10 websites with blocked ads:</h4>
+            <h3>Top 10 websites with blocked ads</h3>
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -598,43 +653,43 @@
               <tbody>
                 <tr>
                   <td>google.com</td>
-                  <td>123</td>
+                  <td>1242</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>facebook.com</td>
+                  <td>344</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>yahoo.com</td>
+                  <td>304</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>lorem.com</td>
+                  <td>295</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>ipsum.com</td>
+                  <td>285</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>sit.com</td>
+                  <td>274</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>amet.com</td>
+                  <td>249</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>hakum.com</td>
+                  <td>210</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>diro.com</td>
+                  <td>180</td>
                 </tr>
                 <tr>
-                  <td>google.com</td>
-                  <td>123</td>
+                  <td>apsum.com</td>
+                  <td>150</td>
                 </tr>
               </tbody>
 
@@ -737,8 +792,8 @@
       </div>
 
       <div id="acceptableAdsContainer">
-        <input type="checkbox" id="acceptableAds" />
-        <label for="acceptableAds" class="i18n_filters_acceptableAds2_label"></label>
+        <input type="checkbox" id="js-acceptableAds" />
+        <label for="js-acceptableAds" class="i18n_filters_acceptableAds2_label"></label>
         <a id="acceptableAdsLink" href="#" target="_blank" class="i18n_filters_viewList_label"></a>
         <a id="acceptableAdsDocs" href="#" target="_blank" class="i18n_filters_readMore_label"></a>
       </div>
@@ -749,7 +804,7 @@
   <div id="tab-whitelisting">
     <p class="i18n_disabled_for_these_domains"></p>
 
-    <form id="whitelistForm" action="#">
+    <form id="js-whitelistForm" action="#">
     <table>
       <tr>
         <td style="max-width:100%">
@@ -762,10 +817,10 @@
 
       <tr>
         <td>
-          <select id="excludedDomainsBox" size="10" multiple style="width:500px; background: white;"></select>
+          <select id="js-excludedDomainsBox" size="10" multiple style="width:500px; background: white;"></select>
         </td>
         <td>
-          <button id="removeWhitelist" class="removeButton"><span class="i18n_remove_button"></span></button>
+          <button id="js-removeWhitelist" class="removeButton"><span class="i18n_remove_button"></span></button>
         </td>
       </tr>
     </table>
@@ -776,7 +831,7 @@
   <div id="tab-rewards">
     <p id="filter-must-follow-syntax" class="i18n_filter_must_follow_syntax"></p>
 
-    <form id="customFilterForm" action="#">
+    <form id="js-customFilterForm" action="#">
     <table>
       <tr>
         <td>
@@ -788,15 +843,15 @@
       </tr>
       <tr>
         <td>
-          <select id="userFiltersBox" size="20" multiple style="width: 500px; background: white;"></select>
+          <select id="js-userFiltersBox" size="20" multiple style="width: 500px; background: white;"></select>
         </td>
         <td>
-          <button id="removeCustomFilter" class="removeButton"><span class="i18n_remove_button"></span></button>
+          <button id="js-removeCustomFilter" class="removeButton"><span class="i18n_remove_button"></span></button>
         </td>
       </tr>
       <tr>
         <td>
-          <div style="font-size: 90%; text-align: right"><a id="rawFiltersButton" href="#"><span class="i18n_edit_filters_raw"></span></a></div>
+          <div style="font-size: 90%; text-align: right"><a id="js-rawFiltersButton" href="#"><span class="i18n_edit_filters_raw"></span></a></div>
         </td>
       </tr>
       <tr id="rawFilters">
@@ -806,7 +861,7 @@
           </div>
         </td>
         <td>
-          <div><button id="importRawFilters"><span class="i18n_apply_changes"></span></button></div>
+          <div><button id="js-importRawFilters"><span class="i18n_apply_changes"></span></button></div>
         </td>
       </tr>
     </table>

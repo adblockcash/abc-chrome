@@ -49,10 +49,10 @@
   <div class="notification-box">
     <div class="notification-header">
       <div class="notification-icon">
-        <div class="hexagon hexagon-green dnone js-whitelisted">$</div>
-        <div class="hexagon hexagon-yellow dnone js-nonwhitelisted">$</div>
-        <div class="hexagon hexagon-red dnone js-adblocked">$</div>
-        <div class="hexagon hexagon-gray dnone js-nonadblocked">$</div>
+        <div class="hexagon hexagon-green js-hide js-whitelisted"></div>
+        <div class="hexagon hexagon-yellow js-hide js-nonwhitelisted"></div>
+        <div class="hexagon hexagon-red js-hide js-adblocked"></div>
+        <div class="hexagon hexagon-gray js-hide js-nonadblocked"></div>
       </div>
 
       <div class="notification-header-contents">
@@ -60,21 +60,21 @@
           <i class="fa fa-wrench"></i>
         </a>
 
-        <div class="adblock-status-name dnone js-whitelisted js-nonadblocked">Whitelist mode</div>
-        <div class="adblock-status-name dnone js-nonwhitelisted">Non-whitelist mode</div>
-        <div class="adblock-status-name dnone js-adblocked">Adblock mode</div>
-        <div class="adblock-status-description dnone js-whitelisted">
+        <div class="adblock-status-name js-hide js-whitelisted js-nonadblocked">Whitelist mode</div>
+        <div class="adblock-status-name js-hide js-nonwhitelisted">Non-whitelist mode</div>
+        <div class="adblock-status-name js-hide js-adblocked">Adblock mode</div>
+        <div class="adblock-status-description js-hide js-whitelisted">
           Ads are unblocked.<br/>
           Whitelisting active.
         </div>
-        <div class="adblock-status-description dnone js-nonwhitelisted">
+        <div class="adblock-status-description js-hide js-nonwhitelisted">
           Ads are blocked.<br/>
           Whitelisting inactive.
         </div>
-        <div class="adblock-status-description dnone js-adblocked">
+        <div class="adblock-status-description js-hide js-adblocked">
           Ads are blocked.
         </div>
-        <div class="adblock-status-description dnone js-nonadblocked">
+        <div class="adblock-status-description js-hide js-nonadblocked">
           Ads are unblocked.
         </div>
       </div>
@@ -84,7 +84,7 @@
       <span id="stats-page"></span> / <strong>0</strong> CC earned
     </div>
 
-    <div class="notification-info green-info dnone js-whitelisted">
+    <div class="notification-info green-info js-hide js-whitelisted">
       <p>
         <strong>You have whitelisted this website.</strong>
       </p>
@@ -94,7 +94,7 @@
       </ul>
     </div>
 
-    <div class="notification-info yellow-info dnone js-nonwhitelisted">
+    <div class="notification-info yellow-info js-hide js-nonwhitelisted">
       <p>
         <strong>Activate whitelisting for this website!</strong>
       </p>

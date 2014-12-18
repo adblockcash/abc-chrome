@@ -120,19 +120,33 @@ var contextMenuItem = {
   }
 };
 
+function getIconFilename(page) {
+  if (require("info").platform == "safari") {
+    // There is no grayscale version of the icon for whitelisted pages
+    // when using Safari, because icons are grayscale already and icons
+    // aren't per page in Safari.
+    return "assets/images/logo-icon-gray.svg";
+  }
+
+  switch(Utils.getAdblockStatus(page)) {
+    case "whitelisted":
+      return "assets/images/logo-icon-green.svg";
+    case "nonwhitelisted":
+      return "assets/images/logo-icon-yellow.svg";
+    case "adblocked":
+      return "assets/images/logo-icon-red.svg";
+    case "nonadblocked":
+      return "assets/images/logo-icon-gray.svg";
+  }
+}
+
 // Adds or removes browser action icon according to options.
 function refreshIconAndContextMenu(page)
 {
   var whitelisted = isWhitelisted(page.url);
 
-  var iconFilename;
-  if (whitelisted && require("info").platform != "safari")
-    // There is no grayscale version of the icon for whitelisted pages
-    // when using Safari, because icons are grayscale already and icons
-    // aren't per page in Safari.
-    iconFilename = "icons/abc-$size-whitelisted.png";
-  else
-    iconFilename = "icons/abc-$size.png";
+
+  var iconFilename = getIconFilename(page);
 
   page.browserAction.setIcon(iconFilename);
   iconAnimation.registerPage(page, iconFilename);

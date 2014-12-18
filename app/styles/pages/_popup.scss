@@ -13,55 +13,23 @@ $notification-controls-padding: $notification-box-padding;
 .hexagon {
   position: relative;
   width: $hexagon-width;
-  height: $hexagon-height / 2;
-  background-color: $red;
+  height: $hexagon-height;
   text-align: center;
   color: #fff;
   font-weight: bold;
-  margin-top: $hexagon-borders;
+  background: url(../../assets/images/logo-icon.svg) no-repeat center center transparent;
+  background-size: contain;
 
-  &:before, &:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 0;
-    border-left: $hexagon-width/2 solid transparent;
-    border-right: $hexagon-width/2 solid transparent;
-  }
-
-  &:before {
-    bottom: 100%;
-    border-bottom: $hexagon-borders solid $red;
-  }
-
-  &:after {
-    top: 100%;
-    width: 0;
-    border-top: $hexagon-borders solid $red;
+  &.hexagon-gray {
+    background-image: url(../../assets/images/logo-icon-gray.svg);
   }
 
   &.hexagon-yellow {
-    background: $yellow;
-
-    &:before {
-      border-bottom-color: $yellow;
-    }
-
-    &:after {
-      border-top-color: $yellow;
-    }
+    background-image: url(../../assets/images/logo-icon-yellow.svg);
   }
 
   &.hexagon-green {
-    background: $green;
-
-    &:before {
-      border-bottom-color: $green;
-    }
-
-    &:after {
-      border-top-color: $green;
-    }
+    background-image: url(../../assets/images/logo-icon-green.svg);
   }
 }
 
