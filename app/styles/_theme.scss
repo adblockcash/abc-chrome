@@ -1,5 +1,5 @@
 @import "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";
-@import "http://fonts.googleapis.com/css?family=Slabo+27px|Open+Sans:400,700&.css";
+@import "http://fonts.googleapis.com/css?family=Roboto:300,400,700|Open+Sans:400,700&.css";
 @import "http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css";
 
 body {
@@ -88,3 +88,6 @@ h1, h2, h3, h4, h5, h6 {
   background: $primary;
 }
 
+.dollar-logo {
+  font-size: 0.8em;
+}

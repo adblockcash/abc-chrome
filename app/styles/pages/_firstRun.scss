@@ -1,10 +1,29 @@
 .firstrun-page {
   .header {
     border-bottom: none;
+    background: #fff;
+
+    .header-inner {
+      position: relative;
+      z-index: 999;
+    }
+
+    .inner {
+      width: 100%!important;
+    }
   }
 
   .logo {
     margin-top: 50px;
+    max-width: 250px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 50%;
+  }
+
+  .note {
+    margin: 0;
+    padding: 15px 5px;
   }
 }
 
@@ -32,10 +51,25 @@
 }
 
 .sign-in {
-  padding: 30px 10px;
+  margin-top: 350px;
+  background: #fff;
+  padding: 60px 0;
 
   .sign-in-controls {
     margin-top: 40px;
+  }
+
+  h3 {
+    font-size: 1.7em;
+    font-weight: 300;
+
+    strong {
+      font-weight: 400;
+    }
+  }
+
+  h4 {
+    font-weight: 300;
   }
 
   .btn-default {
@@ -45,17 +79,80 @@
     background: $primary;
     color: #fff;
     padding: 10px 20px;
-    min-width: 180px;
+    min-width: 140px;
     text-align: center;
+    transition: all 0.3s;
+
+    &:hover,
+    &:active {
+//      color: #0e83cd;
+      background: #fff;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      transition: all 0.3s;
+    }
+
+
+
   }
   .sign-in-button {
-    background: #adadad;
-    border-bottom: 3px solid #adadad - #111;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+    background: $red - #111;
+//    border-bottom: 3px solid #adadad - #111;
+    border-radius: 4px;
+    margin: 20px 40px;
+    font-family: $header-font;
+    font-size: 0.8em;
+    font-weight: normal;
+    font-weight: 200;
+    border-color: $red;
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    line-height: 1.6em;
+    color: #f0f0f0;
+    strong   {
+      color: #fff;
+      font-size: 1.5em;
+      display: inline-block;
+      font-weight: 400;
+      clear: both;
+      float: none;
+      margin: 0px;
+      position: relative;
+    }
+
+    span {
+      opacity: 1;
+    }
 
     &:hover, &:focus, &:active {
-      background: #adadad - #111;
+      background: $red;
+
+      i {
+        font-size: 70px;
+        padding: 25px 0px 5px 0px;
+        transition: all 0.3s;
+      }
+
+      span {
+        transition: all 0.3s;
+        opacity: 0;
+      }
+    }
+
+    i {
+      font-size: 30px;
+      display: block;
+      margin: auto;
+      left: 0px;
+      right: 0px;
+      text-align: center;
+      padding: 5px 0px 10px 0px;
+      transition: all 0.3s;
     }
   }
 
@@ -69,11 +166,13 @@
 
   .sign-in-button-facebook {
     background: #3b5998;
-    border-bottom-color: #3b5998 - #111;
+    border-color: #3b5998 - #111;
     &:hover, &:focus, &:active {
       background: #3b5998 -#111;
     }
   }
+
+
 }
 
 .full-image-section {
@@ -108,6 +207,27 @@
         margin-top: 0;
         margin-bottom: 20px;
         color: $primary;
+        font-family: $header-font;
+        line-height: 1.4em;
+        font-size: 2em;
+        padding: 10px 0px;
+        font-weight: 300;
+
+        border-bottom: 1px #eee solid;
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+
+        strong {
+          font-weight: 400;
+        }
+      }
+
+      p {
+        font-family: $header-font;
+        font-size: 1.2em;
+        line-height: 1.5em;
+        color: #555;
+        font-weight: 300;
       }
     }
 
@@ -140,14 +260,21 @@
 }
 
 .footer {
-  background: #f0f0f0;
+  background: #fff;
   color: #333;
   padding: 40px 10px;
+
+  .container {
+    max-width: 900px;
+  }
+
   a {
     color: #666;
-  }
-  .footer-inner {
-    padding: 20px 20px;
+
+    &:hover {
+      text-decoration: none;
+      color: $red;
+    }
   }
 
   ul.nav-pills {
@@ -177,61 +304,66 @@
 }
 
 .header-top {
-  background: #fff;
-  padding-top: 60px;
+  background: $red;
+  color: #fff;
+  position: fixed;
+  top:0px;
+  left: 0px;
+  right: 0px;
+  margin: auto auto;
 
   h1 {
-    padding: 60px 0;
-    margin: 0;
+    padding: 40px 0px 60px 0px;
+    font-weight: 300;
   }
 }
 
 
-@media (min-width: 900px) {
-  .container {
-    max-width: 980px;
-  }
-  .full-image-section .inner {
-    width: 900px;
-    min-width: 900px;
-  }
-}
+// @media (min-width: 900px) {
+//   .container {
+//     max-width: 980px;
+//   }
+//   .full-image-section .inner {
+//     width: 900px;
+//     min-width: 900px;
+//   }
+// }
 
 
-@media (max-width: 900px) {
-  .sign-in-button {
-    width: 70%;
-    margin: 10px auto;
-  }
+// @media (max-width: 900px) {
+//   .sign-in-button {
+//     width: 70%;
+//     margin: 10px auto;
+//   }
 
-  .footer {
-    .text-right {
-      text-align: center;
-    }
-  }
+//   .footer {
+//     .text-right {
+//       text-align: center;
+//     }
+//   }
 
-  .full-image-section {
-    min-height: 72vh;
-    height: auto;
+//   .full-image-section {
+//     min-height: 72vh;
+//     height: auto;
 
-    .inner {
-      width: 100%;
-      min-width: 100%;
-      min-height: 70vh;
-      height: auto;
+//     .inner {
+//       width: 100%;
+//       min-width: 100%;
+//       min-height: 70vh;
+//       height: auto;
 
-      .left-block, .right-block {
-        text-align: center;
-        width: 90%;
-        margin-left: 5%;
-        margin-right: 5%;
-        float: none;
-      }
-    }
-  }
+//       .left-block, .right-block {
+//         text-align: center;
+//         width: 90%;
+//         margin-left: 5%;
+//         margin-right: 5%;
+//         float: none;
+//       }
+//     }
+//   }
 
-  .share {
-    width: 100%;
-    clear: both;
-  }
-}
+//   .share {
+//     width: 100%;
+//     clear: both;
+//   }
+// }
