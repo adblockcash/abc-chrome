@@ -55,6 +55,7 @@ gulp.task("watch", function(){
   gulp.watch([
     "_locales/**",
     "assets/**",
+    "adblockplustests/chrome/**/*.js",
     "adblockplus/chrome/**",
     "adblockplus/defaults/**",
     "adblockplus/lib/**",
