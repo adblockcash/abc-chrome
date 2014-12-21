@@ -243,7 +243,17 @@ function addSubscription(prevVersion)
 
   if (addSubscription)
   {
-    // Load subscriptions data
+    // Add tracking filter list by default
+    var subscription = Subscription.fromURL(Prefs.subscriptions_tracking_url);
+    if (subscription) {
+      subscription.title = Prefs.subscriptions_tracking_title;
+      FilterStorage.addSubscription(subscription);
+      if (subscription instanceof DownloadableSubscription && !subscription.lastDownload)
+        Synchronizer.execute(subscription);
+    }
+
+    // Load subscriptions data,
+    // and add a preferred filter subscription for the current locale
     var request = new XMLHttpRequest();
     request.open("GET", "subscriptions.xml");
     request.addEventListener("load", function()
