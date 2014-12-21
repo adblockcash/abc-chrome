@@ -1,5 +1,5 @@
 @import "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";
-@import "http://fonts.googleapis.com/css?family=Roboto:300,400,700|Open+Sans:400,700&.css";
+@import "http://fonts.googleapis.com/css?family=Open+Sans:300,400,700&.css";
 @import "http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css";
 
 body {
@@ -8,6 +8,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-font;
+}
+
+.container {
+  max-width: 980px;
 }
 
 // helper classes
@@ -73,6 +77,14 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+.btn-primary {
+  background: $primary;
+}
+
+.dollar-logo {
+  font-size: 0.8em;
+}
+
 // layout
 .header {
   background: $gray-light;
@@ -84,10 +96,48 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.btn-primary {
-  background: $primary;
+.content-container {
+  font-size: 15px;
+  color: #333;
+  font-weight: 300;
 }
 
-.dollar-logo {
-  font-size: 0.8em;
+.footer {
+  background: #fff;
+  color: #333;
+  padding: 40px 0;
+
+  a {
+    color: #666;
+
+    &:hover {
+      text-decoration: none;
+      color: $red;
+    }
+  }
+
+  ul.nav-pills {
+    margin-top: 20px;
+
+    li {
+      border-right: 1px solid #adadad;
+
+      a {
+        padding: 5px 10px 5px 0;
+      }
+
+      + li a {
+        padding-left: 10px;
+      }
+
+      &:last-child {
+        border-right: 0px;
+      }
+    }
+  }
+
+  .share-icon {
+    padding: 10px;
+    text-align: center;
+  }
 }

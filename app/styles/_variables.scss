@@ -9,7 +9,7 @@ $gray-light: #f0f0f0;
 
 $primary: $blue;
 
-$header-font: 'Roboto', sans-serif;
 $main-font: 'Open Sans', sans-serif;
+$header-font: $main-font;
 
 $section-heading-height: 55px;

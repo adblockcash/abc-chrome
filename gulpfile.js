@@ -77,4 +77,6 @@ gulp.task("deploy-zip", ["build-zip-release"], shell.task("scp adblockcashchrome
 
 gulp.task("deploy-package", ["build-package"], shell.task("scp /tmp/adblockcashchrome.crx jt:./public_html/tmp/abc/ && echo \"ABC Chrome extension has been built and deployed to http://jt/tmp/abc/adblockcashchrome.crx .\""));
 
+gulp.task("deploy", ["deploy-zip", "deploy-package"]);
+
 gulp.task("default", ["build-devenv", "watch"]);

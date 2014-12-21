@@ -1,37 +1,84 @@
+.options-page {
+  padding-top: 142px;
+
+  .footer {
+    border-top: 1px solid $gray-light;
+    margin-top: 40px;
+  }
+}
+
 .header {
   margin-bottom: 0px;
 }
 
-.settings-tabs-container {
-  border-bottom: 1px solid $gray-light;
-}
-.settings-tabs {
-  padding: 0px;
+.settings-header {
+  background: $gray-light;
+  padding: 20px 0 0;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0;
+  z-index: 10;
+  line-height: 60px;
 
-  li {
-    padding: 0px;
-    border: 0px;
+  h1 {
+    font-size: 1.9em;
     margin: 0px;
-  }
+    font-weight: 300;
+    line-height: inherit;
 
-  a {
-    color: $primary;
-    padding: 15px !important;
-  }
-
-  li:active, li:hover, li.active {
-    border: none;
-
-    a, a:focus, a:active {
-      border: none;
-      background: $primary;
-      color: #fff;
-      border-radius: 0px;
-      margin: 0px;
+    .logo {
+      margin-right: 15px;
+      height: 60px;
     }
 
-    a:hover {
-      background: #adadad;
+    strong {
+      font-weight: 400;
+    }
+  }
+
+  h3 {
+    color: #777;
+    font-weight: 300;
+    font-size: 1.3em;
+    line-height: inherit;
+    margin: 0;
+  }
+}
+
+.settings-tabs-container {
+  margin-top: 20px;
+  border-bottom: 1px solid $gray-light;
+  line-height: 1.5;
+  background-color: #fff;
+}
+
+.settings-tabs {
+  padding: 0;
+  font-weight: 300;
+  font-size: 16px;
+
+  li {
+    padding: 0;
+    border: none !important;
+    margin: 0;
+
+    a {
+      color: $primary;
+    }
+
+    &:active, &:hover {
+      a {
+        background-color: #eee;
+        color: #000;
+      }
+    }
+
+    &.active {
+      a {
+        background-color: $primary;
+        color: #fff;
+      }
     }
   }
 }
@@ -46,7 +93,7 @@
   line-height: 35px;
   margin-right: 15px;
   float: left;
-  margin-top: 6.5px;
+  margin-top: 10px;
 }
 
 .settings-section {
@@ -58,11 +105,12 @@
 }
 
 .section-heading {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid $gray-light;
   margin-bottom: 20px;
   line-height: $section-heading-height;
   height: $section-heading-height;
   position: relative;
+  font-size: 26px;
 }
 
 .page-heading {
@@ -89,6 +137,38 @@
   }
 }
 
+.extend-section-link {
+  margin: 20px 0 0;
+}
+
+.settings-groups {
+  border: 1px solid $gray-light;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.settings-group {
+  margin: 0 0;
+
+  + .settings-group {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid $gray-light;
+  }
+
+  .settings-group-title {
+    margin: 0 0 20px;
+  }
+
+  .settings-group-body {
+
+  }
+}
+
+//
+// WHITELISTING TAB
+//
+
 .whitelisted-websites {
   padding: 0px;
   h3 {
@@ -106,25 +186,6 @@
   overflow: hidden;
 }
 
-.ad-filters-accordion {
-  margin: 20px 0px;
-
-  .panel-heading {
-    background: none;
-
-    h4.panel-title {
-      font-size: 1.7em;
-      a {
-        display: block;
-        width: 100%;
-      }
-    }
-  }
-}
-
-//
-// WHITELISTING TAB
-//
 
 .single-website {
   width: 33.3%;
@@ -132,6 +193,7 @@
   float: left;
   padding: 10px 5px;
   cursor: pointer;
+
   .inner {
     display: none;
     height: 0px;
@@ -148,14 +210,15 @@
   }
 
   &:hover {
-    background: #f0f0f0;
+    background: $gray-light;
+
     .inner {
       display: block;
       position: absolute;
       top: 50px;
       left: 0px;
       height: auto;
-      background: #f0f0f0;
+      background: $gray-light;
       z-index: 100;
       width: 100%;
       display: block;
@@ -203,12 +266,14 @@
       position: absolute;
       right: 0;
       bottom: 0;
+      font-size: 16px;
 
       li a {
-        line-height: 30px;
+        line-height: 42px;
         padding-top: 0;
         padding-bottom: 0;
         border: none !important;
+        border-radius: 0;
       }
     }
   }
@@ -216,16 +281,40 @@
 
 .statgroups {
   text-align: center;
+
+  &.statgroups--small {
+    .statgroup {
+      width: 120px;
+      margin: 15px 30px;
+    }
+  }
+}
+.table.statgroups-table {
+  width: 100%;
+
+  td, th {
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    padding: 15px 10px;
+  }
+
+  th {
+    text-align: left;
+  }
 }
 .statgroup {
   display: inline-block;
   margin: 30px 40px;
-  width: 200px;
-
-  .statgroup-title {
-    font-size: 16px;
-  }
-  .statgroup-number {
-    font-size: 24px;
-  }
+  width: 230px;
+}
+.statgroup-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+.statgroup-title {
+  font-size: 16px;
+}
+.statgroup-value {
+  font-size: 24px;
 }

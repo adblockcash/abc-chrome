@@ -35,7 +35,7 @@
   <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/tab.js"></script>
   <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/scrollspy.js"></script> -->
   <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/modal.js"></script> -->
-  <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script> -->
+  <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/tooltip.js"></script>
   <!-- <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap/popover.js"></script> -->
   <script src="assets/bower/switchery/dist/switchery.js"></script>
 
@@ -46,28 +46,31 @@
   <script type="text/javascript" src="options.js" charset="utf-8"></script>
 </head>
 <body class="options-page">
-  <div class="container-fluid header">
-    <div class="row">
-      <div class="col-xs-12 text-center">
-        <img src="assets/images/logo.svg" alt="" height="150" />
+
+  <div class="settings-header">
+    <div class="container">
+      <h1 class="pull-left">
+        <img class="logo pull-left" src="assets/images/logo-icon.svg" alt="" />
+        Adblock<strong>Ca<span class="dollar-logo">$</span>h</strong>
+      </h1>
+      <h3 class="pull-right text-right">Settings</h3>
+    </div>
+
+    <div class="settings-tabs-container">
+      <div class="container">
+        <ul class="nav nav-justified settings-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#adblocking" aria-controls="adblocking" role="tab" data-toggle="tab">Adblocking</a></li>
+          <li role="presentation"><a href="#whitelisting" aria-controls="whitelisting" role="tab" data-toggle="tab">Whitelisting</a></li>
+          <li role="presentation"><a href="#rewards" aria-controls="rewards" role="tab" data-toggle="tab">Rewards</a></li>
+          <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+          <li role="presentation"><a href="#statistics" aria-controls="statistics" role="tab" data-toggle="tab">Statistics</a></li>
+          <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <div class="settings-tabs-container">
-    <div class="container">
-      <ul class="nav nav-justified settings-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#adblocking" aria-controls="adblocking" role="tab" data-toggle="tab">Adblocking</a></li>
-        <li role="presentation"><a href="#whitelisting" aria-controls="whitelisting" role="tab" data-toggle="tab">Whitelisting</a></li>
-        <li role="presentation"><a href="#rewards" aria-controls="rewards" role="tab" data-toggle="tab">Rewards</a></li>
-        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-        <li role="presentation"><a href="#statistics" aria-controls="statistics" role="tab" data-toggle="tab">Statistics</a></li>
-        <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container">
+  <div class="container content-container">
     <div role="tabpanel">
       <div class="tab-content">
 
@@ -81,19 +84,20 @@
             </h2>
             <p>Block all the ads (images, videos, popups) on all non-whitelisted websites you browse.</p>
 
-            <h3>Advanced settings</h3>
-            <div class="ad-filters-accordion" id="accordion" role="tablist" aria-multiselectable="true">
-              <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Filter lists
-                    </a>
-                  </h4>
-                </div>
+            <h4 class="extend-section-link">
+              <a data-toggle="collapse" href="#ads-advanced-settings">
+                Show advanced settings <i class="fa fa-sort-desc pull-right"></i>
+              </a>
+            </h4>
 
-                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                  <div class="panel-body">
+            <div id="ads-advanced-settings" class="collapse">
+              <div class="settings-groups">
+                <div class="settings-group">
+                  <h3 class="settings-group-title">
+                    Filter lists
+                  </h3>
+
+                  <div class="settings-group-body">
                     <p>
                       Enable only the filter lists you need. Too many can make your browser unresponsive.
                       Out-of-date lists are updated periodically.
@@ -117,33 +121,31 @@
                     </ul>
 
                     <div class="row">
-                      <div class="col-sm-10">
+                      <div class="col-sm-9">
                         <select class="form-control" id="js-subscriptionSelector"></select>
                       </div>
-                      <div class="col-sm-2">
+                      <div class="col-sm-3">
                         <button id="js-addSubscription" class="btn btn-primary btn-block addButton">Add subscription</button>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="panel-heading" role="tab" id="headingTwo">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                      Custom filters
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingTwo">
-                  <div class="panel-body">
+                <div class="settings-group">
+
+                  <h3 class="settings-group-title">
+                    Custom filters
+                  </h3>
+
+                  <div class="settings-group-body">
                     <p>Your filter must follow AdblockCash filter syntax</p>
 
                     <form id="js-customFilterForm" action="#">
                       <div class="row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                           <input type="text" value="" id="newFilter" class="form-control" placeholder="Your new filter's content" />
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                           <button class="btn btn-primary btn-block addButton" type="submit">
                             <span class="i18n_add_filter_button"></span>
                           </button>
@@ -151,12 +153,12 @@
                       </div>
 
                       <div class="row space-20">
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                           <select class="form-control" id="js-userFiltersBox" size="8" multiple></select>
 
                           <a id="js-rawFiltersButton" href="#"><span class="i18n_edit_filters_raw"></span></a>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                           <button id="js-removeCustomFilter" class="btn btn-primary btn-block removeButton">
                             <span class="i18n_remove_button"></span>
                           </button>
@@ -164,10 +166,10 @@
                       </div>
 
                       <div class="row space-20" id="rawFilters" style="display:none">
-                        <div class="col-sm-10">
+                        <div class="col-sm-9">
                           <textarea class="form-control" id="rawFiltersText"></textarea>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                           <button class="btn btn-primary btn-block" id="js-importRawFilters">
                             <span class="i18n_apply_changes"></span>
                           </button>
@@ -429,7 +431,7 @@
 
           <div class="settings-section">
             <h2 class="section-heading">Whitelist other domains</h2>
-            <p>Adblock Ca$h will be disabled for the domains listed below.</p>
+            <p>Adblock Ca<span class="dollar-logo">$</span>h will be disabled for the domains listed below.</p>
 
             <form id="js-whitelistForm" action="#">
               <div class="row">
@@ -460,22 +462,62 @@
         <!-- REWARDS TAB -->
         <div role="tabpanel" class="tab-pane" id="rewards">
           <div class="settings-section">
-            <h2 class="section-heading"><i class="fa fa-money fa-section-icon"></i> Your CashCoins balance
-              <span class="pull-right">
-                <input type="checkbox" class="js-switch" checked />
-              </span>
+            <h2 class="section-heading">
+              <i class="fa fa-money fa-section-icon"></i> Your CashCoins balance
             </h2>
-            <h4 class="pull-right">Your current category: Category2</h4>
-            <h3 class="space-20">You have collected <strong>395 CashCoins</strong> so far this month.</h3>
-            <h4>Collect <strong>40 more CC</strong>, and you'll advance from category 3 to category 4!</h4>
-            <h4>Next sweepstake: 14th January - your nearest chance to win 450$!</h4>
-            <p>
-              That's <strong>45 CC</strong> less than in the last month (you've collected <strong>440 CC</strong> in April 2014), because during the last 30 days:
-            </p>
-            <ul>
-              <li>you have visited only 5 of your whitelisted websites</li>
-              <li>you have blocked 34 websites, which could be whitelisted instead. <strong>Think about whitelisting them!</strong></li>
-            </ul>
+
+            <table class="table statgroups-table">
+              <tr>
+                <th>
+                  <div class="statgroup-label">
+                    Currently
+                  </div>
+                </th>
+                <td>
+                  <div class="statgroup-value">
+                    II <span class="js-tooltip" title="In previous month, your Reward Category was III">&darr;</span>
+                  </div>
+                  <div class="statgroup-title">Reward Category</div>
+                </td>
+                <td>
+                  <div class="statgroup-value">
+                    395 <span class="js-tooltip" title="In previous month, you had 280 CC in the same point of time">&uarr;</span>
+                  </div>
+                  <div class="statgroup-title">Earned CC</div>
+                </td>
+                <td>
+                  <div class="js-tooltip" title="All users in this Reward Category will take part in a lottery with this reward">
+                    <div class="statgroup-value">500 $</div>
+                    <div class="statgroup-title">Reward Price</div>
+                  </div>
+                </td>
+                <td rowspan="2">
+                  <div class="js-tooltip" title="This is the moment lottery draw will take place, rewards will be payout and all users' cashcoints accounts will be reset to 0">
+                    <div class="statgroup-value">01.02.2015</div>
+                    <div class="statgroup-title">Payout Date</div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <div class="statgroup-label">
+                    Next category
+                  </div>
+                </th>
+                <td>
+                  <div class="statgroup-value">III</div>
+                  <div class="statgroup-title">Reward Category</div>
+                </td>
+                <td>
+                  <div class="statgroup-value">440</div>
+                  <div class="statgroup-title">Earned CC</div>
+                </td>
+                <td>
+                  <div class="statgroup-value">1000 $</div>
+                  <div class="statgroup-title">Reward Price</div>
+                </td>
+              </tr>
+            </table>
 
             <h3>Top 5 websites by earned CashCoins</h3>
             <table class="table table-bordered table-striped">
@@ -487,24 +529,24 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>xxx</td>
-                  <td>xxx</td>
+                  <td>google.com</td>
+                  <td>1242 CC</td>
                 </tr>
                 <tr>
-                  <td>xxx</td>
-                  <td>xxx</td>
+                  <td>facebook.com</td>
+                  <td>344 CC</td>
                 </tr>
                 <tr>
-                  <td>xxx</td>
-                  <td>xxx</td>
+                  <td>yahoo.com</td>
+                  <td>304 CC</td>
                 </tr>
                 <tr>
-                  <td>xxx</td>
-                  <td>xxx</td>
+                  <td>lorem.com</td>
+                  <td>295 CC</td>
                 </tr>
                 <tr>
-                  <td>xxx</td>
-                  <td>xxx</td>
+                  <td>ipsum.com</td>
+                  <td>285 CC</td>
                 </tr>
               </tbody>
             </table>
@@ -517,8 +559,38 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore necessitatibus quisquam sequi. Aperiam asperiores at blanditiis, cum fugit hic maxime minima minus natus perferendis quam rem, suscipit vel voluptate voluptates. Architecto dicta dolore doloremque eos natus nihil quam, sit ullam!</p>
             </div>
             <div class="single-question">
-              <h3>How does it work?</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore necessitatibus quisquam sequi. Aperiam asperiores at blanditiis, cum fugit hic maxime minima minus natus perferendis quam rem, suscipit vel voluptate voluptates. Architecto dicta dolore doloremque eos natus nihil quam, sit ullam!</p>
+              <h3>What are the lottery Reward Categories?</h3>
+              <p>There are 4 different Reward Categories. At the beginning you start in the IV category - which accumulates the last 40% of ABC users with the least amount of CashCoins. Then there are III, II and I categories, which consists of the next 30%, 20% and 10% of users.</p>
+              <p>That is, if you'll be in TOP 10% of users (by CashCoins amount) in the last day of the lottery, only you and those 10% of users will take part in a lottery for the main prize - 100$ ! </p>
+              <p>Every Reward Category has its' own lottery and reward. Below you can see the current numbers:</p>
+
+              <table class="table">
+                <tr>
+                  <th>Reward Category</th>
+                  <th>% of ABC users</th>
+                  <th>Lottery Prize</th>
+                </tr>
+                <tr>
+                  <td>I</td>
+                  <td>Top 10%</td>
+                  <td>100 $</td>
+                </tr>
+                <tr>
+                  <td>II</td>
+                  <td>Next 20% (11% - 30%)</td>
+                  <td>50 $</td>
+                </tr>
+                <tr>
+                  <td>III</td>
+                  <td>Next 30% (31% - 60%)</td>
+                  <td>25 $</td>
+                </tr>
+                <tr>
+                  <td>IV</td>
+                  <td>Next 40% (61% - 100%)</td>
+                  <td>10 $</td>
+                </tr>
+              </table>
             </div>
             <div class="single-question">
               <h3>How does it work?</h3>
@@ -576,7 +648,7 @@
           <div class="settings-section">
             <h3 class="section-heading">Payouts</h3>
             <p>
-              Currently connected to <strong>john.doe@adblockcash.org paypal </strong> account
+              Currently connected to <strong>john.doe@adblockcash.org paypal </strong> account.
             </p>
             <button class="btn btn-primary space-20">
               Turn off PayPal payments
@@ -605,44 +677,47 @@
               <div class="statgroup">
                 <div class="statgroup-title">
                   Blocked ads
-                  <br>
+                </div>
+                <div class="statgroup-value">583</div>
+                <div class="statgroup-title">
                   on all websites
                 </div>
-                <div class="statgroup-number">583</div>
               </div>
               <div class="statgroup">
                 <div class="statgroup-title">
                   Whitelisted ads
-                  <br>
+                </div>
+                <div class="statgroup-value">57</div>
+                <div class="statgroup-title">
                   on whitelisted websites
                 </div>
-                <div class="statgroup-number">57</div>
               </div>
               <div class="statgroup">
                 <div class="statgroup-title">
                   Blocked ads
-                  <br>
+                </div>
+                <div class="statgroup-value">23</div>
+                <div class="statgroup-title">
                   on non-whitelisted websites
                 </div>
-                <div class="statgroup-number">23</div>
               </div>
             </div>
             <div class="statgroups">
               <div class="statgroup">
                 <!-- <div class="statgroup-title">Earned CashCoins</div> -->
-                <!-- <div class="statgroup-number">0 CC</div> -->
+                <!-- <div class="statgroup-value">0 CC</div> -->
               </div>
               <div class="statgroup">
                 <div class="statgroup-title">Earned CashCoins</div>
-                <div class="statgroup-number">57</div>
+                <div class="statgroup-value">57 CC</div>
               </div>
               <div class="statgroup">
                 <div class="statgroup-title">Missed CashCoins</div>
-                <div class="statgroup-number">24 CC</div>
+                <div class="statgroup-value">24 CC</div>
               </div>
             </div>
 
-            <h3>Top 10 websites with blocked ads</h3>
+            <h3>Top 10 websites by blocked ads</h3>
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -692,7 +767,6 @@
                   <td>150</td>
                 </tr>
               </tbody>
-
             </table>
           </div>
         </div>
@@ -725,6 +799,30 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <div class="row footer-inner">
+        <div class="col-sm-6">
+          <a href="http://adblockcash.org/">
+            <strong><img src="assets/images/logo-icon.svg" alt="" height="35"/> adblockcash.org</strong>
+          </a>
+          <ul class="list-unstyled nav-pills">
+            <li><a href="#">Our mission</a></li>
+            <li><a href="#">Code of Conduct</a></li>
+            <li><a href="#">Source</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-6 text-right share">
+          <p>Share with friends:
+            <a class="share-icon" href="#"><i class="fa fa-facebook"></i></a>
+            <a class="share-icon" href="#"><i class="fa fa-google-plus"></i></a>
+            <a class="share-icon" href="#"><i class="fa fa-twitter"></i></a>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
