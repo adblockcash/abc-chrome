@@ -44,7 +44,7 @@ function loadOptions()
 
   // Add event listeners
   window.addEventListener("unload", unloadOptions, false);
-  $("#updateFilterLists").click(updateFilterLists);
+  $(".js-updateFilterLists").click(updateFilterLists);
   $("#startSubscriptionSelection").click(startSubscriptionSelection);
   $("#js-subscriptionSelector").change(updateSubscriptionSelection);
   $("#js-addSubscription").click(addSubscription);

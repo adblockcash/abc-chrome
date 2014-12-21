@@ -101,6 +101,8 @@
                     <p>
                       Enable only the filter lists you need. Too many can make your browser unresponsive.
                       Out-of-date lists are updated periodically.
+                      <br>
+                      <a href="#" class="js-updateFilterLists">Click here to resynchronize.</a>
                     </p>
 
                     <!-- Filter list - elements' container placeholder -->
@@ -120,14 +122,25 @@
                       </li>
                     </ul>
 
-                    <div class="row">
-                      <div class="col-sm-9">
-                        <select class="form-control" id="js-subscriptionSelector"></select>
+                    <form>
+                      <div class="row">
+                        <div class="col-sm-9">
+                          <select class="form-control" id="js-subscriptionSelector"></select>
+
+                          <div id="customSubscriptionContainer" class="js-hide space-20 row">
+                            <div class="col-sm-6">
+                              <input type="text" id="customSubscriptionTitle" class="form-control" placeholder="Subscription title" />
+                            </div>
+                            <div class="col-sm-6">
+                              <input type="text" id="customSubscriptionLocation" class="form-control" placeholder="Filter list location URL" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <button id="js-addSubscription" class="btn btn-primary btn-block addButton">Add subscription</button>
+                        </div>
                       </div>
-                      <div class="col-sm-3">
-                        <button id="js-addSubscription" class="btn btn-primary btn-block addButton">Add subscription</button>
-                      </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
 
