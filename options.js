@@ -736,7 +736,25 @@ function updateVisitorDependantViews() {
   $(".js-visitor-unavailable").toggle(!AdblockCash.visitor);
   if (AdblockCash.visitor) {
     $(".js-visitorEmail").html(AdblockCash.visitor.email);
+
+    AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
+      var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
+      Utils.setCheckboxValue(checkbox, !!AdblockCash.visitor.notification_settings[settingName]);
+    });
   }
+}
+
+function updateVisitorNotificationSettings() {
+  var notification_settings = {};
+
+  AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
+    var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
+    notification_settings[settingName] = checkbox.checked;
+  });
+
+  console.debug("Calling AdblockCash.updateNotificationSettings with ", notification_settings);
+
+  AdblockCash.updateNotificationSettings(window, notification_settings);
 }
 
 function initializeUserAccountView() {
@@ -750,6 +768,13 @@ function initializeUserAccountView() {
 
   document.querySelector(".js-login-with-google").addEventListener("click", function(){
     AdblockCash.loginWithProvider(window, "google");
+  });
+
+  debounced_updateVisitorNotificationSettings = Utils.debounce(updateVisitorNotificationSettings, 1000);
+
+  AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
+    var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
+    checkbox.addEventListener("change", debounced_updateVisitorNotificationSettings);
   });
 
   updateVisitorDependantViews();
