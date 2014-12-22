@@ -734,8 +734,13 @@ function initializeFeatureSubscriptionsCheckboxes() {
 function updateVisitorDependantViews() {
   $(".js-visitor-available").toggle(!!AdblockCash.visitor);
   $(".js-visitor-unavailable").toggle(!AdblockCash.visitor);
+
   if (AdblockCash.visitor) {
     $(".js-visitorEmail").html(AdblockCash.visitor.email);
+    $(".js-visitor-paypal-available").toggle( !!AdblockCash.visitor.paypal_email );
+    $(".js-visitor-paypal-unavailable").toggle( !AdblockCash.visitor.paypal_email );
+    $(".js-visitor-paypal_email").html(AdblockCash.visitor.paypal_email);
+    $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
 
     AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
       var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
@@ -768,6 +773,20 @@ function initializeUserAccountView() {
 
   document.querySelector(".js-login-with-google").addEventListener("click", function(){
     AdblockCash.loginWithProvider(window, "google");
+  });
+
+  document.querySelector(".js-visitor-disconnect-paypal").addEventListener("click", function(){
+    AdblockCash.updateVisitorAccount(window, {
+      paypal_email: null
+    });
+  });
+
+  $(".js-visitor-settings-form").submit(function(event){
+    event.preventDefault();
+
+    AdblockCash.updateVisitorAccount(window, {
+      paypal_email: $(".js-visitor-paypal_email-input").val()
+    });
   });
 
   debounced_updateVisitorNotificationSettings = Utils.debounce(updateVisitorNotificationSettings, 1000);
