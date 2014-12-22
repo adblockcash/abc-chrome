@@ -484,29 +484,29 @@
               <tr>
                 <th>
                   <div class="statgroup-label">
-                    Currently
+                    Current category
                   </div>
                 </th>
                 <td>
                   <div class="statgroup-value">
-                    II <span class="js-tooltip" title="In previous month, your Reward Category was III">&darr;</span>
+                    2nd <span class="js-tooltip red" title="In previous month, you've been in 3rd Reward Category">&darr;</span>
                   </div>
                   <div class="statgroup-title">Reward Category</div>
                 </td>
                 <td>
                   <div class="statgroup-value">
-                    395 <span class="js-tooltip" title="In previous month, you had 280 CC in the same point of time">&uarr;</span>
+                    395 <span class="js-tooltip green" title="In previous month, you had 280 CC in the same point of time">&uarr;</span>
                   </div>
                   <div class="statgroup-title">Earned CC</div>
                 </td>
                 <td>
                   <div class="js-tooltip" title="All users in this Reward Category will take part in a lottery with this reward">
                     <div class="statgroup-value">500 $</div>
-                    <div class="statgroup-title">Reward Price</div>
+                    <div class="statgroup-title">Price Money</div>
                   </div>
                 </td>
                 <td rowspan="2">
-                  <div class="js-tooltip" title="This is the moment lottery draw will take place, rewards will be payout and all users' cashcoints accounts will be reset to 0">
+                  <div class="js-tooltip" title="This is the moment lottery draw will take place, rewards will be payed out and all users' cashcoints accounts will be reset to 0">
                     <div class="statgroup-value">01.02.2015</div>
                     <div class="statgroup-title">Payout Date</div>
                   </div>
@@ -519,16 +519,16 @@
                   </div>
                 </th>
                 <td>
-                  <div class="statgroup-value">III</div>
+                  <div class="statgroup-value">3rd</div>
                   <div class="statgroup-title">Reward Category</div>
                 </td>
                 <td>
                   <div class="statgroup-value">440</div>
-                  <div class="statgroup-title">Earned CC</div>
+                  <div class="statgroup-title">Required CC</div>
                 </td>
                 <td>
                   <div class="statgroup-value">1000 $</div>
-                  <div class="statgroup-title">Reward Price</div>
+                  <div class="statgroup-title">Price Money</div>
                 </td>
               </tr>
             </table>
@@ -574,7 +574,7 @@
             </div>
             <div class="single-question">
               <h3>What are the lottery Reward Categories?</h3>
-              <p>There are 4 different Reward Categories. At the beginning you start in the IV category - which accumulates the last 40% of ABC users with the least amount of CashCoins. Then there are III, II and I categories, which consists of the next 30%, 20% and 10% of users.</p>
+              <p>There are 4 different Reward Categories. At the beginning you start in the 4th category - which accumulates the last 40% of ABC users with the least amount of CashCoins. Then there are 3rd, 2nd and 1st categories, which consists of the next 30%, 20% and 10% of users.</p>
               <p>That is, if you'll be in TOP 10% of users (by CashCoins amount) in the last day of the lottery, only you and those 10% of users will take part in a lottery for the main prize - 100$ ! </p>
               <p>Every Reward Category has its' own lottery and reward. Below you can see the current numbers:</p>
 
@@ -585,22 +585,22 @@
                   <th>Lottery Prize</th>
                 </tr>
                 <tr>
-                  <td>I</td>
+                  <td>1st</td>
                   <td>Top 10%</td>
                   <td>100 $</td>
                 </tr>
                 <tr>
-                  <td>II</td>
+                  <td>2nd</td>
                   <td>Next 20% (11% - 30%)</td>
                   <td>50 $</td>
                 </tr>
                 <tr>
-                  <td>III</td>
+                  <td>3rd</td>
                   <td>Next 30% (31% - 60%)</td>
                   <td>25 $</td>
                 </tr>
                 <tr>
-                  <td>IV</td>
+                  <td>4th</td>
                   <td>Next 40% (61% - 100%)</td>
                   <td>10 $</td>
                 </tr>
@@ -624,12 +624,44 @@
               <i class="fa fa-user fa-section-icon"></i> Your CashCoins Account
             </h2>
 
-            <div class="usercard">
+            <div class="sign-in text-center js-visitor-unavailable js-hide">
+              <h3>Sign in into <strong>Adblock Ca<span class="dollar-logo">$</span>h</strong></h3>
+              <h4 class="space-20">and start collecting your cashcoins right away.</h4>
+
+              <div class="sign-in-controls">
+                <button class="btn btn-default sign-in-button js-login-with-abc">
+                  <i class="fa fa-dollar"></i>
+                  <span>
+                    sign in with
+                    <br/>
+                    <strong>AdblockCa<span class="dollar-logo">$</span>h</strong>
+                  </span>
+                </button>
+                <button class="btn btn-default sign-in-button sign-in-button-facebook js-login-with-facebook">
+                  <i class="fa fa-facebook"></i>
+                  <span>
+                    sign in with
+                    <br/>
+                    <strong>Facebook</strong>
+                  </span>
+                </button>
+                <button class="btn btn-default sign-in-button sign-in-button-gplus js-login-with-google">
+                  <i class="fa fa-google-plus"></i>
+                  <span>
+                    sign in with
+                    <br/>
+                    <strong>Google+</strong>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div class="usercard js-visitor-available js-hide">
               <img class="img-thumbnail avatar usercard-avatar" src="assets/images/avatar.png" />
               <div class="usercard-contents">
-                <h4>john.doe@adblockcash.org</h4>
+                <h4 class="js-visitorEmail">john.doe@adblockcash.org</h4>
                 <div class="usercard-links">
-                  <a href="#">
+                  <a href="#" class="js-visitor-logout">
                     <i class="fa fa-lock"></i> Logout
                   </a>
                 </div>
@@ -637,7 +669,7 @@
             </div>
           </div>
 
-          <div class="settings-section">
+          <div class="settings-section js-visitor-available js-hide">
             <h3 class="section-heading">Notify me about</h3>
             <p>
               New features
@@ -659,7 +691,7 @@
             </p>
           </div>
 
-          <div class="settings-section">
+          <div class="settings-section js-visitor-available js-hide">
             <h3 class="section-heading">Payouts</h3>
             <p>
               Currently connected to <strong>john.doe@adblockcash.org paypal </strong> account.
@@ -705,6 +737,7 @@
                 <div class="statgroup-title">
                   on whitelisted websites
                 </div>
+                <i class="fa fa-long-arrow-down green statgroup-arrow"></i>
               </div>
               <div class="statgroup">
                 <div class="statgroup-title">
@@ -714,6 +747,7 @@
                 <div class="statgroup-title">
                   on non-whitelisted websites
                 </div>
+                <i class="fa fa-long-arrow-down red statgroup-arrow"></i>
               </div>
             </div>
             <div class="statgroups">
@@ -721,12 +755,12 @@
                 <!-- <div class="statgroup-title">Earned CashCoins</div> -->
                 <!-- <div class="statgroup-value">0 CC</div> -->
               </div>
-              <div class="statgroup">
-                <div class="statgroup-title">Earned CashCoins</div>
+              <div class="statgroup green-info">
+                <div class="statgroup-title">Earned</div>
                 <div class="statgroup-value">57 CC</div>
               </div>
-              <div class="statgroup">
-                <div class="statgroup-title">Missed CashCoins</div>
+              <div class="statgroup red-info">
+                <div class="statgroup-title">Missed</div>
                 <div class="statgroup-value">24 CC</div>
               </div>
             </div>

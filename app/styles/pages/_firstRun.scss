@@ -51,16 +51,15 @@
 }
 
 .sign-in {
-  margin-top: 322px;
   background: #fff;
   padding: 60px 0;
 
-  .sign-in-controls {
-    margin-top: 40px;
+  .firstrun-page & {
+    margin-top: 322px;
   }
 
   h3 {
-    font-size: 1.7em;
+    font-size: 24px;
     font-weight: 300;
     margin-top: 0;
 
@@ -72,6 +71,11 @@
   h4 {
     font-weight: 300;
   }
+}
+
+.sign-in-controls {
+  margin-top: 40px;
+  text-align: center;
 
   .btn-default {
     background: 3px;
@@ -86,7 +90,6 @@
 
     &:hover,
     &:active {
-//      color: #0e83cd;
       background: #fff;
     }
 
@@ -96,29 +99,26 @@
       z-index: -1;
       transition: all 0.3s;
     }
-
-
-
   }
+
   .sign-in-button {
     background: $red - #111;
-//    border-bottom: 3px solid #adadad - #111;
     border-radius: 4px;
     margin: 20px 40px;
     font-family: $header-font;
-    font-size: 0.8em;
+    font-size: 11px;
     font-weight: normal;
     font-weight: 200;
     border-color: $red;
     border-radius: 50%;
     width: 140px;
     height: 140px;
-    line-height: 1.6em;
+    line-height: 1.6;
     color: #f0f0f0;
 
     strong   {
       color: #fff;
-      font-size: 1.5em;
+      font-size: 17px;
       display: inline-block;
       font-weight: 400;
       clear: both;
@@ -173,8 +173,6 @@
       background: #3b5998 -#111;
     }
   }
-
-
 }
 
 .full-image-section {

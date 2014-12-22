@@ -35,6 +35,8 @@ var FilterNotifier = require("filterNotifier").FilterNotifier;
 var Prefs = require("prefs").Prefs;
 var Synchronizer = require("synchronizer").Synchronizer;
 var Utils = require("utils").Utils;
+var AdblockCash = require("adblockcash").AdblockCash;
+var subscriptionTemplate;
 
 // Loads options from localStorage and sets UI elements accordingly
 function loadOptions()
@@ -60,13 +62,6 @@ function loadOptions()
   subscriptionTemplate = document.getElementById("js-subscriptionTemplate");
   subscriptionTemplate.parentNode.removeChild(subscriptionTemplate);
 
-  // Display jQuery UI elements
-  // $("#tabs").tabs();
-  // $("button").button();
-  // $(".refreshButton").button("option", "icons", {primary: "ui-icon-refresh"});
-  // $(".addButton").button("option", "icons", {primary: "ui-icon-plus"});
-  // $(".removeButton").button("option", "icons", {primary: "ui-icon-minus"});
-
   // Popuplate option checkboxes
   // initCheckbox("shouldShowBlockElementMenu");
   // initCheckbox("hidePlaceholders");
@@ -78,6 +73,10 @@ function loadOptions()
 
   // Show user's filters
   reloadFilters();
+
+  initializeFeatureSubscriptionsCheckboxes();
+
+  initializeUserAccountView();
 }
 $(loadOptions);
 
@@ -578,8 +577,6 @@ function updateFilterLists()
   }
 }
 
-var subscriptionTemplate;
-
 // Adds a subscription entry to the UI.
 function addSubscriptionEntry(subscription)
 {
@@ -650,13 +647,17 @@ function initializeSwitchery() {
   });
 }
 
+function initializeTooltips() {
+  $(".js-tooltip").tooltip();
+}
+
 function refreshDOM() {
+  initializeTooltips();
   initializeSwitchery();
 }
 document.addEventListener("DOMContentLoaded", refreshDOM, false);
 
-
-$(document).ready(function(){
+function initializeFeatureSubscriptionsCheckboxes() {
   // Load subscriptions for features
   var featureSubscriptions = [
     {
@@ -721,8 +722,40 @@ $(document).ready(function(){
       }
     }
   }
+
   FilterNotifier.addListener(filterListener);
-  window.addEventListener("unload", function(event) {
+  window.addEventListener("unload", function() {
     FilterNotifier.removeListener(filterListener);
   }, false);
-});
+}
+
+
+// Enable all handlers that should be called when the user will log in / log out.
+function updateVisitorDependantViews() {
+  $(".js-visitor-available").toggle(!!AdblockCash.visitor);
+  $(".js-visitor-unavailable").toggle(!AdblockCash.visitor);
+  if (AdblockCash.visitor) {
+    $(".js-visitorEmail").html(AdblockCash.visitor.email);
+  }
+}
+
+function initializeUserAccountView() {
+  document.querySelector(".js-visitor-logout").addEventListener("click", function(){
+    AdblockCash.logout();
+  });
+
+  document.querySelector(".js-login-with-facebook").addEventListener("click", function(){
+    AdblockCash.loginWithProvider(window, "facebook");
+  });
+
+  document.querySelector(".js-login-with-google").addEventListener("click", function(){
+    AdblockCash.loginWithProvider(window, "google");
+  });
+
+  updateVisitorDependantViews();
+
+  AdblockCash.addListener("visitor.changed", updateVisitorDependantViews);
+  window.addEventListener("unload", function() {
+    AdblockCash.removeListener("visitor.changed", updateVisitorDependantViews);
+  }, false);
+}
