@@ -744,7 +744,7 @@ function updateVisitorDependantViews() {
 
     AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
       var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
-      Utils.setCheckboxValue(checkbox, !!AdblockCash.visitor.notification_settings[settingName]);
+      Utils.setCheckboxValue(checkbox, (AdblockCash.visitor.notification_settings && !!AdblockCash.visitor.notification_settings[settingName]));
     });
   }
 }
@@ -768,16 +768,22 @@ function initializeUserAccountView() {
   });
 
   document.querySelector(".js-login-with-facebook").addEventListener("click", function(){
-    AdblockCash.loginWithProvider(window, "facebook");
+    AdblockCash.loginWithProvider(window, "facebook").catch(function(error){
+      alert("An error occured while logging in with Facebook: " + error);
+    });
   });
 
   document.querySelector(".js-login-with-google").addEventListener("click", function(){
-    AdblockCash.loginWithProvider(window, "google");
+    AdblockCash.loginWithProvider(window, "google").catch(function(error){
+      alert("An error occured while logging in with Google: " + error);
+    });
   });
 
   document.querySelector(".js-visitor-disconnect-paypal").addEventListener("click", function(){
     AdblockCash.updateVisitorAccount(window, {
       paypal_email: null
+    }).catch(function(error) {
+      alert("An error occured while updating account settings: " + error);
     });
   });
 
@@ -786,6 +792,8 @@ function initializeUserAccountView() {
 
     AdblockCash.updateVisitorAccount(window, {
       paypal_email: $(".js-visitor-paypal_email-input").val()
+    }).catch(function(error) {
+      alert("An error occured while updating account settings: " + error);
     });
   });
 
