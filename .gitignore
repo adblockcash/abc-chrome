@@ -2,7 +2,6 @@ devenv
 *.zip
 *.crx
 *.pyc
-*.sh
 *.safariextension
 node_modules
 assets/bower
