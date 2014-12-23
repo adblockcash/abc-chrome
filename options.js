@@ -38,6 +38,7 @@ var Utils = require("utils").Utils;
 var AdblockCash = require("adblockcash").AdblockCash;
 var isWhitelisted = require("whitelisting").isWhitelisted;
 var subscriptionTemplate;
+var fakeCheckboxChangeEvent = 0;
 
 // Loads options from localStorage and sets UI elements accordingly
 function loadOptions()
@@ -51,7 +52,15 @@ function loadOptions()
   $("#startSubscriptionSelection").click(startSubscriptionSelection);
   $("#js-subscriptionSelector").change(updateSubscriptionSelection);
   $("#js-addSubscription").click(addSubscription);
-  $("#js-acceptableAds").change(allowAcceptableAds);
+  $("#js-toggle-whitelisting-websites").change(function(event){
+    // Don't trigger toggleAll() if this checkbox has been changed by the JS API
+    // (f.e. while changing other checkbox, we check/uncheck this one)
+    if (fakeCheckboxChangeEvent) {
+      return;
+    }
+
+    WhitelistableWebsitesModule.toggleAll( $(this).prop("checked") );
+  });
   $("#js-whitelistForm").submit(addWhitelistedDomainFormSubmitHandler);
   $("#js-removeWhitelist").click(removeSelectedExcludedDomain);
   $("#js-customFilterForm").submit(addTypedFilter);
@@ -106,24 +115,6 @@ function reloadFilters()
   var container = document.getElementById("js-filterLists");
   while (container.lastChild)
     container.removeChild(container.lastChild);
-
-  var hasAcceptable = false;
-  for (var i = 0; i < FilterStorage.subscriptions.length; i++)
-  {
-    var subscription = FilterStorage.subscriptions[i];
-    if (subscription instanceof SpecialSubscription)
-      continue;
-
-    if (subscription.url == Prefs.subscriptions_exceptionsurl)
-    {
-      hasAcceptable = true;
-      continue;
-    }
-
-    addSubscriptionEntry(subscription);
-  }
-
-  Utils.setCheckboxValue($("#js-acceptableAds")[0], hasAcceptable);
 
   // User-entered filters
   var userFilters = backgroundPage.getUserFilters();
@@ -299,26 +290,6 @@ function doAddSubscription(url, title, homepage)
     Synchronizer.execute(subscription);
 }
 
-function allowAcceptableAds(event)
-{
-  var subscription = Subscription.fromURL(Prefs.subscriptions_exceptionsurl);
-  if (!subscription)
-    return;
-
-  subscription.disabled = false;
-  subscription.title = "Allow non-intrusive advertising";
-  if ($("#js-acceptableAds").prop("checked"))
-  {
-    FilterStorage.addSubscription(subscription);
-    if (subscription instanceof DownloadableSubscription && !subscription.lastDownload)
-      Synchronizer.execute(subscription);
-  }
-  else
-    FilterStorage.removeSubscription(subscription);
-
-  console.debug("allowAcceptableAds", event, subscription);
-}
-
 function findSubscriptionElement(subscription)
 {
   var children = document.getElementById("js-filterLists").childNodes;
@@ -392,8 +363,6 @@ function onFilterChange(action, item, param1, param2)
         for (var i = 0; i < item.filters.length; i++)
           onFilterChange("filter.added", item.filters[i]);
       }
-      else if (item.url == Prefs.subscriptions_exceptionsurl)
-        Utils.setCheckboxValue($("#js-acceptableAds")[0], true);
       else if (!findSubscriptionElement(item))
         addSubscriptionEntry(item);
       break;
@@ -403,8 +372,6 @@ function onFilterChange(action, item, param1, param2)
         for (var i = 0; i < item.filters.length; i++)
           onFilterChange("filter.removed", item.filters[i]);
       }
-      else if (item.url == Prefs.subscriptions_exceptionsurl)
-        Utils.setCheckboxValue($("#js-acceptableAds")[0], false);
       else
       {
         var element = findSubscriptionElement(item);
@@ -414,7 +381,10 @@ function onFilterChange(action, item, param1, param2)
       break;
     case "filter.added":
       if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text)) {
-        appendToListBox("js-excludedDomainsBox", RegExp.$1);
+        var domain = RegExp.$1;
+        if (!AdblockCash.isDomainWhitelistable(domain)) {
+          appendToListBox("js-excludedDomainsBox", domain);
+        }
         WhitelistableWebsitesModule.render();
       } else {
         appendToListBox("js-userFiltersBox", item.text);
@@ -422,7 +392,10 @@ function onFilterChange(action, item, param1, param2)
       break;
     case "filter.removed":
       if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text)) {
-        removeFromListBox("js-excludedDomainsBox", RegExp.$1);
+        var domain = RegExp.$1;
+        if (!AdblockCash.isDomainWhitelistable(domain)) {
+          removeFromListBox("js-excludedDomainsBox", domain);
+        }
         WhitelistableWebsitesModule.render();
       } else {
         removeFromListBox("js-userFiltersBox", item.text);
@@ -890,6 +863,10 @@ var WhitelistableWebsitesModule = {
     }.bind(this));
     this.elements.$nonWhitelistedWebsitesSection.toggle( nonWhitelistedWebsites.length > 0 );
 
+    fakeCheckboxChangeEvent++;
+    Utils.setCheckboxValue( $("#js-toggle-whitelisting-websites")[0], whitelistedWebsites.length > 0 );
+    fakeCheckboxChangeEvent--;
+
     refreshDOM();
   },
 
@@ -935,5 +912,17 @@ var WhitelistableWebsitesModule = {
 
   isWhitelisted: function(website) {
     return !!isWhitelisted("http://" + website.domain);
+  },
+
+  toggleAll: function(toggle){
+    if (toggle) {
+      this.getNonWhitelistedWebsites().forEach(function(website){
+        addWhitelistedDomain(website.domain);
+      }.bind(this));
+    } else {
+      this.getWhitelistedWebsites().forEach(function(website){
+        removeWhitelistedDomain(website.domain);
+      }.bind(this));
+    }
   }
 };
