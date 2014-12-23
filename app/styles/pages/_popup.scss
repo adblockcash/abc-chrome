@@ -1,14 +1,14 @@
-$notification-box-padding: 10px;
+$popup-box-padding: 10px;
 
-$notification-box-header-height: 80px;
-$notification-box-header-padding: $notification-box-padding;
+$popup-box-header-height: 80px;
+$popup-box-header-padding: $popup-box-padding;
 
 $hexagon-height: 40px;
 $hexagon-width: $hexagon-height / 2 / 173.21 * 300;
 $hexagon-borders: $hexagon-width *  86.60/300;
 
-$notification-controls-height: 42px;
-$notification-controls-padding: $notification-box-padding;
+$popup-controls-height: 42px;
+$popup-controls-padding: $popup-box-padding;
 
 .hexagon {
   position: relative;
@@ -33,90 +33,92 @@ $notification-controls-padding: $notification-box-padding;
   }
 }
 
-.notification-box {
+.popup-box {
   width: 250px;
+  font-size: 12px;
+  font-weight: 400;
   line-height: 1.5;
   background-color: #fff;
   position: relative;
   overflow: hidden;
-  padding-bottom: $notification-controls-height;
+  padding-bottom: $popup-controls-height;
 
-  .notification-header {
-    width: 100%;
-    height: $notification-box-header-height;
-    padding: $notification-box-header-padding;
-    border-bottom: 1px solid #f0f0f0;
-    overflow: hidden;
-    position: relative;
+  .popup-boxes & {
+    display: inline-block;
+    margin: 20px;
+  }
+}
 
-    .notification-icon {
-      display: inline-block;
-      position: absolute;
-      // margin: (($notification-box-header-height - $hexagon-height - $notification-box-header-padding) / 2) 0;
-      margin: 2px 15px 0 0;
-    }
+.popup-header {
+  width: 100%;
+  padding: $popup-box-header-padding;
+  border-bottom: 1px solid #f0f0f0;
+  overflow: hidden;
+  position: relative;
 
-    .notification-header-contents {
-      margin-left: $hexagon-width + 15px;
-    }
-
-    .adblock-status-name {
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .adblock-status-description {
-      color: #999;
-      font-size: 12px;
-    }
-
-    .options-link {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      font-size: 16px;
-      color: #999;
-
-      &:hover {
-        color: #000;
-      }
-    }
+  .popup-icon {
+    display: inline-block;
+    position: absolute;
+    margin-right: 15px;
   }
 
-  .notification-body {
-    padding: $notification-box-padding;
-    font-size: 12px;
+  .popup-header-contents {
+    margin-left: $hexagon-width + 15px;
+  }
+
+  .adblock-status-name {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .adblock-status-description {
     color: #999;
   }
 
-  .notification-info {
-    padding: $notification-box-padding;
-    font-size: 12px;
+  .options-link {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 16px;
+    color: #999;
 
-    ul {
-      padding-left: 20px;
-      margin: 0;
+    &:hover {
+      color: #000;
     }
   }
+}
 
-  .notification-controls {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #f0f0f0;
-    line-height: $notification-controls-height - 2 * $notification-controls-padding;
-    padding: $notification-controls-padding;
+.popup-body {
+  padding: $popup-box-padding;
+  color: #999;
+}
 
-    label {
-      font-weight: normal;
-      margin: 0;
-      display: block;
-      color: #666;
-    }
+.popup-info {
+  padding: $popup-box-padding;
 
-    .switchery {
-      float: right;
-    }
+  ul {
+    padding-left: 20px;
+    margin: 0;
+  }
+}
+
+.popup-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #f0f0f0;
+  line-height: $popup-controls-height - 2 * $popup-controls-padding;
+  padding: $popup-controls-padding;
+
+  label {
+    font-weight: normal;
+    margin: 0;
+    display: block;
+    color: #666;
+  }
+
+  .switchery {
+    float: right;
   }
 }

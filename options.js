@@ -36,6 +36,7 @@ var Prefs = require("prefs").Prefs;
 var Synchronizer = require("synchronizer").Synchronizer;
 var Utils = require("utils").Utils;
 var AdblockCash = require("adblockcash").AdblockCash;
+var isWhitelisted = require("whitelisting").isWhitelisted;
 var subscriptionTemplate;
 
 // Loads options from localStorage and sets UI elements accordingly
@@ -51,7 +52,7 @@ function loadOptions()
   $("#js-subscriptionSelector").change(updateSubscriptionSelection);
   $("#js-addSubscription").click(addSubscription);
   $("#js-acceptableAds").change(allowAcceptableAds);
-  $("#js-whitelistForm").submit(addWhitelistDomain);
+  $("#js-whitelistForm").submit(addWhitelistedDomainFormSubmitHandler);
   $("#js-removeWhitelist").click(removeSelectedExcludedDomain);
   $("#js-customFilterForm").submit(addTypedFilter);
   $("#js-removeCustomFilter").click(removeSelectedFilters);
@@ -77,6 +78,12 @@ function loadOptions()
   initializeFeatureSubscriptionsCheckboxes();
 
   initializeUserAccountView();
+
+  initializeQuestionCollapses();
+
+  WhitelistableWebsitesModule.init();
+
+  refreshDOM();
 }
 $(loadOptions);
 
@@ -404,16 +411,20 @@ function onFilterChange(action, item, param1, param2)
       }
       break;
     case "filter.added":
-      if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text))
+      if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text)) {
         appendToListBox("js-excludedDomainsBox", RegExp.$1);
-      else
+        WhitelistableWebsitesModule.render();
+      } else {
         appendToListBox("js-userFiltersBox", item.text);
+      }
       break;
     case "filter.removed":
-      if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text))
+      if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text)) {
         removeFromListBox("js-excludedDomainsBox", RegExp.$1);
-      else
+        WhitelistableWebsitesModule.render();
+      } else {
         removeFromListBox("js-userFiltersBox", item.text);
+      }
       break;
   }
 }
@@ -453,7 +464,7 @@ function removeFromListBox(boxId, text)
       list.remove(i--);
 }
 
-function addWhitelistDomain(event)
+function addWhitelistedDomainFormSubmitHandler(event)
 {
   event.preventDefault();
 
@@ -462,8 +473,17 @@ function addWhitelistDomain(event)
   if (!domain)
     return;
 
+  addWhitelistedDomain(domain);
+}
+
+function addWhitelistedDomain(domain)
+{
   var filterText = "@@||" + domain + "^$document";
-  FilterStorage.addFilter(Filter.fromText(filterText));
+  return FilterStorage.addFilter(Filter.fromText(filterText));
+}
+
+function removeWhitelistedDomain(domain) {
+  FilterStorage.removeFilter(Filter.fromText("@@||" + domain + "^$document"));
 }
 
 // Adds filter text that user typed to the selection box
@@ -491,7 +511,7 @@ function removeSelectedExcludedDomain()
     return;
 
   for (var i = 0; i < remove.length; i++)
-    FilterStorage.removeFilter(Filter.fromText("@@||" + remove[i] + "^$document"));
+    removeWhitelistedDomain(remove[i]);
 }
 
 // Removes all currently selected filters
@@ -630,7 +650,7 @@ function setLinks(id)
 
 
 function initializeSwitchery() {
-  var switchElements = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+  var switchElements = Array.prototype.slice.call(document.querySelectorAll('.js-switch:not(.js-hide)'));
   switchElements.forEach(function(element) {
     if ($(element).data("switchery")) {
       return;
@@ -667,11 +687,7 @@ function initializeQuestionCollapses() {
 function refreshDOM() {
   initializeTooltips();
   initializeSwitchery();
-  initializeQuestionCollapses();
 }
-document.addEventListener("DOMContentLoaded", refreshDOM, false);
-
-
 
 function initializeFeatureSubscriptionsCheckboxes() {
   // Load subscriptions for features
@@ -822,8 +838,107 @@ function initializeUserAccountView() {
 
   updateVisitorDependantViews();
 
-  AdblockCash.addListener("visitor.changed", updateVisitorDependantViews);
+  AdblockCash.addListener("visitor.updated", updateVisitorDependantViews);
   window.addEventListener("unload", function() {
-    AdblockCash.removeListener("visitor.changed", updateVisitorDependantViews);
+    AdblockCash.removeListener("visitor.updated", updateVisitorDependantViews);
   }, false);
 }
+
+
+var WhitelistableWebsitesModule = {
+  _templates: {},
+  elements: {},
+
+  init: function() {
+    this._templates = {
+      website: $("#js-whitelistable-website-template").remove()[0].outerHTML
+    };
+
+    this.elements = {
+      $whitelistedWebsitesSection: $("#js-whitelisted-websites-section"),
+      $nonWhitelistedWebsitesSection: $("#js-nonwhitelisted-websites-section"),
+      $whitelistedWebsitesWrapper: $("#js-whitelisted-websites-wrapper"),
+      $nonWhitelistedWebsitesWrapper: $("#js-nonwhitelisted-websites-wrapper")
+    };
+
+    AdblockCash.addListener("whitelistableWebsites.updated", this.render);
+    window.addEventListener("unload", function() {
+      AdblockCash.removeListener("whitelistableWebsites.updated", this.render);
+    }.bind(this), false);
+
+    this.render();
+  },
+
+  render: function() {
+    this.elements.$whitelistedWebsitesWrapper.html("");
+    this.elements.$nonWhitelistedWebsitesWrapper.html("");
+
+    var whitelistedWebsites = this.getWhitelistedWebsites();
+    whitelistedWebsites.forEach(function(website){
+      var $template = this.renderWebsite(website);
+      this.elements.$whitelistedWebsitesWrapper.append($template);
+    }.bind(this));
+    this.elements.$whitelistedWebsitesSection.toggle( whitelistedWebsites.length > 0 );
+
+    var nonWhitelistedWebsites = this.getNonWhitelistedWebsites();
+    nonWhitelistedWebsites.forEach(function(website){
+      var $template = this.renderWebsite(website);
+      this.elements.$nonWhitelistedWebsitesWrapper.append($template);
+    }.bind(this));
+    this.elements.$nonWhitelistedWebsitesSection.toggle( nonWhitelistedWebsites.length > 0 );
+
+    refreshDOM();
+  },
+
+  renderWebsite: function(website){
+    var $template = $(this._templates.website);
+    var whitelisted = this.isWhitelisted(website);
+
+    var $whitelistModeCheckbox = $template.find(".js-toggle-whitemode");
+
+    $template.find(".js-website-image").attr("src", website.icon_url);
+    $template.find(".js-website-name").html(website.name);
+    $template.find(".js-whitelisted").toggle(whitelisted);
+    $template.find(".js-nonwhitelisted").toggle(!whitelisted);
+    $whitelistModeCheckbox.prop("checked", whitelisted);
+    $whitelistModeCheckbox.removeClass("js-hide");
+    $whitelistModeCheckbox[0].addEventListener("change", function(){
+      if ($whitelistModeCheckbox[0].checked) {
+        removeWhitelistedDomain(website.domain);
+      } else {
+        addWhitelistedDomain(website.domain);
+      }
+    });
+    $template.click(function(event){
+      event.preventDefault();
+
+      if ($whitelistModeCheckbox[0].checked) {
+        removeWhitelistedDomain(website.domain);
+      } else {
+        addWhitelistedDomain(website.domain);
+      }
+    });
+
+    return $template;
+  },
+
+  getWebsites: function() {
+    return AdblockCash.whitelistableWebsites;
+  },
+
+  getWhitelistedWebsites: function() {
+    return this.getWebsites().filter(function(website) {
+      return this.isWhitelisted(website);
+    }.bind(this));
+  },
+
+  getNonWhitelistedWebsites: function() {
+    return this.getWebsites().filter(function(website) {
+      return !this.isWhitelisted(website);
+    }.bind(this));
+  },
+
+  isWhitelisted: function(website) {
+    return !!isWhitelisted("http://" + website.domain);
+  }
+};

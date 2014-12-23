@@ -173,79 +173,60 @@
 // WHITELISTING TAB
 //
 
-.whitelisted-websites {
-  padding: 0px;
-  h3 {
+.whitelistable-websites {
+  position: relative;
+
+  &, > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  > li {
+    $website-title-height: 40px;
+    $website-title-image-size: 20px;
+
+    width: 33%;
+    display: inline-block;
     position: relative;
-    display: block;
-    width: 100%;
-    clear: both;
-  }
-}
-.whitelisted-websites-wrapper {
-  position: relative;
-  width: 100%;
-  height: auto;
-  clear: both;
-  overflow: hidden;
-}
+    cursor: pointer;
 
+    .website-title {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: $website-title-height;
 
-.single-website {
-  width: 33.3%;
-  position: relative;
-  float: left;
-  padding: 10px 5px;
-  cursor: pointer;
-
-  .inner {
-    display: none;
-    height: 0px;
-  }
-
-  h4 {
-    text-align: center;
-  }
-
-  h6 {
-    font-family: $main-font;
-    font-size: 1.2em;
-    padding: 0.1em 0.9em;
-  }
-
-  &:hover {
-    background: $gray-light;
-
-    .inner {
-      display: block;
-      position: absolute;
-      top: 50px;
-      left: 0px;
-      height: auto;
-      background: $gray-light;
-      z-index: 100;
-      width: 100%;
-      display: block;
-      padding: 0px 1%;
-
-      ul {
-        font-size: 0.9em;
-        margin-left: 20px;
+      img {
+        float: left;
+        height: $website-title-image-size;
+        width: $website-title-image-size;
+        margin: (($website-title-height - $website-title-image-size) / 2) 10px;
       }
     }
-  }
-  .controls {
-    border-top: 1px solid #adadad;
-    h5 {
-      font-family: $main-font;
-    }
-  }
 
-  @media (max-width: 900px) {
-    & {
-      width: 100%;
-      .inner {
-        width: 100%;
+    .popup-box {
+      display: none;
+      background-color: $gray-light;
+      position: absolute;
+      top: $website-title-height;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      width: auto;
+      font-size: 14px;
+      font-weight: 300;
+      border-top: 1px solid #fff;
+
+      .popup-controls {
+        border-top: 1px solid #fff;
+      }
+    }
+
+    &:hover {
+      background-color: $gray-light;
+
+      .popup-box {
+        display: block;
       }
     }
   }

@@ -44,18 +44,18 @@
 </head>
 <!-- Set tabindex to work around Chromium issue 304532 -->
 <!-- Set overflow to hidden in order to prevent Safari showing scrollbars while loading -->
-<body class="notification-page" tabindex="1" style="overflow: hidden;">
+<body class="popup-page" tabindex="1" style="overflow: hidden;">
 
-  <div class="notification-box">
-    <div class="notification-header">
-      <div class="notification-icon">
+  <div class="popup-box">
+    <div class="popup-header">
+      <div class="popup-icon">
         <div class="hexagon hexagon-green js-hide js-whitelisted"></div>
         <div class="hexagon hexagon-yellow js-hide js-nonwhitelisted"></div>
         <div class="hexagon hexagon-red js-hide js-adblocked"></div>
         <div class="hexagon hexagon-gray js-hide js-nonadblocked"></div>
       </div>
 
-      <div class="notification-header-contents">
+      <div class="popup-header-contents">
         <a href="#" class="options-link" id="js-open-options">
           <i class="fa fa-wrench"></i>
         </a>
@@ -80,31 +80,29 @@
       </div>
     </div>
 
-    <div class="notification-body js-hide" id="js-stats-container">
+    <div class="popup-body js-hide" id="js-stats-container">
       <span id="js-stats-page"></span> / <strong>0</strong> CC earned
     </div>
 
-    <div class="notification-info green-info js-hide js-whitelisted">
+    <div class="popup-info green-info js-hide js-whitelisted">
       <p>
         <strong>You have whitelisted this website.</strong>
       </p>
       <ul>
-        <li>you earn 4 Cash Coins (CC) every time you visit it</li>
-        <li>you read 20 articles for free instead of just 5</li>
+        <li>you earn <span class="js-website-cashcoins_per_visit">4</span> Cash Coins (CC) every time you visit it</li>
       </ul>
     </div>
 
-    <div class="notification-info yellow-info js-hide js-nonwhitelisted">
+    <div class="popup-info yellow-info js-hide js-nonwhitelisted">
       <p>
         <strong>Activate whitelisting for this website!</strong>
       </p>
       <ul>
-        <li>earn 4 Cash Coins (CC) every time you visit it</li>
-        <li>read 20 articles for free instead of just 5</li>
+        <li>earn <span class="js-website-cashcoins_per_visit">4</span> Cash Coins (CC) every time you visit it</li>
       </ul>
     </div>
 
-    <div class="notification-controls">
+    <div class="popup-controls">
       <label>
         Whitelist mode
         <input class="switchery js-switch" type="checkbox" checked id="js-toggle-whitemode" />
