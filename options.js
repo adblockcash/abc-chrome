@@ -909,15 +909,6 @@ var WhitelistableWebsitesModule = {
         addWhitelistedDomain(website.domain);
       }
     });
-    $template.click(function(event){
-      event.preventDefault();
-
-      if ($whitelistModeCheckbox[0].checked) {
-        removeWhitelistedDomain(website.domain);
-      } else {
-        addWhitelistedDomain(website.domain);
-      }
-    });
 
     return $template;
   },
