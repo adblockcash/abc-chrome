@@ -13,3 +13,11 @@ $main-font: 'Open Sans', sans-serif;
 $header-font: $main-font;
 
 $section-heading-height: 55px;
+
+@mixin fa-icon {
+  font-family: "FontAwesome";
+  font-style: normal;
+  display: inline-block;
+  font-weight: normal;
+  line-height: 1;
+}

@@ -627,6 +627,8 @@ function setLinks(id)
   }
 }
 
+
+
 function initializeSwitchery() {
   var switchElements = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
   switchElements.forEach(function(element) {
@@ -651,11 +653,25 @@ function initializeTooltips() {
   $(".js-tooltip").tooltip();
 }
 
+function initializeQuestionCollapses() {
+  $(".question-body").addClass("collapse").removeClass("js-hide");
+
+  $(document).on("click", ".single-question .question-title", function(event){
+    event.preventDefault();
+
+    console.log($(this).closest(".single-question"));
+    $(this).closest(".single-question").find(".question-body").collapse("toggle");
+  });
+}
+
 function refreshDOM() {
   initializeTooltips();
   initializeSwitchery();
+  initializeQuestionCollapses();
 }
 document.addEventListener("DOMContentLoaded", refreshDOM, false);
+
+
 
 function initializeFeatureSubscriptionsCheckboxes() {
   // Load subscriptions for features
