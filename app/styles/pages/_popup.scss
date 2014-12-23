@@ -91,6 +91,10 @@ $popup-controls-padding: $popup-box-padding;
 .popup-body {
   padding: $popup-box-padding;
   color: #999;
+
+  .popup-body-stat:not(.js-hide) + .popup-body-stat:before {
+    content: " / ";
+  }
 }
 
 .popup-info {

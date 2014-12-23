@@ -25,6 +25,7 @@ var Filter = require("filterClasses").Filter;
 var FilterStorage = require("filterStorage").FilterStorage;
 var Prefs = require("prefs").Prefs;
 var isWhitelisted = require("whitelisting").isWhitelisted;
+var AdblockCash = require("adblockcash").AdblockCash;
 
 var page = null;
 
@@ -52,13 +53,13 @@ function init()
   {
     ext.showOptions();
   }, false);
+
+  rerender();
 }
 window.addEventListener("DOMContentLoaded", init, false);
 
 function toggleEnabled()
 {
-  $(".js-whitelisted, .js-nonwhitelisted, .js-adblocked, .js-nonadblocked").hide();
-
   var toggleWhitemodeCheckbox = document.getElementById("js-toggle-whitemode");
   if (toggleWhitemodeCheckbox.checked)
   {
@@ -85,10 +86,28 @@ function toggleEnabled()
     }
   }
 
-  var adblockStatus = Utils.getAdblockStatus(page);
-  $(".js-" + adblockStatus).show();
+  rerender();
 }
 
+function rerender() {
+  // Hide all and turn on only one of those divs, depending on adblockStatus
+  var adblockStatus = Utils.getAdblockStatus(page);
+  $(".js-whitelisted, .js-nonwhitelisted, .js-adblocked, .js-nonadblocked").hide();
+  $(".js-" + adblockStatus).show();
+
+  // Disable / Fill in "x CC earned"
+  var whitelistableWebsite = AdblockCash.isDomainWhitelistable( extractHostFromURL(page.url) );
+  if (adblockStatus === "whitelisted") {
+    $("#js-website-cc-stats").show();
+    $("#js-website-cc-stats").html("<strong>" + whitelistableWebsite.cashcoins_per_visit + "</strong> CC earned");
+  } else {
+    $("#js-website-cc-stats").hide();
+  }
+
+  if (whitelistableWebsite) {
+    $(".js-website-cashcoins_per_visit").html(whitelistableWebsite.cashcoins_per_visit);
+  }
+}
 
 
 function initializeSwitchery() {

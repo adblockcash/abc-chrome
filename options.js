@@ -863,9 +863,10 @@ var WhitelistableWebsitesModule = {
       $nonWhitelistedWebsitesWrapper: $("#js-nonwhitelisted-websites-wrapper")
     };
 
-    AdblockCash.addListener("whitelistableWebsites.updated", this.render);
+    var render = this.render.bind(this);
+    AdblockCash.addListener("whitelistableWebsites.updated", render);
     window.addEventListener("unload", function() {
-      AdblockCash.removeListener("whitelistableWebsites.updated", this.render);
+      AdblockCash.removeListener("whitelistableWebsites.updated", render);
     }.bind(this), false);
 
     this.render();
@@ -900,6 +901,7 @@ var WhitelistableWebsitesModule = {
 
     $template.find(".js-website-image").attr("src", website.icon_url);
     $template.find(".js-website-name").html(website.name);
+    $template.find(".js-website-cashcoins_per_visit").html(website.cashcoins_per_visit);
     $template.find(".js-whitelisted").toggle(whitelisted);
     $template.find(".js-nonwhitelisted").toggle(!whitelisted);
     $whitelistModeCheckbox.prop("checked", whitelisted);

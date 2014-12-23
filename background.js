@@ -133,10 +133,11 @@ function getIconFilename(page) {
       return "assets/images/logo-icon-green.svg";
     case "nonwhitelisted":
       return "assets/images/logo-icon-yellow.svg";
-    case "adblocked":
-      return "assets/images/logo-icon-red.svg";
     case "nonadblocked":
       return "assets/images/logo-icon-gray.svg";
+    case "adblocked":
+    default:
+      return "assets/images/logo-icon-red.svg";
   }
 }
 
