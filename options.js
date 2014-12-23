@@ -128,7 +128,9 @@ function reloadFilters()
   // User-entered filters
   var userFilters = backgroundPage.getUserFilters();
   populateList("js-userFiltersBox", userFilters.filters);
-  populateList("js-excludedDomainsBox", userFilters.exceptions);
+  populateList("js-excludedDomainsBox", userFilters.exceptions.filter(function(domain){
+    return !AdblockCash.isDomainWhitelistable(domain);
+  }));
 }
 
 // Cleans up when the options window is closed
