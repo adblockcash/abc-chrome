@@ -36,7 +36,7 @@
 
       FilterNotifier.addListener(onNotify);
 
-      document.getElementById("stats-container").removeAttribute("hidden");
+      document.getElementById("js-stats-container").classList.remove("js-hide");
     });
   }
 
@@ -53,7 +53,7 @@
 
   function updateStats()
   {
-    var statsPage = document.getElementById("stats-page");
+    var statsPage = document.getElementById("js-stats-page");
     var blockedPage = getStats("blocked", currentPage).toLocaleString();
     i18n.setElementText(statsPage, "stats_label_page", [blockedPage]);
   }
