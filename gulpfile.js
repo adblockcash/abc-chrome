@@ -62,7 +62,6 @@ gulp.task("watch", function(){
     "chrome/**",
     "ext/**",
     "lib/**",
-    "skin/**",
     "*.{html,js}",
     "metadata.*",
     paths.destination.styles + "**/*.css"

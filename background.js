@@ -179,16 +179,6 @@ function addSubscription(prevVersion)
   if (toRemove in FilterStorage.knownSubscriptions)
     FilterStorage.removeSubscription(FilterStorage.knownSubscriptions[toRemove]);
 
-  // Add "acceptable ads" subscription for new users
-  var addAcceptable = !prevVersion;
-  if (addAcceptable)
-  {
-    addAcceptable = !FilterStorage.subscriptions.some(function(subscription)
-    {
-      return subscription.url == Prefs.subscriptions_exceptionsurl;
-    });
-  }
-
   // Don't add subscription if the user has a subscription already
   var addSubscription = !FilterStorage.subscriptions.some(function(subscription)
   {
@@ -206,21 +196,6 @@ function addSubscription(prevVersion)
     });
   }
 
-  // Add "acceptable ads" subscription
-  if (addAcceptable)
-  {
-    var subscription = Subscription.fromURL(Prefs.subscriptions_exceptionsurl);
-    if (subscription)
-    {
-      subscription.title = "Allow non-intrusive advertising";
-      FilterStorage.addSubscription(subscription);
-      if (subscription instanceof DownloadableSubscription && !subscription.lastDownload)
-        Synchronizer.execute(subscription);
-    }
-    else
-      addAcceptable = false;
-  }
-
   // Add "anti-adblock messages" subscription for new users and users updating from old ABP versions
   if (!prevVersion || Services.vc.compare(prevVersion, "1.8") < 0)
   {
@@ -234,7 +209,7 @@ function addSubscription(prevVersion)
     }
   }
 
-  if (!addSubscription && !addAcceptable)
+  if (!addSubscription)
     return;
 
   function notifyUser()

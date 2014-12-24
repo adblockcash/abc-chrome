@@ -105,7 +105,6 @@ adblockplus/chrome/locale/*/filters.dtd = subscription.lastDownload.inProgress
   addSubscription.label
   addSubscriptionAdd.label
   addSubscriptionOther.label
-  acceptableAds2.label
   viewList.label
   readMore.label
 adblockplus/chrome/locale/*/subscriptionSelection.dtd = location.label
