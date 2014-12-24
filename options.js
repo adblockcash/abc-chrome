@@ -116,6 +116,15 @@ function reloadFilters()
   while (container.lastChild)
     container.removeChild(container.lastChild);
 
+  for (var i = 0; i < FilterStorage.subscriptions.length; i++)
+  {
+    var subscription = FilterStorage.subscriptions[i];
+    if (subscription instanceof SpecialSubscription)
+      continue;
+
+    addSubscriptionEntry(subscription);
+  }
+
   // User-entered filters
   var userFilters = backgroundPage.getUserFilters();
   populateList("js-userFiltersBox", userFilters.filters);
