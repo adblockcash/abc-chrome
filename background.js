@@ -182,8 +182,7 @@ function addSubscription(prevVersion)
   // Don't add subscription if the user has a subscription already
   var addSubscription = !FilterStorage.subscriptions.some(function(subscription)
   {
-    return subscription instanceof DownloadableSubscription &&
-           subscription.url != Prefs.subscriptions_exceptionsurl;
+    return subscription instanceof DownloadableSubscription;
   });
 
   // If this isn't the first run, only add subscription if the user has no custom filters
@@ -191,8 +190,7 @@ function addSubscription(prevVersion)
   {
     addSubscription = !FilterStorage.subscriptions.some(function(subscription)
     {
-      return subscription.url != Prefs.subscriptions_exceptionsurl &&
-             subscription.filters.length;
+      return subscription.filters.length;
     });
   }
 

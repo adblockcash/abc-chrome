@@ -96,7 +96,7 @@ function rerender() {
   $(".js-" + adblockStatus).show();
 
   // Disable / Fill in "x CC earned"
-  var whitelistableWebsite = AdblockCash.isDomainWhitelistable( extractHostFromURL(page.url) );
+  var whitelistableWebsite = AdblockCash.isDomainWhitelistable(page.domain);
   if (adblockStatus === "whitelisted") {
     $("#js-website-cc-stats").show();
     $("#js-website-cc-stats").html("<strong>" + whitelistableWebsite.cashcoins_per_visit + "</strong> CC earned");

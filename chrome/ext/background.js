@@ -47,6 +47,10 @@
           return frame.url;
       }
     },
+    get domain()
+    {
+      return extractHostFromURL(this.url);
+    },
     activate: function()
     {
       chrome.tabs.update(this._id, {selected: true});
