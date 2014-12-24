@@ -52,14 +52,10 @@ function loadOptions()
   $("#startSubscriptionSelection").click(startSubscriptionSelection);
   $("#js-subscriptionSelector").change(updateSubscriptionSelection);
   $("#js-addSubscription").click(addSubscription);
-  $("#js-toggle-whitelisting-websites").change(function(event){
-    // Don't trigger toggleAll() if this checkbox has been changed by the JS API
-    // (f.e. while changing other checkbox, we check/uncheck this one)
-    if (fakeCheckboxChangeEvent) {
-      return;
-    }
+  $("#js-toggle-whitelisting-websites").parent().click(function(event){
+    event.preventDefault();
 
-    WhitelistableWebsitesModule.toggleAll( $(this).prop("checked") );
+    WhitelistableWebsitesModule.toggleAll( $("#js-toggle-whitelisting-websites").prop("checked") );
   });
   $("#js-whitelistForm").submit(addWhitelistedDomainFormSubmitHandler);
   $("#js-removeWhitelist").click(removeSelectedExcludedDomain);
@@ -91,6 +87,7 @@ function loadOptions()
   initializeQuestionCollapses();
 
   WhitelistableWebsitesModule.init();
+  StatisticsModule.init();
 
   refreshDOM();
 }
@@ -924,6 +921,8 @@ var WhitelistableWebsitesModule = {
   },
 
   toggleAll: function(toggle){
+    console.debug("WhitelistableWebsitesModule.toggleAll(" + toggle + ")")
+
     if (toggle) {
       this.getNonWhitelistedWebsites().forEach(function(website){
         addWhitelistedDomain(website.domain);
@@ -933,5 +932,42 @@ var WhitelistableWebsitesModule = {
         removeWhitelistedDomain(website.domain);
       }.bind(this));
     }
+  }
+};
+
+
+var StatisticsModule = {
+  init: function(){
+    this._templates = {
+      topBlockedAdsRow: $("#js-top-blocked-ads-row-template").remove()[0].outerHTML
+    };
+
+    this.elements = {
+      $topBlockedAdsRowsContainer: $("#js-top-blocked-ads-rows")
+    };
+
+    this.render();
+  },
+
+  render: function(){
+    $("#js-stat-total_blocked_ads").html(Prefs.stats_total.blocked);
+    $("#js-stat-total_whitelisted_ads").html(Prefs.stats_total.earned);
+    $("#js-stat-total_missed_ads").html(Prefs.stats_total.missed);
+    $("#js-stat-earned_cc").html("0 CC");
+    $("#js-stat-missed_cc").html("0 CC");
+
+    this.elements.$topBlockedAdsRowsContainer.html("");
+    var domains = Object.keys(Prefs.stats_by_domain);
+    domains.sort(function(domainA, domainB){
+      return (Prefs.stats_by_domain[domainB].blocked || 0) - (Prefs.stats_by_domain[domainA].blocked || 0);
+    });
+    domains.slice(0, 10).forEach(function(domain){
+      var rowTemplate = $(this._templates.topBlockedAdsRow);
+
+      rowTemplate.find(".js-website-name").html(domain);
+      rowTemplate.find(".js-website-blocked_ads").html(Prefs.stats_by_domain[domain].blocked);
+
+      this.elements.$topBlockedAdsRowsContainer.append(rowTemplate);
+    }.bind(this));
   }
 };

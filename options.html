@@ -247,8 +247,8 @@
             <ul class="whitelistable-websites" id="js-whitelisted-websites-wrapper">
               <li class="website" id="js-whitelistable-website-template">
                 <div class="website-title">
-                  <img src="http://youtube.com/favicon.ico" class="js-website-image">
-                  <span class="js-website-name">Youtube.com</span>
+                  <img src="http://adblockcash.org/favicon.ico" class="js-website-image">
+                  <span class="js-website-name">adblockcash.org</span>
                 </div>
 
                 <div class="popup-box">
@@ -650,7 +650,7 @@
                 <div class="statgroup-title">
                   Blocked ads
                 </div>
-                <div class="statgroup-value">583</div>
+                <div class="statgroup-value" id="js-stat-total_blocked_ads">583</div>
                 <div class="statgroup-title">
                   on all websites
                 </div>
@@ -659,7 +659,7 @@
                 <div class="statgroup-title">
                   Whitelisted ads
                 </div>
-                <div class="statgroup-value">57</div>
+                <div class="statgroup-value" id="js-stat-total_whitelisted_ads">57</div>
                 <div class="statgroup-title">
                   on whitelisted websites
                 </div>
@@ -669,7 +669,7 @@
                 <div class="statgroup-title">
                   Blocked ads
                 </div>
-                <div class="statgroup-value">23</div>
+                <div class="statgroup-value" id="js-stat-total_missed_ads">23</div>
                 <div class="statgroup-title">
                   on non-whitelisted websites
                 </div>
@@ -679,15 +679,15 @@
             <div class="statgroups">
               <div class="statgroup">
                 <!-- <div class="statgroup-title">Earned CashCoins</div> -->
-                <!-- <div class="statgroup-value">0 CC</div> -->
+                <!-- <div class="statgroup-value" id="js-stat-total_blocked_ads">0 CC</div> -->
               </div>
               <div class="statgroup green-info">
                 <div class="statgroup-title">Earned</div>
-                <div class="statgroup-value">57 CC</div>
+                <div class="statgroup-value" id="js-stat-earned_cc">57 CC</div>
               </div>
               <div class="statgroup red-info">
                 <div class="statgroup-title">Missed</div>
-                <div class="statgroup-value">24 CC</div>
+                <div class="statgroup-value" id="js-stat-missed_cc">24 CC</div>
               </div>
             </div>
 
@@ -699,46 +699,10 @@
                   <td>Number of blocked ads</td>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>google.com</td>
-                  <td>1242</td>
-                </tr>
-                <tr>
-                  <td>facebook.com</td>
-                  <td>344</td>
-                </tr>
-                <tr>
-                  <td>yahoo.com</td>
-                  <td>304</td>
-                </tr>
-                <tr>
-                  <td>lorem.com</td>
-                  <td>295</td>
-                </tr>
-                <tr>
-                  <td>ipsum.com</td>
-                  <td>285</td>
-                </tr>
-                <tr>
-                  <td>sit.com</td>
-                  <td>274</td>
-                </tr>
-                <tr>
-                  <td>amet.com</td>
-                  <td>249</td>
-                </tr>
-                <tr>
-                  <td>hakum.com</td>
-                  <td>210</td>
-                </tr>
-                <tr>
-                  <td>diro.com</td>
-                  <td>180</td>
-                </tr>
-                <tr>
-                  <td>apsum.com</td>
-                  <td>150</td>
+              <tbody id="js-top-blocked-ads-rows">
+                <tr id="js-top-blocked-ads-row-template">
+                  <td class="js-website-name">adblockcash.org</td>
+                  <td class="js-website-blocked_ads">0</td>
                 </tr>
               </tbody>
             </table>

@@ -49,7 +49,11 @@
     },
     get domain()
     {
-      return extractHostFromURL(this.url);
+      let host = extractHostFromURL(this.url);
+      // Drop the www. from the beginning
+      host = host.replace(/^(?:www\.)?/, "");
+
+      return host;
     },
     activate: function()
     {
