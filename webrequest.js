@@ -50,9 +50,6 @@ FilterNotifier.addListener(function(action)
 
 function onBeforeRequest(url, type, page, frame)
 {
-  if (isFrameWhitelisted(page, frame))
-    return true;
-
   var docDomain = extractHostFromFrame(frame);
   var key = getKey(page, frame);
   var filter = defaultMatcher.matchesAny(
@@ -63,6 +60,11 @@ function onBeforeRequest(url, type, page, frame)
     key
   );
 
+  FilterNotifier.triggerListeners("filter.hitCount", filter, 0, 0, page);
+
+  if (isFrameWhitelisted(page, frame))
+    return true;
+
   // We can't listen to onHeadersReceived in Safari so we need to
   // check for notifications here
   if (platform != "chromium" && type == "sub_frame")
@@ -72,7 +74,6 @@ function onBeforeRequest(url, type, page, frame)
       showNotification(notificationToShow);
   }
 
-  FilterNotifier.triggerListeners("filter.hitCount", filter, 0, 0, page);
   return !(filter instanceof BlockingFilter);
 }
 
