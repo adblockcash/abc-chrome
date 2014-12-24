@@ -87,6 +87,7 @@ function loadOptions()
   initializeQuestionCollapses();
 
   WhitelistableWebsitesModule.init();
+  RewardsModule.init();
   StatisticsModule.init();
 
   refreshDOM();
@@ -935,6 +936,36 @@ var WhitelistableWebsitesModule = {
   }
 };
 
+var RewardsModule = {
+  init: function(){
+    this._templates = {
+      topEarnedCashcoinsRow: $("#js-top-earned-cc-row-template").remove()[0].outerHTML
+    };
+
+    this.elements = {
+      $topEarnedCashcoinsRowsContainer: $("#js-top-earned-cc-rows")
+    };
+
+    this.render();
+  },
+
+  render: function(){
+    this.elements.$topEarnedCashcoinsRowsContainer.html("");
+
+    var domains = Object.keys(Prefs.stats_by_domain);
+    domains.sort(function(domainA, domainB){
+      return (Prefs.stats_by_domain[domainB].earned_cc || 0) - (Prefs.stats_by_domain[domainA].earned_cc || 0);
+    });
+    domains.slice(0, 5).forEach(function(domain){
+      var rowTemplate = $(this._templates.topEarnedCashcoinsRow);
+
+      rowTemplate.find(".js-website-name").html(domain);
+      rowTemplate.find(".js-website-earned_cc").html((Prefs.stats_by_domain[domain].earned_cc || 0) + " CC");
+
+      this.elements.$topEarnedCashcoinsRowsContainer.append(rowTemplate);
+    }.bind(this));
+  }
+};
 
 var StatisticsModule = {
   init: function(){
