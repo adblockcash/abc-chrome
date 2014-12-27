@@ -943,13 +943,32 @@ var RewardsModule = {
     };
 
     this.elements = {
-      $topEarnedCashcoinsRowsContainer: $("#js-top-earned-cc-rows")
+      $topEarnedCashcoinsRowsContainer: $("#js-top-earned-cc-rows"),
+      $statCurrentRewardCategory: $(".js-rewards-current-reward_category"),
+      $statCurrentCashcoins: $(".js-rewards-current-cashcoins"),
+      $statCurrentPriceMoney: $(".js-rewards-current-price_money"),
+      $statCurrentPayoutDate: $(".js-rewards-current-payout_date"),
+      $statNextRow: $(".js-rewards-next-row"),
+      $statNextRewardCategory: $(".js-rewards-next-reward_category"),
+      $statNextCashcoins: $(".js-rewards-next-cashcoins"),
+      $statNextPriceMoney: $(".js-rewards-next-price_money")
     };
 
     this.render();
   },
 
   render: function(){
+    this.elements.$statCurrentRewardCategory.html(AdblockCash.visitor.current_reward_category.rank);
+    this.elements.$statCurrentCashcoins.html(AdblockCash.visitor.cashcoins);
+    this.elements.$statCurrentPriceMoney.html(AdblockCash.visitor.current_reward_category.price_money + " $");
+    this.elements.$statCurrentPayoutDate.html(AdblockCash.visitor.current_reward_category.payout_date);
+    this.elements.$statNextRow.toggle(!!AdblockCash.visitor.next_reward_category);
+    if (AdblockCash.visitor.next_reward_category) {
+      this.elements.$statNextRewardCategory.html(AdblockCash.visitor.next_reward_category.rank);
+      this.elements.$statNextCashcoins.html(AdblockCash.visitor.next_reward_category.required_cashcoins);
+      this.elements.$statNextPriceMoney.html(AdblockCash.visitor.next_reward_category.price_money + " $");
+    }
+
     this.elements.$topEarnedCashcoinsRowsContainer.html("");
 
     var domains = Object.keys(Prefs.stats_by_domain);
