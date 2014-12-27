@@ -944,6 +944,7 @@ var RewardsModule = {
 
     this.elements = {
       $topEarnedCashcoinsRowsContainer: $("#js-top-earned-cc-rows"),
+      $statCurrentRow: $(".js-rewards-current-row"),
       $statCurrentRewardCategory: $(".js-rewards-current-reward_category"),
       $statCurrentCashcoins: $(".js-rewards-current-cashcoins"),
       $statCurrentPriceMoney: $(".js-rewards-current-price_money"),
@@ -958,12 +959,15 @@ var RewardsModule = {
   },
 
   render: function(){
-    this.elements.$statCurrentRewardCategory.html(AdblockCash.visitor.current_reward_category.rank);
-    this.elements.$statCurrentCashcoins.html(AdblockCash.visitor.cashcoins);
-    this.elements.$statCurrentPriceMoney.html(AdblockCash.visitor.current_reward_category.price_money + " $");
-    this.elements.$statCurrentPayoutDate.html(AdblockCash.visitor.current_reward_category.payout_date);
-    this.elements.$statNextRow.toggle(!!AdblockCash.visitor.next_reward_category);
-    if (AdblockCash.visitor.next_reward_category) {
+    this.elements.$statCurrentRow.toggle(AdblockCash.visitor && AdblockCash.visitor.current_reward_category);
+    if (AdblockCash.visitor && AdblockCash.visitor.current_reward_category) {
+      this.elements.$statCurrentRewardCategory.html(AdblockCash.visitor.current_reward_category.rank);
+      this.elements.$statCurrentCashcoins.html(AdblockCash.visitor.cashcoins);
+      this.elements.$statCurrentPriceMoney.html(AdblockCash.visitor.current_reward_category.price_money + " $");
+      this.elements.$statCurrentPayoutDate.html(AdblockCash.visitor.current_reward_category.payout_date);
+    }
+    this.elements.$statNextRow.toggle(AdblockCash.visitor && AdblockCash.visitor.next_reward_category);
+    if (AdblockCash.visitor && AdblockCash.visitor.next_reward_category) {
       this.elements.$statNextRewardCategory.html(AdblockCash.visitor.next_reward_category.rank);
       this.elements.$statNextCashcoins.html(AdblockCash.visitor.next_reward_category.required_cashcoins);
       this.elements.$statNextPriceMoney.html(AdblockCash.visitor.next_reward_category.price_money + " $");
@@ -993,6 +997,7 @@ var StatisticsModule = {
     };
 
     this.elements = {
+      $topBlockedAdsContainer: $("#js-top-blocked-ads-container"),
       $topBlockedAdsRowsContainer: $("#js-top-blocked-ads-rows")
     };
 
@@ -1019,5 +1024,7 @@ var StatisticsModule = {
 
       this.elements.$topBlockedAdsRowsContainer.append(rowTemplate);
     }.bind(this));
+
+    this.elements.$topBlockedAdsContainer.toggle(domains.length > 0);
   }
 };

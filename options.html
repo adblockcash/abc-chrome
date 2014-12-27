@@ -328,86 +328,120 @@
               <i class="fa fa-money fa-section-icon"></i> Your CashCoins balance
             </h2>
 
-            <table class="table statgroups-table">
-              <tr>
-                <th>
-                  <div class="statgroup-label">
-                    Current category
-                  </div>
-                </th>
-                <td>
-                  <div class="statgroup-value">
-                    <span class="js-rewards-current-reward_category">4</span>
-                    <!-- <span class="js-tooltip red" title="In previous month, you've been in 3rd Reward Category">&darr;</span> -->
-                  </div>
-                  <div class="statgroup-title">Reward Category</div>
-                </td>
-                <td>
-                  <div class="statgroup-value">
-                    <span class="js-rewards-current-cashcoins">0</span>
-                    <!-- <span class="js-tooltip green" title="In previous month, you had 280 CC in the same point of time">&uarr;</span> -->
-                  </div>
-                  <div class="statgroup-title">Earned CC</div>
-                </td>
-                <td>
-                  <div class="js-tooltip" title="All users in this Reward Category will take part in a lottery with this reward">
+            <div class="sign-in text-center js-visitor-unavailable js-hide">
+              <h3>Sign in to <strong>Adblock Ca<span class="dollar-logo">$</span>h</strong></h3>
+              <h4 class="space-20">and start collecting your CashCoins right away.</h4>
+
+              <div class="sign-in-controls">
+                <!-- <button class="btn btn-default sign-in-button js-login-with-abc">
+                  <i class="fa fa-dollar"></i>
+                  <span>
+                    sign in with
+                    <br/>
+                    <strong>AdblockCa<span class="dollar-logo">$</span>h</strong>
+                  </span>
+                </button> -->
+                <button class="btn btn-default sign-in-button sign-in-button-facebook js-login-with-facebook">
+                  <i class="fa fa-facebook"></i>
+                  <span>
+                    sign in with
+                    <br/>
+                    <strong>Facebook</strong>
+                  </span>
+                </button>
+                <button class="btn btn-default sign-in-button sign-in-button-gplus js-login-with-google">
+                  <i class="fa fa-google-plus"></i>
+                  <span>
+                    sign in with
+                    <br/>
+                    <strong>Google+</strong>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div class="js-visitor-available">
+              <table class="table statgroups-table">
+                <tr>
+                  <th>
+                    <div class="statgroup-label">
+                      Current category
+                    </div>
+                  </th>
+                  <td>
                     <div class="statgroup-value">
-                      <span class="js-rewards-current-price_money">25 $</span>
+                      <span class="js-rewards-current-reward_category">4</span>
+                      <!-- <span class="js-tooltip red" title="In previous month, you've been in 3rd Reward Category">&darr;</span> -->
+                    </div>
+                    <div class="statgroup-title">Reward Category</div>
+                  </td>
+                  <td>
+                    <div class="statgroup-value">
+                      <span class="js-rewards-current-cashcoins">0</span>
+                      <!-- <span class="js-tooltip green" title="In previous month, you had 280 CC in the same point of time">&uarr;</span> -->
+                    </div>
+                    <div class="statgroup-title">Earned CC</div>
+                  </td>
+                  <td>
+                    <div class="js-tooltip" title="All users in this Reward Category will take part in a lottery with this reward">
+                      <div class="statgroup-value">
+                        <span class="js-rewards-current-price_money">25 $</span>
+                      </div>
+                      <div class="statgroup-title">Price Money</div>
+                    </div>
+                  </td>
+                  <td rowspan="2">
+                    <div class="js-tooltip" title="This is the moment lottery draw will take place, rewards will be payed out and all users' CashCoins accounts will be reset to 0">
+                      <div class="statgroup-value">
+                        <span class="js-rewards-current-payout_date">01.02.2015</span>
+                      </div>
+                      <div class="statgroup-title">Payout Date</div>
+                    </div>
+                  </td>
+                </tr>
+                <tr class="js-rewards-next-row">
+                  <th>
+                    <div class="statgroup-label">
+                      Next category
+                    </div>
+                  </th>
+                  <td>
+                    <div class="statgroup-value">
+                      <span class="js-rewards-next-reward_category">3</span>
+                    </div>
+                    <div class="statgroup-title">Reward Category</div>
+                  </td>
+                  <td>
+                    <div class="statgroup-value">
+                      <span class="js-rewards-next-cashcoins">100</span>
+                    </div>
+                    <div class="statgroup-title">Required CC</div>
+                  </td>
+                  <td>
+                    <div class="statgroup-value">
+                      <span class="js-rewards-next-price_money">50 $</span>
                     </div>
                     <div class="statgroup-title">Price Money</div>
-                  </div>
-                </td>
-                <td rowspan="2">
-                  <div class="js-tooltip" title="This is the moment lottery draw will take place, rewards will be payed out and all users' CashCoins accounts will be reset to 0">
-                    <div class="statgroup-value">
-                      <span class="js-rewards-current-payout_date">01.02.2015</span>
-                    </div>
-                    <div class="statgroup-title">Payout Date</div>
-                  </div>
-                </td>
-              </tr>
-              <tr class="js-rewards-next-row">
-                <th>
-                  <div class="statgroup-label">
-                    Next category
-                  </div>
-                </th>
-                <td>
-                  <div class="statgroup-value">
-                    <span class="js-rewards-next-reward_category">3</span>
-                  </div>
-                  <div class="statgroup-title">Reward Category</div>
-                </td>
-                <td>
-                  <div class="statgroup-value">
-                    <span class="js-rewards-next-cashcoins">100</span>
-                  </div>
-                  <div class="statgroup-title">Required CC</div>
-                </td>
-                <td>
-                  <div class="statgroup-value">
-                    <span class="js-rewards-next-price_money">50 $</span>
-                  </div>
-                  <div class="statgroup-title">Price Money</div>
-                </td>
-              </tr>
-            </table>
+                  </td>
+                </tr>
+              </table>
 
-            <h3>Top 5 websites by earned CashCoins</h3>
-            <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Website</th>
-                  <th>Earned CC</th>
-                </tr>
-              </thead>
-              <tbody id="js-top-earned-cc-rows">
-                <tr id="js-top-earned-cc-row-template">
-                  <td class="js-website-name">adblockcash.org</td>
-                  <td class="js-website-earned_cc">0 CC</td>
-                </tr>
-              </tbody>
-            </table>
+              <h3>Top 5 websites by earned CashCoins</h3>
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th>Website</th>
+                    <th>Earned CC</th>
+                  </tr>
+                </thead>
+                <tbody id="js-top-earned-cc-rows">
+                  <tr id="js-top-earned-cc-row-template">
+                    <td class="js-website-name">adblockcash.org</td>
+                    <td class="js-website-earned_cc">0 CC</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div class="settings-section">
@@ -659,7 +693,7 @@
                 <div class="statgroup-title">
                   on whitelisted websites
                 </div>
-                <i class="fa fa-long-arrow-down green statgroup-arrow"></i>
+                <i class="fa fa-long-arrow-down green statgroup-arrow js-visitor-available"></i>
               </div>
               <div class="statgroup">
                 <div class="statgroup-title">
@@ -669,10 +703,10 @@
                 <div class="statgroup-title">
                   on non-whitelisted websites
                 </div>
-                <i class="fa fa-long-arrow-down red statgroup-arrow"></i>
+                <i class="fa fa-long-arrow-down red statgroup-arrow js-visitor-available"></i>
               </div>
             </div>
-            <div class="statgroups">
+            <div class="statgroups js-visitor-available">
               <div class="statgroup">
                 <!-- <div class="statgroup-title">Earned CashCoins</div> -->
                 <!-- <div class="statgroup-value" id="js-stat-total_blocked_ads">0 CC</div> -->
@@ -687,21 +721,23 @@
               </div>
             </div>
 
-            <h3>Top 10 websites by blocked ads</h3>
-            <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <td>Website</td>
-                  <td>Number of blocked ads</td>
-                </tr>
-              </thead>
-              <tbody id="js-top-blocked-ads-rows">
-                <tr id="js-top-blocked-ads-row-template">
-                  <td class="js-website-name">adblockcash.org</td>
-                  <td class="js-website-blocked_ads">0</td>
-                </tr>
-              </tbody>
-            </table>
+            <div id="js-top-blocked-ads-container">
+              <h3>Top 10 websites by blocked ads</h3>
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <td>Website</td>
+                    <td>Number of blocked ads</td>
+                  </tr>
+                </thead>
+                <tbody id="js-top-blocked-ads-rows">
+                  <tr id="js-top-blocked-ads-row-template">
+                    <td class="js-website-name">adblockcash.org</td>
+                    <td class="js-website-blocked_ads">0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
