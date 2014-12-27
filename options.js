@@ -993,18 +993,16 @@ var RewardsModule = {
 
     this.elements.$topEarnedCashcoinsRowsContainer.html("");
 
-    var domains = Object.keys(Prefs.stats_by_domain);
-    domains.sort(function(domainA, domainB){
-      return (Prefs.stats_by_domain[domainB].earned_cc || 0) - (Prefs.stats_by_domain[domainA].earned_cc || 0);
-    });
-    domains.slice(0, 5).forEach(function(domain){
-      var rowTemplate = $(this._templates.topEarnedCashcoinsRow);
+    if (AdblockCash.visitor && AdblockCash.visitor.top_5_websites_by_earned_cc) {
+      AdblockCash.visitor.top_5_websites_by_earned_cc.forEach(function(website){
+        var rowTemplate = $(this._templates.topEarnedCashcoinsRow);
 
-      rowTemplate.find(".js-website-name").html(domain);
-      rowTemplate.find(".js-website-earned_cc").html((Prefs.stats_by_domain[domain].earned_cc || 0) + " CC");
+        rowTemplate.find(".js-website-name").html(website.domain);
+        rowTemplate.find(".js-website-earned_cc").html((website.earned_cashcoins || 0) + " CC");
 
-      this.elements.$topEarnedCashcoinsRowsContainer.append(rowTemplate);
-    }.bind(this));
+        this.elements.$topEarnedCashcoinsRowsContainer.append(rowTemplate);
+      }.bind(this));
+    }
   }
 };
 
