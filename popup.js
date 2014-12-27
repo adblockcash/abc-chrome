@@ -16,9 +16,9 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var backgroundPage = ext.backgroundPage.getWindow();
-var imports = ["require", "extractHostFromURL"];
-for (var i = 0; i < imports.length; i++)
+ var backgroundPage = ext.backgroundPage.getWindow();
+ var imports = ["require", "extractHostFromURL"];
+ for (var i = 0; i < imports.length; i++)
   window[imports[i]] = backgroundPage[imports[i]];
 
 var Filter = require("filterClasses").Filter;
@@ -61,29 +61,30 @@ window.addEventListener("DOMContentLoaded", init, false);
 function toggleEnabled()
 {
   var toggleWhitemodeCheckbox = document.getElementById("js-toggle-whitemode");
-  if (toggleWhitemodeCheckbox.checked)
-  {
-    var host = extractHostFromURL(page.url).replace(/^www\./, "");
-    var filter = Filter.fromText("@@||" + host + "^$document");
-    if (filter.subscriptions.length && filter.disabled)
+  var domain = extractHostFromURL(page.url).replace(/^www\./, "");
+
+  if (toggleWhitemodeCheckbox.checked) {
+    var filter = Filter.fromText("@@||" + domain + "^$document");
+    if (filter.subscriptions.length && filter.disabled) {
       filter.disabled = false;
-    else
-    {
+    } else {
       filter.disabled = false;
       FilterStorage.addFilter(filter);
     }
-  }
-  else
-  {
+
+    AdblockCash.blockWhitelistableDomain(domain);
+  } else {
     // Remove any exception rules applying to this URL
     var filter = isWhitelisted(page.url);
-    while (filter)
-    {
+    while (filter) {
       FilterStorage.removeFilter(filter);
-      if (filter.subscriptions.length)
+      if (filter.subscriptions.length) {
         filter.disabled = true;
+      }
       filter = isWhitelisted(page.url);
     }
+
+    AdblockCash.unblockWhitelistableDomain(domain);
   }
 
   rerender();

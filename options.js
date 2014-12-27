@@ -458,13 +458,26 @@ function addWhitelistedDomainFormSubmitHandler(event)
   addWhitelistedDomain(domain);
 }
 
-function addWhitelistedDomain(domain)
-{
+function addWhitelistedDomain(domain, blockInAdblockCash) {
+  if (blockInAdblockCash == null) {
+    blockInAdblockCash = true;
+  }
+  if (blockInAdblockCash && AdblockCash.isDomainWhitelistable(domain)) {
+    AdblockCash.unblockWhitelistableDomain(domain);
+  }
+
   var filterText = "@@||" + domain + "^$document";
   return FilterStorage.addFilter(Filter.fromText(filterText));
 }
 
-function removeWhitelistedDomain(domain) {
+function removeWhitelistedDomain(domain, blockInAdblockCash) {
+  if (blockInAdblockCash == null) {
+    blockInAdblockCash = true;
+  }
+  if (blockInAdblockCash && AdblockCash.isDomainWhitelistable(domain)) {
+    AdblockCash.blockWhitelistableDomain(domain);
+  }
+
   FilterStorage.removeFilter(Filter.fromText("@@||" + domain + "^$document"));
 }
 
@@ -925,13 +938,18 @@ var WhitelistableWebsitesModule = {
     console.debug("WhitelistableWebsitesModule.toggleAll(" + toggle + ")")
 
     if (toggle) {
-      this.getNonWhitelistedWebsites().forEach(function(website){
-        addWhitelistedDomain(website.domain);
-      }.bind(this));
+      this.getNonWhitelistedWebsites()
+        .filter(function(website){
+          return !AdblockCash.isWhitelistableDomainBlocked(website.domain);
+        })
+        .forEach(function(website){
+          addWhitelistedDomain(website.domain, false);
+        });
     } else {
-      this.getWhitelistedWebsites().forEach(function(website){
-        removeWhitelistedDomain(website.domain);
-      }.bind(this));
+      this.getWhitelistedWebsites()
+        .forEach(function(website){
+          removeWhitelistedDomain(website.domain, false);
+        });
     }
   }
 };
