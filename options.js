@@ -790,23 +790,23 @@ function updateVisitorNotificationSettings() {
 }
 
 function initializeUserAccountView() {
-  document.querySelector(".js-visitor-logout").addEventListener("click", function(){
+  $(".js-visitor-logout").click(function(){
     AdblockCash.logout();
   });
 
-  document.querySelector(".js-login-with-facebook").addEventListener("click", function(){
+  $(".js-login-with-facebook").click(function(){
     AdblockCash.loginWithProvider(window, "facebook").catch(function(error){
       alert("An error occured while logging in with Facebook: " + error);
     });
   });
 
-  document.querySelector(".js-login-with-google").addEventListener("click", function(){
+  $(".js-login-with-google").click(function(){
     AdblockCash.loginWithProvider(window, "google").catch(function(error){
       alert("An error occured while logging in with Google: " + error);
     });
   });
 
-  document.querySelector(".js-visitor-disconnect-paypal").addEventListener("click", function(){
+  $(".js-visitor-disconnect-paypal").click(function(){
     AdblockCash.updateVisitorAccount(window, {
       paypal_email: null
     }).catch(function(error) {
