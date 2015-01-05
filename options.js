@@ -1021,10 +1021,12 @@ var StatisticsModule = {
   },
 
   render: function(){
-    $("#js-stat-total_blocked_ads").html(Prefs.stats_total.blocked);
-    $("#js-stat-total_whitelisted_ads").html(Prefs.stats_total.earned);
-    $("#js-stat-total_missed_ads").html(Prefs.stats_total.missed);
+    $("#js-stat-total_blocked_ads").html(Prefs.stats_total.blocked || 0);
+    $("#js-stat-total_whitelisted_ads").html(Prefs.stats_total.earned || 0);
+    $("#js-stat-total_missed_ads").html(Prefs.stats_total.missed || 0);
+    // TODO
     $("#js-stat-earned_cc").html("0 CC");
+    // TODO
     $("#js-stat-missed_cc").html("0 CC");
 
     this.elements.$topBlockedAdsRowsContainer.html("");

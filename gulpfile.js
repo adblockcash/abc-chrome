@@ -8,7 +8,7 @@ var notify = require('gulp-notify');
 var plumber = require('gulp-plumber');
 var runSequence = require('run-sequence');
 
-var CHROME_COMMAND = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome";
+var CHROME_CLI_COMMAND = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome";
 
 var APP_ROOT = require("execSync").exec("pwd").stdout.trim() + "/";
 
@@ -23,6 +23,9 @@ var PATHS = {
 
 var _ENV_GLOBALS = {
   "default": {
+    // Call `gulp --platform=firefox` to change current browser destination.
+    // Supported platforms: chrome|firefox|opera|safari
+    PLATFORM: gutil.env.platform || "chrome",
   },
   "development": {
     ENV: "development",
@@ -92,13 +95,15 @@ gulp.task("build-dist", function(callback) {
   return runSequence(["bower:install", "scripts:generate-env"], "styles", callback);
 });
 
-gulp.task("buildtools:build-devenv", shell.task("./build.py -t chrome devenv"));
+gulp.task("buildtools:build-devenv", shell.task("./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
 
-gulp.task("build-zip", ["build-dist"], shell.task("./build.py -t chrome build adblockcashchrome.zip"));
+gulp.task("build-zip", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build adblockcash"+ GLOBALS.PLATFORM +".zip"));
 
-gulp.task("build-zip-release", ["build-dist"], shell.task("./build.py -t chrome build -r adblockcashchrome.zip"));
+gulp.task("build-zip-release", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build -r adblockcash"+ GLOBALS.PLATFORM +".zip"));
 
-gulp.task("build-package", ["build-zip-release"], shell.task("rm -rf /tmp/adblockcashchrome && unzip adblockcashchrome.zip -d /tmp/adblockcashchrome && " + CHROME_COMMAND + " --pack-extension=/tmp/adblockcashchrome --pack-extension-key=certificates/adblockcashchrome.pem"));
+if (GLOBALS.PLATFORM == "chrome") {
+  gulp.task("build-package", ["build-zip-release"], shell.task("rm -rf /tmp/adblockcashchrome && unzip adblockcashchrome.zip -d /tmp/adblockcashchrome && " + CHROME_CLI_COMMAND + " --pack-extension=/tmp/adblockcashchrome --pack-extension-key=certificates/adblockcashchrome.pem"));
+}
 
 gulp.task("build-devenv", function(callback) {
   return runSequence("build-dist", "buildtools:build-devenv", callback);
@@ -129,9 +134,9 @@ gulp.task("watch", function(){
 });
 
 
-gulp.task("deploy-zip", ["build-zip-release"], shell.task("scp adblockcashchrome.zip jt:./public_html/tmp/abc/ && echo \"ABC Chrome extension has been built and deployed to http://jt/tmp/abc/adblockcashchrome.zip .\""));
+gulp.task("deploy-zip", ["build-zip-release"], shell.task("scp adblockcash"+ GLOBALS.PLATFORM +".zip jt:./public_html/tmp/abc/ && echo \"ABC "+ GLOBALS.PLATFORM +" extension has been built and deployed to http://jt/tmp/abc/adblockcash"+ GLOBALS.PLATFORM +".zip .\""));
 
-gulp.task("deploy-package", ["build-package"], shell.task("scp /tmp/adblockcashchrome.crx jt:./public_html/tmp/abc/ && echo \"ABC Chrome extension has been built and deployed to http://jt/tmp/abc/adblockcashchrome.crx .\""));
+gulp.task("deploy-package", ["build-package"], shell.task("scp /tmp/adblockcash"+ GLOBALS.PLATFORM +".crx jt:./public_html/tmp/abc/ && echo \"ABC "+ GLOBALS.PLATFORM +" extension has been built and deployed to http://jt/tmp/abc/adblockcash"+ GLOBALS.PLATFORM +".crx .\""));
 
 gulp.task("deploy", ["deploy-zip", "deploy-package"]);
 
