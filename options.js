@@ -52,11 +52,6 @@ function loadOptions()
   $("#startSubscriptionSelection").click(startSubscriptionSelection);
   $("#js-subscriptionSelector").change(updateSubscriptionSelection);
   $("#js-addSubscription").click(addSubscription);
-  $("#js-toggle-whitelisting-websites").parent().click(function(event){
-    event.preventDefault();
-
-    WhitelistableWebsitesModule.toggleAll( $("#js-toggle-whitelisting-websites").prop("checked") );
-  });
   $("#js-whitelistForm").submit(addWhitelistedDomainFormSubmitHandler);
   $("#js-removeWhitelist").click(removeSelectedExcludedDomain);
   $("#js-customFilterForm").submit(addTypedFilter);
@@ -781,8 +776,15 @@ function updateVisitorNotificationSettings() {
 
   AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
     var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
-    notification_settings[settingName] = checkbox.checked;
+    if (AdblockCash.visitor.notification_settings[settingName] != checkbox.checked) {
+      notification_settings[settingName] = checkbox.checked;
+    }
   });
+
+  // If nothing has changed, skip the update.
+  if (Object.keys(notification_settings).length == 0) {
+    return;
+  }
 
   console.debug("Calling AdblockCash.updateNotificationSettings with ", notification_settings);
 
@@ -837,6 +839,8 @@ function initializeUserAccountView() {
   window.addEventListener("unload", function() {
     AdblockCash.removeListener("visitor.updated", updateVisitorDependantViews);
   }, false);
+
+  AdblockCash.refreshCurrentVisitor();
 }
 
 
@@ -861,6 +865,11 @@ var WhitelistableWebsitesModule = {
     window.addEventListener("unload", function() {
       AdblockCash.removeListener("whitelistableWebsites.updated", render);
     }.bind(this), false);
+
+    $("#js-toggle-whitelisting-websites").parent().click(function(event){
+      event.preventDefault();
+      WhitelistableWebsitesModule.toggleAll( $("#js-toggle-whitelisting-websites").prop("checked") );
+    });
 
     this.render();
   },
@@ -973,18 +982,24 @@ var RewardsModule = {
       $statNextPriceMoney: $(".js-rewards-next-price_money")
     };
 
+    var render = this.render.bind(this);
+    AdblockCash.addListener("visitor.updated", render);
+    window.addEventListener("unload", function() {
+      AdblockCash.removeListener("visitor.updated", render);
+    }, false);
+
     this.render();
   },
 
   render: function(){
-    this.elements.$statCurrentRow.toggle(AdblockCash.visitor && AdblockCash.visitor.current_reward_category);
+    this.elements.$statCurrentRow.toggle(!!(AdblockCash.visitor && AdblockCash.visitor.current_reward_category));
     if (AdblockCash.visitor && AdblockCash.visitor.current_reward_category) {
       this.elements.$statCurrentRewardCategory.html(AdblockCash.visitor.current_reward_category.rank);
       this.elements.$statCurrentCashcoins.html(AdblockCash.visitor.cashcoins);
       this.elements.$statCurrentPriceMoney.html(AdblockCash.visitor.current_reward_category.price_money + " $");
       this.elements.$statCurrentPayoutDate.html(AdblockCash.visitor.current_reward_category.payout_date);
     }
-    this.elements.$statNextRow.toggle(AdblockCash.visitor && AdblockCash.visitor.next_reward_category);
+    this.elements.$statNextRow.toggle(!!(AdblockCash.visitor && AdblockCash.visitor.next_reward_category));
     if (AdblockCash.visitor && AdblockCash.visitor.next_reward_category) {
       this.elements.$statNextRewardCategory.html(AdblockCash.visitor.next_reward_category.rank);
       this.elements.$statNextCashcoins.html(AdblockCash.visitor.next_reward_category.required_cashcoins);
@@ -993,7 +1008,7 @@ var RewardsModule = {
 
     this.elements.$topEarnedCashcoinsRowsContainer.html("");
 
-    if (AdblockCash.visitor && AdblockCash.visitor.top_5_websites_by_earned_cc) {
+    if (AdblockCash.visitor && AdblockCash.visitor.top_5_websites_by_earned_cc.length > 0) {
       AdblockCash.visitor.top_5_websites_by_earned_cc.forEach(function(website){
         var rowTemplate = $(this._templates.topEarnedCashcoinsRow);
 
@@ -1017,6 +1032,12 @@ var StatisticsModule = {
       $topBlockedAdsRowsContainer: $("#js-top-blocked-ads-rows")
     };
 
+    var render = this.render.bind(this);
+    AdblockCash.addListener("visitor.updated", render);
+    window.addEventListener("unload", function() {
+      AdblockCash.removeListener("visitor.updated", render);
+    }, false);
+
     this.render();
   },
 
@@ -1024,10 +1045,8 @@ var StatisticsModule = {
     $("#js-stat-total_blocked_ads").html(Prefs.stats_total.blocked || 0);
     $("#js-stat-total_whitelisted_ads").html(Prefs.stats_total.earned || 0);
     $("#js-stat-total_missed_ads").html(Prefs.stats_total.missed || 0);
-    // TODO
-    $("#js-stat-earned_cc").html("0 CC");
-    // TODO
-    $("#js-stat-missed_cc").html("0 CC");
+    $("#js-stat-earned_cc").html((AdblockCash.visitor.total_earned_cashcoins || 0) + " CC");
+    $("#js-stat-missed_cc").html((AdblockCash.visitor.total_missed_cashcoins || 0) + " CC");
 
     this.elements.$topBlockedAdsRowsContainer.html("");
     var domains = Object.keys(Prefs.stats_by_domain);
