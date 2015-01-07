@@ -383,7 +383,7 @@
                     <div class="statgroup-title">Earned CC</div>
                   </td>
                   <td>
-                    <div class="js-tooltip" title="All users in this Reward Category will take part in a lottery with this reward">
+                    <div class="js-tooltip" title="All users in this Reward Category will take part in a sweepstake with this reward">
                       <div class="statgroup-value">
                         <span class="js-rewards-current-price_money">25 $</span>
                       </div>
@@ -391,7 +391,7 @@
                     </div>
                   </td>
                   <td rowspan="2">
-                    <div class="js-tooltip" title="This is the moment lottery draw will take place, rewards will be payed out and all users' CashCoins accounts will be reset to 0">
+                    <div class="js-tooltip" title="This is the moment sweepstake draw will take place, rewards will be payed out and all users' CashCoins accounts will be reset to 0">
                       <div class="statgroup-value">
                         <span class="js-rewards-current-payout_date">01.02.2015</span>
                       </div>
@@ -447,112 +447,104 @@
           <div class="settings-section">
             <h2 class="section-heading"><i class="fa fa-question-circle fa-section-icon"></i>Sweepstakes</h2>
 
+<!-- start FAQ questions -->
+
 <div class="single-question">
   <h4 class="question-title">How many Reward Categories exist?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>Four.</p>
   </div>
 </div>
-
 <div class="single-question">
-  <h4 class="question-title">What are the lottery Reward Categories?</h4>
-  <div class="question-body js-hide">
-    <p>There are 4 different Reward Categories. At the beginning you start in the 4th category - which accumulates the last 40% of ABC users with the least amount of CashCoins. Then there are 3rd, 2nd and 1st categories, which consists of the next 30%, 20% and 10% of users.</p>
-    <p>That is, if you'll be in TOP 10% of users (by CashCoins amount) in the last day of the lottery, only you and those 10% of users will take part in a lottery for the main prize - 100$ ! </p>
-    <p>Every Reward Category has its' own lottery and reward. Below you can see the current numbers:</p>
-
+  <h4 class="question-title">What are the Reward Categories?</h4>
+  <div class="question-body collapse">
+    <p>There are 4 different Reward Categories. Based on the CashCoins you have collected you will be placed in a Reward Category.</p>
+    <p>Every Reward Category has its own sweepstakes and price money. In the table below you find an overview of the Reward Categories and prize money.</p>
     <table class="table">
-      <tr>
+      <tbody><tr>
         <th>Reward Category</th>
         <th>% of ABC users</th>
-        <th>Lottery Prize</th>
+        <th>Prize Money</th>
       </tr>
       <tr>
         <td>1st</td>
-        <td>Top 10%</td>
+        <td>Top 25%</td>
         <td>100 $</td>
       </tr>
       <tr>
         <td>2nd</td>
-        <td>Next 20% (11% - 30%)</td>
+        <td>Next 25% (26% - 50%)</td>
         <td>50 $</td>
       </tr>
       <tr>
         <td>3rd</td>
-        <td>Next 30% (31% - 60%)</td>
+        <td>Next 25% (51% - 75%)</td>
         <td>25 $</td>
       </tr>
       <tr>
         <td>4th</td>
-        <td>Next 40% (61% - 100%)</td>
+        <td>Next 25% (76% - 100%)</td>
         <td>10 $</td>
       </tr>
-    </table>
+    </tbody></table>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">Do I have the same chance to win in each category?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>Yes. Only the price money differs from category to category.</p>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">How can I advance to a higher category?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>By enabling whitelisting and visiting the whitelisted websites frequently. To increase your chances we recommend to do both.</p>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">Who can participate in sweepstakes?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>Every user aged 18 and older with a CashCoins balance larger than zero.</p>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">How frequently do the sweepstakes take place?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>The sweepstakes take place on the 1st day of each month.</p>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">How are the sweepstake winners selected?</h4>
-  <div class="question-body js-hide">
-    <p>Our system determines the sweepstake winner randomly to guarantee fair and unbiased Auslosungen. So all participants have the same chance.</p>
+  <div class="question-body collapse">
+    <p>Our system determines the sweepstake winner randomly to guarantee fair and unbiased draws. So all participants have the same chance.</p>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">When is it decided what sweepstake category I am in?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>Your category is “frozen” on the last day of each month at 23:59:59 CET before it is reset.</p>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">How am I going to be notified when I win?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>We will notify you by email and by notification in your user panel and browser extension</p>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">How do I get my price money when I win?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>We will pay out the price money to your bank or PayPal account depending on the payout option you have chosen in your account under Settings.</p>
   </div>
 </div>
-
 <div class="single-question">
   <h4 class="question-title">What happens after the sweepstakes winners have been announced?</h4>
-  <div class="question-body js-hide">
+  <div class="question-body collapse">
     <p>Your CashCoins balance will be reset.</p>
   </div>
 </div>
+
+<!-- end FAQ questions -->
           </div>
         </div>
 
@@ -595,7 +587,7 @@
               </div>
             </div>
 
-            <div class="usercard js-visitor-available js-hide">
+            <div class="usercard js-visitor-available">
               <img class="img-thumbnail avatar usercard-avatar" src="assets/images/avatar.png" />
               <div class="usercard-contents">
                 <h4 class="js-visitorEmail">john.doe@adblockcash.org</h4>
@@ -608,7 +600,7 @@
             </div>
           </div>
 
-          <div class="settings-section js-visitor-available js-hide">
+          <div class="settings-section js-visitor-available">
             <h3 class="section-heading">Notify me about</h3>
             <p>
               New features
@@ -630,7 +622,7 @@
             </p>
           </div>
 
-          <div class="settings-section js-visitor-available js-hide">
+          <div class="settings-section js-visitor-available">
             <h3 class="section-heading">Payouts</h3>
             <div class="js-visitor-paypal-available js-hide">
               <p>
@@ -780,16 +772,16 @@
             <strong><img src="assets/images/logo-icon.svg" alt="" height="35"/> adblockcash.org</strong>
           </a>
           <ul class="list-unstyled nav-pills">
-            <li><a href="#">Our mission</a></li>
-            <li><a href="#">Code of Conduct</a></li>
-            <li><a href="#">Source</a></li>
+            <li><a href="http://adblockcash.org/privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="http://github.com/adblockcash">Source</a></li>
           </ul>
         </div>
         <div class="col-sm-6 text-right share">
-          <p>Share with friends:
-            <a class="share-icon" href="#"><i class="fa fa-facebook"></i></a>
-            <a class="share-icon" href="#"><i class="fa fa-google-plus"></i></a>
-            <a class="share-icon" href="#"><i class="fa fa-twitter"></i></a>
+          <p>
+            Share with friends:
+            <a class="share-icon" href="https://www.facebook.com/pages/Adblock-Cash/620294074764125?ref=hl"><i class="fa fa-facebook"></i></a>
+            <a class="share-icon" href="https://plus.google.com/u/1/b/116347344017796622273/116347344017796622273/about"><i class="fa fa-google-plus"></i></a>
+            <a class="share-icon" href="https://twitter.com/adblockcash"><i class="fa fa-twitter"></i></a>
           </p>
         </div>
       </div>
