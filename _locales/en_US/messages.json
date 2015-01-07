@@ -31,13 +31,13 @@
   },
   "description_chrome": {
     "description": "Note: this cannot be longer than 132 characters",
-    "message": "The free adblock tool for Chrome: Blocks annoying video ads on YouTube, Facebook ads, banners and much more."
+    "message": "Block ads or earn cash. Join the adblock revolution and become part of our global community."
   },
   "description_opera": {
-    "message": "The free adblock tool for Opera: Blocks annoying video ads on YouTube, Facebook ads, banners and much more."
+    "message": "Block ads or earn cash. Join the adblock revolution and become part of our global community."
   },
   "description_safari": {
-    "message": "The free adblock tool for Safari: Blocks annoying video ads on YouTube, Facebook ads, banners and much more."
+    "message": "Block ads or earn cash. Join the adblock revolution and become part of our global community."
   },
   "disabled_for_site":
   {
