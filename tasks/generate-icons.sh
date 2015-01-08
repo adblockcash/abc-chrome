@@ -17,6 +17,8 @@ convert -density 19 \
   -background transparent $LOGO +antialias "icons/abc-16.png"
 convert -density 37 \
   -background transparent $LOGO +antialias "icons/abc-32.png"
+convert -density 74 \
+  -background transparent $LOGO +antialias "icons/abc-64.png"
 convert -density 147 \
   -background transparent $LOGO +antialias "icons/abc-128.png"
 
