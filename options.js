@@ -75,12 +75,10 @@ function loadOptions()
   // Show user's filters
   reloadFilters();
 
-  initializeFeatureSubscriptionsCheckboxes();
-
-  initializeUserAccountView();
-
   initializeQuestionCollapses();
 
+  AdblockingModule.init();
+  VisitorModule.init();
   WhitelistableWebsitesModule.init();
   RewardsModule.init();
   StatisticsModule.init();
@@ -679,170 +677,173 @@ function refreshDOM() {
   initializeSwitchery();
 }
 
-function initializeFeatureSubscriptionsCheckboxes() {
-  // Load subscriptions for features
-  var featureSubscriptions = [
+
+var AdblockingModule = {
+  init: function() {
+    // Load subscriptions for features
+    var featureSubscriptions = [
+      {
+        feature: "malware",
+        homepage: "http://malwaredomains.com/",
+        title: "Malware Domains",
+        url: "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt"
+      },
+      {
+        feature: "social",
+        homepage: "https://www.fanboy.co.nz/",
+        title: "Fanboy's Social Blocking List",
+        url: "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
+      },
+      {
+        feature: "tracking",
+        homepage: "https://easylist.adblockplus.org/",
+        title: "EasyPrivacy",
+        url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+      }
+    ];
+
+    function isSubscriptionEnabled(featureSubscription)
     {
-      feature: "malware",
-      homepage: "http://malwaredomains.com/",
-      title: "Malware Domains",
-      url: "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt"
-    },
-    {
-      feature: "social",
-      homepage: "https://www.fanboy.co.nz/",
-      title: "Fanboy's Social Blocking List",
-      url: "https://easylist-downloads.adblockplus.org/fanboy-social.txt"
-    },
-    {
-      feature: "tracking",
-      homepage: "https://easylist.adblockplus.org/",
-      title: "EasyPrivacy",
-      url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt"
+      return featureSubscription.url in FilterStorage.knownSubscriptions
+        && !Subscription.fromURL(featureSubscription.url).disabled;
     }
-  ];
 
-  function isSubscriptionEnabled(featureSubscription)
-  {
-    return featureSubscription.url in FilterStorage.knownSubscriptions
-      && !Subscription.fromURL(featureSubscription.url).disabled;
-  }
+    // Set up feature buttons linked to subscriptions
+    featureSubscriptions.forEach(function setToggleSubscriptionButton(featureSubscription)
+    {
+      var feature = featureSubscription.feature;
 
-  // Set up feature buttons linked to subscriptions
-  featureSubscriptions.forEach(function setToggleSubscriptionButton(featureSubscription)
-  {
-    var feature = featureSubscription.feature;
+      var checkboxElement = document.querySelector("#js-toggle-" + feature);
+      Utils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
 
-    var checkboxElement = document.querySelector("#js-toggle-" + feature);
-    Utils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
+      checkboxElement.addEventListener("change", function(event) {
+        var subscription = Subscription.fromURL(featureSubscription.url);
 
-    checkboxElement.addEventListener("change", function(event) {
-      var subscription = Subscription.fromURL(featureSubscription.url);
+        if (isSubscriptionEnabled(featureSubscription) && !checkboxElement.checked) {
+          FilterStorage.removeSubscription(subscription);
+        } else if (!isSubscriptionEnabled(featureSubscription) && checkboxElement.checked) {
+          subscription.disabled = false;
+          subscription.title = featureSubscription.title;
+          subscription.homepage = featureSubscription.homepage;
+          FilterStorage.addSubscription(subscription);
+          if (!subscription.lastDownload) {
+            Synchronizer.execute(subscription);
+          }
+        }
+      }, false);
+    });
 
-      if (isSubscriptionEnabled(featureSubscription) && !checkboxElement.checked) {
-        FilterStorage.removeSubscription(subscription);
-      } else if (!isSubscriptionEnabled(featureSubscription) && checkboxElement.checked) {
-        subscription.disabled = false;
-        subscription.title = featureSubscription.title;
-        subscription.homepage = featureSubscription.homepage;
-        FilterStorage.addSubscription(subscription);
-        if (!subscription.lastDownload) {
-          Synchronizer.execute(subscription);
+    function filterListener(action, item) {
+      if (/^subscription\.(added|removed|disabled)$/.test(action)) {
+        for (var i = 0; i < featureSubscriptions.length; i++) {
+          var featureSubscription = featureSubscriptions[i];
+          if (featureSubscription.url === item.url) {
+            var checkboxElement = document.querySelector("#js-toggle-" + featureSubscription.feature);
+            Utils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
+          }
         }
       }
+    }
+
+    FilterNotifier.addListener(filterListener);
+    window.addEventListener("unload", function() {
+      FilterNotifier.removeListener(filterListener);
     }, false);
-  });
-
-  function filterListener(action, item) {
-    if (/^subscription\.(added|removed|disabled)$/.test(action)) {
-      for (var i = 0; i < featureSubscriptions.length; i++) {
-        var featureSubscription = featureSubscriptions[i];
-        if (featureSubscription.url === item.url) {
-          var checkboxElement = document.querySelector("#js-toggle-" + featureSubscription.feature);
-          Utils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
-        }
-      }
-    }
   }
+};
 
-  FilterNotifier.addListener(filterListener);
-  window.addEventListener("unload", function() {
-    FilterNotifier.removeListener(filterListener);
-  }, false);
-}
+var VisitorModule = {
+  init: function() {
+    $(".js-visitor-logout").click(function(){
+      AdblockCash.logout();
+    });
 
+    $(".js-login-with-facebook").click(function(){
+      AdblockCash.loginWithProvider(window, "facebook").catch(function(error){
+        alert("An error occured while logging in with Facebook: " + error);
+      });
+    });
 
-// Enable all handlers that should be called when the user will log in / log out.
-function updateVisitorDependantViews() {
-  $(".js-visitor-available").toggle(!!AdblockCash.visitor);
-  $(".js-visitor-unavailable").toggle(!AdblockCash.visitor);
+    $(".js-login-with-google").click(function(){
+      AdblockCash.loginWithProvider(window, "google").catch(function(error){
+        alert("An error occured while logging in with Google: " + error);
+      });
+    });
 
-  if (AdblockCash.visitor) {
-    $(".js-visitorEmail").html(AdblockCash.visitor.email);
-    $(".js-visitor-paypal-available").toggle( !!AdblockCash.visitor.paypal_email );
-    $(".js-visitor-paypal-unavailable").toggle( !AdblockCash.visitor.paypal_email );
-    $(".js-visitor-paypal_email").html(AdblockCash.visitor.paypal_email);
-    $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
+    $(".js-visitor-disconnect-paypal").click(function(){
+      AdblockCash.updateVisitorAccount(window, {
+        paypal_email: null
+      }).catch(function(error) {
+        alert("An error occured while updating account settings: " + error);
+      });
+    });
+
+    $(".js-visitor-settings-form").submit(function(event){
+      event.preventDefault();
+
+      AdblockCash.updateVisitorAccount(window, {
+        paypal_email: $(".js-visitor-paypal_email-input").val()
+      }).catch(function(error) {
+        alert("An error occured while updating account settings: " + error);
+      });
+    });
+
+    debounced_updateVisitorNotificationSettings = Utils.debounce(VisitorModule.updateVisitorNotificationSettings, 1000);
 
     AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
       var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
-      Utils.setCheckboxValue(checkbox, (AdblockCash.visitor.notification_settings && !!AdblockCash.visitor.notification_settings[settingName]));
+      checkbox.addEventListener("change", debounced_updateVisitorNotificationSettings);
     });
-  }
-}
 
-function updateVisitorNotificationSettings() {
-  var notification_settings = {};
+    VisitorModule.updateVisitorDependantViews();
 
-  AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
-    var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
-    if (AdblockCash.visitor.notification_settings[settingName] != checkbox.checked) {
-      notification_settings[settingName] = checkbox.checked;
+    AdblockCash.addListener("visitor.updated", VisitorModule.updateVisitorDependantViews);
+    window.addEventListener("unload", function() {
+      AdblockCash.removeListener("visitor.updated", VisitorModule.updateVisitorDependantViews);
+    }, false);
+
+    AdblockCash.refreshCurrentVisitor();
+  },
+
+  // Enable all handlers that should be called when the user will log in / log out.
+  updateVisitorDependantViews: function () {
+    $(".js-visitor-available").toggle(!!AdblockCash.visitor);
+    $(".js-visitor-unavailable").toggle(!AdblockCash.visitor);
+
+    if (AdblockCash.visitor) {
+      $(".js-visitorEmail").html(AdblockCash.visitor.email);
+      $(".js-visitor-paypal-available").toggle( !!AdblockCash.visitor.paypal_email );
+      $(".js-visitor-paypal-unavailable").toggle( !AdblockCash.visitor.paypal_email );
+      $(".js-visitor-paypal_email").html(AdblockCash.visitor.paypal_email);
+      $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
+
+      AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
+        var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
+        Utils.setCheckboxValue(checkbox, (AdblockCash.visitor.notification_settings && !!AdblockCash.visitor.notification_settings[settingName]));
+      });
     }
-  });
+  },
 
-  // If nothing has changed, skip the update.
-  if (Object.keys(notification_settings).length == 0) {
-    return;
+  updateVisitorNotificationSettings: function() {
+    var notification_settings = {};
+
+    AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
+      var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
+      if (AdblockCash.visitor.notification_settings[settingName] != checkbox.checked) {
+        notification_settings[settingName] = checkbox.checked;
+      }
+    });
+
+    // If nothing has changed, skip the update.
+    if (Object.keys(notification_settings).length == 0) {
+      return;
+    }
+
+    console.debug("Calling AdblockCash.updateNotificationSettings with ", notification_settings);
+
+    AdblockCash.updateNotificationSettings(window, notification_settings);
   }
-
-  console.debug("Calling AdblockCash.updateNotificationSettings with ", notification_settings);
-
-  AdblockCash.updateNotificationSettings(window, notification_settings);
-}
-
-function initializeUserAccountView() {
-  $(".js-visitor-logout").click(function(){
-    AdblockCash.logout();
-  });
-
-  $(".js-login-with-facebook").click(function(){
-    AdblockCash.loginWithProvider(window, "facebook").catch(function(error){
-      alert("An error occured while logging in with Facebook: " + error);
-    });
-  });
-
-  $(".js-login-with-google").click(function(){
-    AdblockCash.loginWithProvider(window, "google").catch(function(error){
-      alert("An error occured while logging in with Google: " + error);
-    });
-  });
-
-  $(".js-visitor-disconnect-paypal").click(function(){
-    AdblockCash.updateVisitorAccount(window, {
-      paypal_email: null
-    }).catch(function(error) {
-      alert("An error occured while updating account settings: " + error);
-    });
-  });
-
-  $(".js-visitor-settings-form").submit(function(event){
-    event.preventDefault();
-
-    AdblockCash.updateVisitorAccount(window, {
-      paypal_email: $(".js-visitor-paypal_email-input").val()
-    }).catch(function(error) {
-      alert("An error occured while updating account settings: " + error);
-    });
-  });
-
-  debounced_updateVisitorNotificationSettings = Utils.debounce(updateVisitorNotificationSettings, 1000);
-
-  AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
-    var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
-    checkbox.addEventListener("change", debounced_updateVisitorNotificationSettings);
-  });
-
-  updateVisitorDependantViews();
-
-  AdblockCash.addListener("visitor.updated", updateVisitorDependantViews);
-  window.addEventListener("unload", function() {
-    AdblockCash.removeListener("visitor.updated", updateVisitorDependantViews);
-  }, false);
-
-  AdblockCash.refreshCurrentVisitor();
-}
-
+};
 
 var WhitelistableWebsitesModule = {
   _templates: {},
