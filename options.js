@@ -754,23 +754,31 @@ var AdblockingModule = {
 
 var VisitorModule = {
   init: function() {
-    $(".js-visitor-logout").click(function(){
+    $(".js-visitor-logout").click(function(event){
+      event.preventDefault();
+
       AdblockCash.logout();
     });
 
-    $(".js-login-with-facebook").click(function(){
+    $(".js-login-with-facebook").click(function(event){
+      event.preventDefault();
+
       AdblockCash.loginWithProvider(window, "facebook").catch(function(error){
         alert("An error occured while logging in with Facebook: " + error);
       });
     });
 
-    $(".js-login-with-google").click(function(){
+    $(".js-login-with-google").click(function(event){
+      event.preventDefault();
+
       AdblockCash.loginWithProvider(window, "google").catch(function(error){
         alert("An error occured while logging in with Google: " + error);
       });
     });
 
-    $(".js-visitor-disconnect-paypal").click(function(){
+    $(".js-visitor-disconnect-paypal").click(function(event){
+      event.preventDefault();
+
       AdblockCash.updateVisitorAccount(window, {
         paypal_email: null
       }).catch(function(error) {
@@ -1009,7 +1017,9 @@ var RewardsModule = {
 
     this.elements.$topEarnedCashcoinsRowsContainer.html("");
 
-    if (AdblockCash.visitor && AdblockCash.visitor.top_5_websites_by_earned_cc.length > 0) {
+    if (AdblockCash.visitor
+      && AdblockCash.visitor.top_5_websites_by_earned_cc
+      && AdblockCash.visitor.top_5_websites_by_earned_cc.length > 0) {
       AdblockCash.visitor.top_5_websites_by_earned_cc.forEach(function(website){
         var rowTemplate = $(this._templates.topEarnedCashcoinsRow);
 
@@ -1046,8 +1056,8 @@ var StatisticsModule = {
     $("#js-stat-total_blocked_ads").html(Prefs.stats_total.blocked || 0);
     $("#js-stat-total_whitelisted_ads").html(Prefs.stats_total.earned || 0);
     $("#js-stat-total_missed_ads").html(Prefs.stats_total.missed || 0);
-    $("#js-stat-earned_cc").html((AdblockCash.visitor.total_earned_cashcoins || 0) + " CC");
-    $("#js-stat-missed_cc").html((AdblockCash.visitor.total_missed_cashcoins || 0) + " CC");
+    $("#js-stat-earned_cc").html(((AdblockCash.visitor && AdblockCash.visitor.total_earned_cashcoins) || 0) + " CC");
+    $("#js-stat-missed_cc").html(((AdblockCash.visitor && AdblockCash.visitor.total_missed_cashcoins) || 0) + " CC");
 
     this.elements.$topBlockedAdsRowsContainer.html("");
     var domains = Object.keys(Prefs.stats_by_domain);
