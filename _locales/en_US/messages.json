@@ -106,9 +106,6 @@
   "notification_without_buttons": {
     "message": "Click on the notification to open all links in it."
   },
-  "options": {
-    "message": "Adblock Cash Options"
-  },
   "options_short": {
     "description": "Link to the options page from the popup balloon.",
     "message": "Options"

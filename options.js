@@ -43,9 +43,6 @@ var fakeCheckboxChangeEvent = 0;
 // Loads options from localStorage and sets UI elements accordingly
 function loadOptions()
 {
-  // Set page title to i18n version of "Adblock Cash Options"
-  document.title = i18n.getMessage("options");
-
   // Add event listeners
   window.addEventListener("unload", unloadOptions, false);
   $(".js-updateFilterLists").click(updateFilterLists);
@@ -796,21 +793,57 @@ var VisitorModule = {
       });
     });
 
-    debounced_updateVisitorNotificationSettings = Utils.debounce(VisitorModule.updateVisitorNotificationSettings, 1000);
+    debounced_updateVisitorNotificationSettings = Utils.debounce(this.updateVisitorNotificationSettings, 1000);
 
     AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
       var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
       checkbox.addEventListener("change", debounced_updateVisitorNotificationSettings);
     });
 
-    VisitorModule.updateVisitorDependantViews();
-
-    AdblockCash.addListener("visitor.updated", VisitorModule.updateVisitorDependantViews);
+    var _updateVisitorDependantViews = this.updateVisitorDependantViews.bind(this);
+    AdblockCash.addListener("visitor.updated", _updateVisitorDependantViews);
     window.addEventListener("unload", function() {
-      AdblockCash.removeListener("visitor.updated", VisitorModule.updateVisitorDependantViews);
-    }, false);
+      AdblockCash.removeListener("visitor.updated", _updateVisitorDependantViews);
+    }.bind(this), false);
+    _updateVisitorDependantViews();
 
     AdblockCash.refreshCurrentVisitor();
+
+    this.setupCountriesList();
+  },
+
+  setupCountriesList: function() {
+    AdblockCash.getCountriesList().then(function(countries){
+      var optionsHtml = "<option value=''>--- select ---</option>" + countries.map(function(country){
+        return "<option value='" + country.code + "'>" + country.name + "</option>";
+      });
+
+      $(".js-visitor-country_code-select").html(optionsHtml);
+      this.setCurrentCountry(AdblockCash.visitor.country_code);
+    }.bind(this));
+
+    $(".js-visitor-country_code-select").change(function(){
+      if (AdblockCash.visitor && $(".js-visitor-country_code-select").val() != AdblockCash.visitor.country_code) {
+        this.setCurrentCountry(AdblockCash.visitor.country_code, false);
+
+        AdblockCash.updateVisitorAccount(window, {
+          country_code: $(".js-visitor-country_code-select").val()
+        }).catch(function(error) {
+          alert("An error occured while updating account settings: " + error);
+        });
+      }
+    }.bind(this))
+  },
+
+  setCurrentCountry: function(countryCode, changeSelect) {
+    if (changeSelect == null) {
+      changeSelect = true;
+    }
+
+    if (changeSelect) {
+      $(".js-visitor-country_code-select").val(countryCode);
+    }
+    $(".js-visitor-country_code-flag").removeClass().addClass("js-visitor-country_code-flag flag-icon flag-icon-" + (countryCode || "").toLowerCase());
   },
 
   // Enable all handlers that should be called when the user will log in / log out.
@@ -824,6 +857,7 @@ var VisitorModule = {
       $(".js-visitor-paypal-unavailable").toggle( !AdblockCash.visitor.paypal_email );
       $(".js-visitor-paypal_email").html(AdblockCash.visitor.paypal_email);
       $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
+      this.setCurrentCountry(AdblockCash.visitor.country_code);
 
       AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
         var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];

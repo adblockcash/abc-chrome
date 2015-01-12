@@ -311,3 +311,26 @@
   text-align: center;
   font-size: 18px;
 }
+
+//
+// SETTINGS TAB
+//
+
+.usercard {
+  position: relative;
+
+  .usercard-avatar {
+    position: absolute;
+  }
+
+  .usercard-contents {
+    margin-left: 110px;
+
+    .flag-icon {
+      position: absolute;
+      left: -1.5em;
+      line-height: inherit;
+      top: 0.3em;
+    }
+  }
+}

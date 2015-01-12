@@ -1,6 +1,8 @@
 @import "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";
 @import "http://fonts.googleapis.com/css?family=Open+Sans:300,400,700&.css";
-@import "http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css";
+@import "../../assets/bower/font-awesome/css/font-awesome.css";
+@import "../../assets/bower/flag-icon-css/css/flag-icon.css";
+
 
 body {
   font-family: $main-font;
@@ -77,17 +79,6 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     right: 0;
     font-size: .8em;
-  }
-}
-
-.usercard {
-  .usercard-avatar {
-    display: inline-block;
-    margin-right: 20px;
-  }
-
-  .usercard-contents {
-    display: inline-block;
   }
 }
 
