@@ -1,7 +1,8 @@
 @import "variables";
+@import "mixins";
 
-@import "switchery";
-@import "theme";
+@import "theme/_switchery";
+@import "theme/_theme";
 
 @import "pages/options";
 @import "pages/firstRun";

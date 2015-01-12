@@ -55,9 +55,9 @@
       </h1>
     </div>
 
-    <div class="settings-tabs-container">
+    <div class="settings-nav">
       <div class="container">
-        <ul class="nav nav-justified settings-tabs" role="tablist">
+        <ul class="nav nav-justified nav-abc" role="tablist">
           <li role="presentation" class="active"><a href="#adblocking" aria-controls="adblocking" role="tab" data-toggle="tab">Adblocking</a></li>
           <li role="presentation"><a href="#whitelisting" aria-controls="whitelisting" role="tab" data-toggle="tab">Whitelisting</a></li>
           <li role="presentation"><a href="#rewards" aria-controls="rewards" role="tab" data-toggle="tab">Rewards</a></li>
@@ -233,6 +233,7 @@
                 <input type="checkbox" class="js-switch" checked id="js-toggle-whitelisting-websites" />
               </span>
             </h2>
+
             <p>
               Allow <strong>unobtrusive ads</strong> on whitelisted websites.
             </p>
@@ -240,6 +241,12 @@
               Unlock special features and win rewards while browsing them.
             </p>
           </div>
+
+          <ul class="nav nav-pills pull-right">
+            <li class="active"><a href="#">Global</a></li>
+            <li><a href="#">Local</a></li>
+            <li><a href="#">Other</a></li>
+          </ul>
 
           <div class="whitelistable-websites-section" id="js-whitelisted-websites-section">
             <h3>Whitelisted websites</h3>
@@ -671,7 +678,7 @@
             <div class="section-heading">
               <h2><i class="fa fa-line-chart fa-section-icon"></i> Statistics</h2>
 
-              <!-- <ul class="nav nav-tabs nav-justified settings-tabs">
+              <!-- <ul class="nav nav-tabs nav-justified nav-abc">
                 <li class="active"><a href="#">Today</a></li>
                 <li><a href="#">Yesterday</a></li>
                 <li><a href="#">This week</a></li>

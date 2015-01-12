@@ -1,16 +1,8 @@
-@import "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css";
 @import "http://fonts.googleapis.com/css?family=Open+Sans:300,400,700&.css";
 @import "../../assets/bower/font-awesome/css/font-awesome.css";
 @import "../../assets/bower/flag-icon-css/css/flag-icon.css";
 
-
-body {
-  font-family: $main-font;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: $header-font;
-}
+@import "bootstrap/_bootstrap";
 
 .container {
   max-width: 980px;
