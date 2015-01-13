@@ -76,7 +76,7 @@ function loadOptions()
 
   AdblockingModule.init();
   VisitorModule.init();
-  WhitelistableWebsitesModule.init();
+  CashableWebsitesModule.init();
   RewardsModule.init();
   StatisticsModule.init();
 
@@ -117,7 +117,7 @@ function reloadFilters()
   var userFilters = backgroundPage.getUserFilters();
   populateList("js-userFiltersBox", userFilters.filters);
   populateList("js-excludedDomainsBox", userFilters.exceptions.filter(function(domain){
-    return !AdblockCash.isDomainWhitelistable(domain);
+    return !AdblockCash.isDomainCashable(domain);
   }));
 }
 
@@ -379,10 +379,10 @@ function onFilterChange(action, item, param1, param2)
     case "filter.added":
       if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text)) {
         var domain = RegExp.$1;
-        if (!AdblockCash.isDomainWhitelistable(domain)) {
+        if (!AdblockCash.isDomainCashable(domain)) {
           appendToListBox("js-excludedDomainsBox", domain);
         }
-        WhitelistableWebsitesModule.render();
+        CashableWebsitesModule.render();
       } else {
         appendToListBox("js-userFiltersBox", item.text);
       }
@@ -390,10 +390,10 @@ function onFilterChange(action, item, param1, param2)
     case "filter.removed":
       if (item instanceof WhitelistFilter && /^@@\|\|([^\/:]+)\^\$document$/.test(item.text)) {
         var domain = RegExp.$1;
-        if (!AdblockCash.isDomainWhitelistable(domain)) {
+        if (!AdblockCash.isDomainCashable(domain)) {
           removeFromListBox("js-excludedDomainsBox", domain);
         }
-        WhitelistableWebsitesModule.render();
+        CashableWebsitesModule.render();
       } else {
         removeFromListBox("js-userFiltersBox", item.text);
       }
@@ -452,8 +452,8 @@ function addWhitelistedDomain(domain, blockInAdblockCash) {
   if (blockInAdblockCash == null) {
     blockInAdblockCash = true;
   }
-  if (blockInAdblockCash && AdblockCash.isDomainWhitelistable(domain)) {
-    AdblockCash.unblockWhitelistableDomain(domain);
+  if (blockInAdblockCash && AdblockCash.isDomainCashable(domain)) {
+    AdblockCash.unblockCashableDomain(domain);
   }
 
   var filterText = "@@||" + domain + "^$document";
@@ -464,8 +464,8 @@ function removeWhitelistedDomain(domain, blockInAdblockCash) {
   if (blockInAdblockCash == null) {
     blockInAdblockCash = true;
   }
-  if (blockInAdblockCash && AdblockCash.isDomainWhitelistable(domain)) {
-    AdblockCash.blockWhitelistableDomain(domain);
+  if (blockInAdblockCash && AdblockCash.isDomainCashable(domain)) {
+    AdblockCash.blockCashableDomain(domain);
   }
 
   FilterStorage.removeFilter(Filter.fromText("@@||" + domain + "^$document"));
@@ -887,13 +887,13 @@ var VisitorModule = {
   }
 };
 
-var WhitelistableWebsitesModule = {
+var CashableWebsitesModule = {
   _templates: {},
   elements: {},
 
   init: function() {
     this._templates = {
-      website: $("#js-whitelistable-website-template").remove()[0].outerHTML
+      website: $("#js-cashable-website-template").remove()[0].outerHTML
     };
 
     this.elements = {
@@ -904,17 +904,36 @@ var WhitelistableWebsitesModule = {
     };
 
     var render = this.render.bind(this);
-    AdblockCash.addListener("whitelistableWebsites.updated", render);
+    AdblockCash.addListener("cashableWebsites.updated", render);
     window.addEventListener("unload", function() {
-      AdblockCash.removeListener("whitelistableWebsites.updated", render);
+      AdblockCash.removeListener("cashableWebsites.updated", render);
     }.bind(this), false);
 
     $("#js-toggle-whitelisting-websites").parent().click(function(event){
       event.preventDefault();
-      WhitelistableWebsitesModule.toggleAll( $("#js-toggle-whitelisting-websites").prop("checked") );
+      CashableWebsitesModule.toggleAll( $("#js-toggle-whitelisting-websites").prop("checked") );
     });
 
+    $(".js-cashable-toggle-region-category").click(function(event){
+      event.preventDefault();
+
+      var regionCategory = $(this).data("regionCategory");
+      CashableWebsitesModule.toggleRegionCategory(regionCategory);
+    })
+    this.toggleRegionCategory("global");
+
     this.render();
+  },
+
+  toggleRegionCategory: function(regionCategory) {
+    if (this.__regionCategory == regionCategory) {
+      return;
+    }
+
+    $(".js-cashable-toggle-region-category").each(function(){
+      $(this).parent().removeClass("active");
+    });
+    $(".js-cashable-toggle-region-category-" + regionCategory).parent().addClass("active");
   },
 
   render: function() {
@@ -967,7 +986,7 @@ var WhitelistableWebsitesModule = {
   },
 
   getWebsites: function() {
-    return AdblockCash.whitelistableWebsites;
+    return AdblockCash.cashableWebsites;
   },
 
   getWhitelistedWebsites: function() {
@@ -987,12 +1006,12 @@ var WhitelistableWebsitesModule = {
   },
 
   toggleAll: function(toggle){
-    console.debug("WhitelistableWebsitesModule.toggleAll(" + toggle + ")")
+    console.debug("CashableWebsitesModule.toggleAll(" + toggle + ")")
 
     if (toggle) {
       this.getNonWhitelistedWebsites()
         .filter(function(website){
-          return !AdblockCash.isWhitelistableDomainBlocked(website.domain);
+          return !AdblockCash.isCashableDomainBlocked(website.domain);
         })
         .forEach(function(website){
           addWhitelistedDomain(website.domain, false);

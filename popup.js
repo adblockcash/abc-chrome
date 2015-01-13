@@ -72,7 +72,7 @@ function toggleEnabled()
       FilterStorage.addFilter(filter);
     }
 
-    AdblockCash.blockWhitelistableDomain(domain);
+    AdblockCash.blockCashableDomain(domain);
   } else {
     // Remove any exception rules applying to this URL
     var filter = isWhitelisted(page.url);
@@ -84,7 +84,7 @@ function toggleEnabled()
       filter = isWhitelisted(page.url);
     }
 
-    AdblockCash.unblockWhitelistableDomain(domain);
+    AdblockCash.unblockCashableDomain(domain);
   }
 
   rerender();
@@ -97,16 +97,16 @@ function rerender() {
   $(".js-" + adblockStatus).show();
 
   // Disable / Fill in "x CC earned"
-  var whitelistableWebsite = AdblockCash.isDomainWhitelistable(page.domain);
+  var cashableWebsite = AdblockCash.isDomainCashable(page.domain);
   if (adblockStatus === "whitelisted") {
     $("#js-website-cc-stats").show();
-    $("#js-website-cc-stats").html("<strong>" + whitelistableWebsite.cashcoins_per_visit + "</strong> CC earned");
+    $("#js-website-cc-stats").html("<strong>" + cashableWebsite.cashcoins_per_visit + "</strong> CC earned");
   } else {
     $("#js-website-cc-stats").hide();
   }
 
-  if (whitelistableWebsite) {
-    $(".js-website-cashcoins_per_visit").html(whitelistableWebsite.cashcoins_per_visit);
+  if (cashableWebsite) {
+    $(".js-website-cashcoins_per_visit").html(cashableWebsite.cashcoins_per_visit);
   }
 }
 
