@@ -253,9 +253,19 @@
                   <a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-other" data-region-category="other">Other</a>
                 </li>
               </ul>
+
+              <div class="whitelisting-region-country-select js-cashable-toggle-region-category-when-active js-cashable-toggle-region-category-local-active js-cashable-choose-local-country_code">
+                <label id="cashable-choose-local-country_code-select">Choose your local country:</label>
+                <i class="flag-icon js-visitor-country_code-flag"></i>
+                <select class="form-control js-visitor-country_code-select" id="cashable-choose-local-country_code-select">
+                  <option value=''>--- select ---</option>
+                </select>
+              </div>
+
               <div class="whitelisting-region-country-select js-cashable-toggle-region-category-when-active js-cashable-toggle-region-category-other-active">
+                <label id="cashable-choose-local-country_code-select">Choose country:</label>
                 <i class="flag-icon js-cashable-other_country_code-flag"></i>
-                <select class="form-control js-cashable-other_country_code-select">
+                <select class="form-control js-cashable-other_country_code-select" id="cashable-choose-other-country_code-select">
                   <option value=''>--- select ---</option>
                 </select>
               </div>
@@ -267,7 +277,10 @@
             <ul class="cashable-websites" id="js-whitelisted-websites-wrapper">
               <li class="website" id="js-cashable-website-template">
                 <div class="website-title">
-                  <img src="http://adblockcash.org/favicon.ico" class="js-website-image">
+                  <div class="website-image">
+                    <img src="http://adblockcash.org/favicon.ico" class="js-website-image">
+                    <i class="fa fa-globe js-website-image-fallback js-hide"></i>
+                  </div>
                   <a href="http://adblockcash.org/" target="_blank" class="js-website-name">adblockcash.org</a>
                 </div>
 

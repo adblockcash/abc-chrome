@@ -836,6 +836,10 @@ var VisitorModule = {
       $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
       this.setCurrentCountry(AdblockCash.visitor.country_code);
 
+      if (AdblockCash.visitor.country_code) {
+        $(".js-cashable-choose-local-country_code").remove();
+      }
+
       AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
         var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
         Utils.setCheckboxValue(checkbox, (AdblockCash.visitor.notification_settings && !!AdblockCash.visitor.notification_settings[settingName]));
@@ -979,7 +983,12 @@ var CashableWebsitesModule = {
 
     var $whitelistModeCheckbox = $template.find(".js-toggle-whitemode");
 
-    $template.find(".js-website-image").attr("src", website.icon_url);
+    if (website.icon_url) {
+      $template.find(".js-website-image").attr("src", website.icon_url);
+    } else {
+      $template.find(".js-website-image").remove();
+      $template.find(".js-website-image-fallback").removeClass("js-hide");
+    }
     $template.find(".js-website-name").html(website.name).attr("href", "http://" + website.domain);
     $template.find(".js-website-cashcoins_per_visit").html(website.cashcoins_per_visit);
     $template.find(".js-whitelisted").toggle(whitelisted);
