@@ -36,7 +36,6 @@ var Prefs = require("prefs").Prefs;
 var Synchronizer = require("synchronizer").Synchronizer;
 var Utils = require("utils").Utils;
 var AdblockCash = require("adblockcash").AdblockCash;
-var isWhitelisted = require("whitelisting").isWhitelisted;
 var subscriptionTemplate;
 var fakeCheckboxChangeEvent = 0;
 
@@ -381,8 +380,9 @@ function onFilterChange(action, item, param1, param2)
         var domain = RegExp.$1;
         if (!AdblockCash.isDomainCashable(domain)) {
           appendToListBox("js-excludedDomainsBox", domain);
+        } else {
+          CashableWebsitesModule.render();
         }
-        CashableWebsitesModule.render();
       } else {
         appendToListBox("js-userFiltersBox", item.text);
       }
@@ -392,8 +392,9 @@ function onFilterChange(action, item, param1, param2)
         var domain = RegExp.$1;
         if (!AdblockCash.isDomainCashable(domain)) {
           removeFromListBox("js-excludedDomainsBox", domain);
+        } else {
+          CashableWebsitesModule.render();
         }
-        CashableWebsitesModule.render();
       } else {
         removeFromListBox("js-userFiltersBox", item.text);
       }
@@ -445,7 +446,7 @@ function addWhitelistedDomainFormSubmitHandler(event)
   if (!domain)
     return;
 
-  AdblockCash.addWhitelistedDomain(domain);
+  AdblockCash.addWhitelistedDomain(domain, false);
 }
 
 // Adds filter text that user typed to the selection box
@@ -473,7 +474,7 @@ function removeSelectedExcludedDomain()
     return;
 
   for (var i = 0; i < remove.length; i++)
-    AdblockCash.removeWhitelistedDomain(remove[i]);
+    AdblockCash.removeWhitelistedDomain(remove[i], false);
 }
 
 // Removes all currently selected filters
@@ -848,6 +849,10 @@ var VisitorModule = {
   },
 
   updateVisitorNotificationSettings: function() {
+    if (!AdblockCash.visitor) {
+      return;
+    }
+
     var notification_settings = {};
 
     AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
@@ -872,7 +877,7 @@ var CashableWebsitesModule = {
   _templates: {},
   elements: {},
 
-  regionCategory: null,
+  regionCategory: undefined,
   DEFAULT_REGION_CATEGORY: "global",
   DEFAULT_OTHER_REGION_CATEGORY_COUNTRY_CODE: "AU",
 
@@ -979,7 +984,7 @@ var CashableWebsitesModule = {
 
   renderWebsite: function(website){
     var $template = $(this._templates.website);
-    var whitelisted = this.isWhitelisted(website);
+    var isWhitelisted = AdblockCash.isDomainWhitelisted(website.domain);
 
     var $whitelistModeCheckbox = $template.find(".js-toggle-whitemode");
 
@@ -991,9 +996,9 @@ var CashableWebsitesModule = {
     }
     $template.find(".js-website-name").html(website.name).attr("href", "http://" + website.domain);
     $template.find(".js-website-cashcoins_per_visit").html(website.cashcoins_per_visit);
-    $template.find(".js-whitelisted").toggle(whitelisted);
-    $template.find(".js-nonwhitelisted").toggle(!whitelisted);
-    $whitelistModeCheckbox.prop("checked", whitelisted);
+    $template.find(".js-whitelisted").toggle(isWhitelisted);
+    $template.find(".js-nonwhitelisted").toggle(!isWhitelisted);
+    $whitelistModeCheckbox.prop("checked", isWhitelisted);
     $whitelistModeCheckbox.removeClass("js-hide");
     $whitelistModeCheckbox[0].addEventListener("change", function(){
       if ($whitelistModeCheckbox[0].checked) {
@@ -1020,7 +1025,7 @@ var CashableWebsitesModule = {
           return !website.country_code;
         });
       case "local":
-        var countryCode = AdblockCash.visitor.country_code;
+        var countryCode = AdblockCash.visitor && AdblockCash.visitor.country_code;
         return AdblockCash.cashableWebsites.filter(function(website) {
           return website.country_code == countryCode;
         });
@@ -1039,18 +1044,14 @@ var CashableWebsitesModule = {
 
   getWhitelistedCashableWebsites: function(type) {
     return this.getCashableWebsites(type).filter(function(website) {
-      return this.isWhitelisted(website);
+      return AdblockCash.isDomainWhitelisted(website.domain);
     }.bind(this));
   },
 
   getNonWhitelistedCashableWebsites: function(type) {
     return this.getCashableWebsites(type).filter(function(website) {
-      return !this.isWhitelisted(website);
+      return !AdblockCash.isDomainWhitelisted(website.domain);
     }.bind(this));
-  },
-
-  isWhitelisted: function(website) {
-    return !!isWhitelisted("http://" + website.domain);
   },
 
   toggleAll: function(toggle){
@@ -1070,6 +1071,8 @@ var CashableWebsitesModule = {
           AdblockCash.removeWhitelistedDomain(website.domain, false, true);
         });
     }
+
+    FilterNotifier.triggerListeners("load");
 
     this.render();
   }
