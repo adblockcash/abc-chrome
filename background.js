@@ -36,6 +36,7 @@ with(require("whitelisting"))
   this.processKey = processKey;
   this.getKey = getKey;
 }
+var AdblockCash = require("adblockcash").AdblockCash;
 var FilterStorage = require("filterStorage").FilterStorage;
 var ElemHide = require("elemHide").ElemHide;
 var defaultMatcher = require("matcher").defaultMatcher;
