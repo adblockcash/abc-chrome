@@ -445,30 +445,7 @@ function addWhitelistedDomainFormSubmitHandler(event)
   if (!domain)
     return;
 
-  addWhitelistedDomain(domain);
-}
-
-function addWhitelistedDomain(domain, blockInAdblockCash) {
-  if (blockInAdblockCash == null) {
-    blockInAdblockCash = true;
-  }
-  if (blockInAdblockCash && AdblockCash.isDomainCashable(domain)) {
-    AdblockCash.unblockCashableDomain(domain);
-  }
-
-  var filterText = "@@||" + domain + "^$document";
-  return FilterStorage.addFilter(Filter.fromText(filterText));
-}
-
-function removeWhitelistedDomain(domain, blockInAdblockCash) {
-  if (blockInAdblockCash == null) {
-    blockInAdblockCash = true;
-  }
-  if (blockInAdblockCash && AdblockCash.isDomainCashable(domain)) {
-    AdblockCash.blockCashableDomain(domain);
-  }
-
-  FilterStorage.removeFilter(Filter.fromText("@@||" + domain + "^$document"));
+  AdblockCash.addWhitelistedDomain(domain);
 }
 
 // Adds filter text that user typed to the selection box
@@ -496,7 +473,7 @@ function removeSelectedExcludedDomain()
     return;
 
   for (var i = 0; i < remove.length; i++)
-    removeWhitelistedDomain(remove[i]);
+    AdblockCash.removeWhitelistedDomain(remove[i]);
 }
 
 // Removes all currently selected filters
@@ -891,6 +868,10 @@ var CashableWebsitesModule = {
   _templates: {},
   elements: {},
 
+  regionCategory: null,
+  DEFAULT_REGION_CATEGORY: "global",
+  DEFAULT_OTHER_REGION_CATEGORY_COUNTRY_CODE: "AU",
+
   init: function() {
     this._templates = {
       website: $("#js-cashable-website-template").remove()[0].outerHTML
@@ -903,10 +884,10 @@ var CashableWebsitesModule = {
       $nonWhitelistedWebsitesWrapper: $("#js-nonwhitelisted-websites-wrapper")
     };
 
-    var render = this.render.bind(this);
-    AdblockCash.addListener("cashableWebsites.updated", render);
+    var initialRender = this.initialRender.bind(this);
+    AdblockCash.addListener("cashableWebsites.updated", initialRender);
     window.addEventListener("unload", function() {
-      AdblockCash.removeListener("cashableWebsites.updated", render);
+      AdblockCash.removeListener("cashableWebsites.updated", initialRender);
     }.bind(this), false);
 
     $("#js-toggle-whitelisting-websites").parent().click(function(event){
@@ -920,34 +901,63 @@ var CashableWebsitesModule = {
       var regionCategory = $(this).data("regionCategory");
       CashableWebsitesModule.toggleRegionCategory(regionCategory);
     })
-    this.toggleRegionCategory("global");
 
-    this.render();
+    $(".js-cashable-other_country_code-select").change(function() {
+      this.otherRegionCountryCode = $(".js-cashable-other_country_code-select").val();
+
+      this.render();
+    }.bind(this));
+
+    this.toggleRegionCategory(this.DEFAULT_REGION_CATEGORY, false)
+    this.initialRender();
   },
 
-  toggleRegionCategory: function(regionCategory) {
-    if (this.__regionCategory == regionCategory) {
+  toggleRegionCategory: function(regionCategory, rerender) {
+    if (rerender == null) {
+      rerender = true;
+    }
+
+    if (this.regionCategory == regionCategory) {
       return;
     }
 
+    this.regionCategory = regionCategory;
     $(".js-cashable-toggle-region-category").each(function(){
       $(this).parent().removeClass("active");
     });
     $(".js-cashable-toggle-region-category-" + regionCategory).parent().addClass("active");
+    $(".js-cashable-toggle-region-category-when-active").hide();
+    $(".js-cashable-toggle-region-category-"+ regionCategory + "-active").show();
+
+    if (rerender) {
+      this.render();
+    }
+  },
+
+  initialRender: function() {
+    AdblockCash.getCashableCountriesList().then(function(countries) {
+      var optionsHtml = countries.map(function(country){
+        return "<option value='" + country.code + "'>" + country.name + "</option>";
+      });
+
+      $(".js-cashable-other_country_code-select").html(optionsHtml).val(this.DEFAULT_OTHER_REGION_CATEGORY_COUNTRY_CODE).change();
+    }.bind(this));
+
+    this.render();
   },
 
   render: function() {
     this.elements.$whitelistedWebsitesWrapper.html("");
     this.elements.$nonWhitelistedWebsitesWrapper.html("");
 
-    var whitelistedWebsites = this.getWhitelistedWebsites();
+    var whitelistedWebsites = this.getWhitelistedCashableWebsites(this.regionCategory);
     whitelistedWebsites.forEach(function(website){
       var $template = this.renderWebsite(website);
       this.elements.$whitelistedWebsitesWrapper.append($template);
     }.bind(this));
     this.elements.$whitelistedWebsitesSection.toggle( whitelistedWebsites.length > 0 );
 
-    var nonWhitelistedWebsites = this.getNonWhitelistedWebsites();
+    var nonWhitelistedWebsites = this.getNonWhitelistedCashableWebsites(this.regionCategory);
     nonWhitelistedWebsites.forEach(function(website){
       var $template = this.renderWebsite(website);
       this.elements.$nonWhitelistedWebsitesWrapper.append($template);
@@ -955,8 +965,10 @@ var CashableWebsitesModule = {
     this.elements.$nonWhitelistedWebsitesSection.toggle( nonWhitelistedWebsites.length > 0 );
 
     fakeCheckboxChangeEvent++;
-    Utils.setCheckboxValue( $("#js-toggle-whitelisting-websites")[0], whitelistedWebsites.length > 0 );
+    Utils.setCheckboxValue( $("#js-toggle-whitelisting-websites")[0], this.getWhitelistedCashableWebsites().length > 0 );
     fakeCheckboxChangeEvent--;
+
+    $(".js-cashable-other_country_code-flag").removeClass().addClass("js-cashable-other_country_code-flag flag-icon flag-icon-" + (this.otherRegionCountryCode || "").toLowerCase());
 
     refreshDOM();
   },
@@ -968,7 +980,7 @@ var CashableWebsitesModule = {
     var $whitelistModeCheckbox = $template.find(".js-toggle-whitemode");
 
     $template.find(".js-website-image").attr("src", website.icon_url);
-    $template.find(".js-website-name").html(website.name);
+    $template.find(".js-website-name").html(website.name).attr("href", "http://" + website.domain);
     $template.find(".js-website-cashcoins_per_visit").html(website.cashcoins_per_visit);
     $template.find(".js-whitelisted").toggle(whitelisted);
     $template.find(".js-nonwhitelisted").toggle(!whitelisted);
@@ -976,27 +988,54 @@ var CashableWebsitesModule = {
     $whitelistModeCheckbox.removeClass("js-hide");
     $whitelistModeCheckbox[0].addEventListener("change", function(){
       if ($whitelistModeCheckbox[0].checked) {
-        removeWhitelistedDomain(website.domain);
+        AdblockCash.removeWhitelistedDomain(website.domain);
       } else {
-        addWhitelistedDomain(website.domain);
+        AdblockCash.addWhitelistedDomain(website.domain);
       }
     });
 
     return $template;
   },
 
-  getWebsites: function() {
-    return AdblockCash.cashableWebsites;
+  // @param {String} type all|global|local|PL all/global/local or only for the given country (if you pass in country ISO2 code)
+  getCashableWebsites: function(type) {
+    if (type == null) {
+      type = "all";
+    }
+
+    switch(type) {
+      case "all":
+        return AdblockCash.cashableWebsites;
+      case "global":
+        return AdblockCash.cashableWebsites.filter(function(website) {
+          return !website.country_code;
+        });
+      case "local":
+        var countryCode = AdblockCash.visitor.country_code;
+        return AdblockCash.cashableWebsites.filter(function(website) {
+          return website.country_code == countryCode;
+        });
+      case "other":
+        var countryCode = this.otherRegionCountryCode;
+        return AdblockCash.cashableWebsites.filter(function(website) {
+          return website.country_code == countryCode;
+        });
+      default:
+        var countryCode = type;
+        return AdblockCash.cashableWebsites.filter(function(website) {
+          return website.country_code == countryCode;
+        });
+    }
   },
 
-  getWhitelistedWebsites: function() {
-    return this.getWebsites().filter(function(website) {
+  getWhitelistedCashableWebsites: function(type) {
+    return this.getCashableWebsites(type).filter(function(website) {
       return this.isWhitelisted(website);
     }.bind(this));
   },
 
-  getNonWhitelistedWebsites: function() {
-    return this.getWebsites().filter(function(website) {
+  getNonWhitelistedCashableWebsites: function(type) {
+    return this.getCashableWebsites(type).filter(function(website) {
       return !this.isWhitelisted(website);
     }.bind(this));
   },
@@ -1009,19 +1048,21 @@ var CashableWebsitesModule = {
     console.debug("CashableWebsitesModule.toggleAll(" + toggle + ")")
 
     if (toggle) {
-      this.getNonWhitelistedWebsites()
+      this.getNonWhitelistedCashableWebsites()
         .filter(function(website){
           return !AdblockCash.isCashableDomainBlocked(website.domain);
         })
         .forEach(function(website){
-          addWhitelistedDomain(website.domain, false);
+          AdblockCash.addWhitelistedDomain(website.domain, false, true);
         });
     } else {
-      this.getWhitelistedWebsites()
+      this.getWhitelistedCashableWebsites()
         .forEach(function(website){
-          removeWhitelistedDomain(website.domain, false);
+          AdblockCash.removeWhitelistedDomain(website.domain, false, true);
         });
     }
+
+    this.render();
   }
 };
 

@@ -240,13 +240,27 @@
             <p>
               Unlock special features and win rewards while browsing them.
             </p>
-          </div>
 
-          <ul class="nav nav-pills pull-right">
-            <li class="active"><a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-global" data-region-category="global">Global</a></li>
-            <li><a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-local" data-region-category="local">Local</a></li>
-            <li><a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-other" data-region-category="other">Other</a></li>
-          </ul>
+            <div class="whitelisting-region-nav">
+              <ul class="nav nav-pills pull-right">
+                <li>
+                  <a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-global" data-region-category="global">Global</a>
+                </li>
+                <li>
+                  <a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-local" data-region-category="local">Local</a>
+                </li>
+                <li>
+                  <a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-other" data-region-category="other">Other</a>
+                </li>
+              </ul>
+              <div class="whitelisting-region-country-select js-cashable-toggle-region-category-when-active js-cashable-toggle-region-category-other-active">
+                <i class="flag-icon js-cashable-other_country_code-flag"></i>
+                <select class="form-control js-cashable-other_country_code-select">
+                  <option value=''>--- select ---</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
           <div class="cashable-websites-section" id="js-whitelisted-websites-section">
             <h3>Whitelisted websites</h3>
@@ -254,7 +268,7 @@
               <li class="website" id="js-cashable-website-template">
                 <div class="website-title">
                   <img src="http://adblockcash.org/favicon.ico" class="js-website-image">
-                  <span class="js-website-name">adblockcash.org</span>
+                  <a href="http://adblockcash.org/" target="_blank" class="js-website-name">adblockcash.org</a>
                 </div>
 
                 <div class="popup-box">

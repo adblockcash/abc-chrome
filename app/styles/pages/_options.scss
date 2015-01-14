@@ -98,6 +98,7 @@
 
 .settings-section {
   margin: 20px 0px;
+  overflow: hidden;
 
   + .settings-section {
     margin-top: 40px;
@@ -172,6 +173,24 @@
 //
 // WHITELISTING TAB
 //
+
+.whitelisting-region-nav {
+  margin-top: -2.8em;
+}
+.whitelisting-region-country-select {
+  float: right;
+  width: 11em;
+  clear: both;
+  position: relative;
+  margin-top: .5em;
+
+  .flag-icon {
+    position: absolute;
+    left: -2em;
+    line-height: inherit;
+    top: 0.3em;
+  }
+}
 
 .cashable-websites {
   position: relative;
