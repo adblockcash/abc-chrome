@@ -39,6 +39,23 @@ var AdblockCash = require("adblockcash").AdblockCash;
 var subscriptionTemplate;
 var fakeCheckboxChangeEvent = 0;
 
+$.escapeHtml = (function(){
+  var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  };
+
+  return function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return entityMap[s];
+    });
+  };
+})();
+
 // Loads options from localStorage and sets UI elements accordingly
 function loadOptions()
 {
@@ -793,7 +810,7 @@ var VisitorModule = {
   setupCountriesList: function() {
     AdblockCash.getCountriesList().then(function(countries){
       var optionsHtml = "<option value=''>--- select ---</option>" + countries.map(function(country){
-        return "<option value='" + country.code + "'>" + country.name + "</option>";
+        return "<option value='" + $.escapeHtml(country.code) + "'>" + $.escapeHtml(country.name) + "</option>";
       });
 
       $(".js-visitor-country_code-select").html(optionsHtml);
@@ -830,10 +847,10 @@ var VisitorModule = {
     $(".js-visitor-unavailable").toggle(!AdblockCash.visitor);
 
     if (AdblockCash.visitor) {
-      $(".js-visitorEmail").html(AdblockCash.visitor.email);
+      $(".js-visitorEmail").text(AdblockCash.visitor.email);
       $(".js-visitor-paypal-available").toggle( !!AdblockCash.visitor.paypal_email );
       $(".js-visitor-paypal-unavailable").toggle( !AdblockCash.visitor.paypal_email );
-      $(".js-visitor-paypal_email").html(AdblockCash.visitor.paypal_email);
+      $(".js-visitor-paypal_email").text(AdblockCash.visitor.paypal_email);
       $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
       this.setCurrentCountry(AdblockCash.visitor.country_code);
 
@@ -946,18 +963,20 @@ var CashableWebsitesModule = {
   initialRender: function() {
     AdblockCash.getCashableCountriesList().then(function(countries) {
       var optionsHtml = countries.map(function(country){
-        return "<option value='" + country.code + "'>" + country.name + "</option>";
+        return "<option value='" + $.escapeHtml(country.code) + "'>" + $.escapeHtml(country.name) + "</option>";
       });
 
-      $(".js-cashable-other_country_code-select").html(optionsHtml).val(this.DEFAULT_OTHER_REGION_CATEGORY_COUNTRY_CODE).change();
+      $(".js-cashable-other_country_code-select").html(optionsHtml)
+        .val(this.DEFAULT_OTHER_REGION_CATEGORY_COUNTRY_CODE)
+        .change();
     }.bind(this));
 
     this.render();
   },
 
   render: function() {
-    this.elements.$whitelistedWebsitesWrapper.html("");
-    this.elements.$nonWhitelistedWebsitesWrapper.html("");
+    this.elements.$whitelistedWebsitesWrapper.text("");
+    this.elements.$nonWhitelistedWebsitesWrapper.text("");
 
     var whitelistedWebsites = this.getWhitelistedCashableWebsites(this.regionCategory);
     whitelistedWebsites.forEach(function(website){
@@ -994,8 +1013,8 @@ var CashableWebsitesModule = {
       $template.find(".js-website-image").remove();
       $template.find(".js-website-image-fallback").removeClass("js-hide");
     }
-    $template.find(".js-website-name").html(website.name).attr("href", "http://" + website.domain);
-    $template.find(".js-website-cashcoins_per_visit").html(website.cashcoins_per_visit);
+    $template.find(".js-website-name").text(website.name).attr("href", "http://" + website.domain);
+    $template.find(".js-website-cashcoins_per_visit").text(website.cashcoins_per_visit);
     $template.find(".js-whitelisted").toggle(isWhitelisted);
     $template.find(".js-nonwhitelisted").toggle(!isWhitelisted);
     $whitelistModeCheckbox.prop("checked", isWhitelisted);
@@ -1109,19 +1128,19 @@ var RewardsModule = {
   render: function(){
     this.elements.$statCurrentRow.toggle(!!(AdblockCash.visitor && AdblockCash.visitor.current_reward_category));
     if (AdblockCash.visitor && AdblockCash.visitor.current_reward_category) {
-      this.elements.$statCurrentRewardCategory.html(AdblockCash.visitor.current_reward_category.rank);
-      this.elements.$statCurrentCashcoins.html(AdblockCash.visitor.cashcoins);
-      this.elements.$statCurrentPriceMoney.html(AdblockCash.visitor.current_reward_category.price_money + " $");
-      this.elements.$statCurrentPayoutDate.html(AdblockCash.visitor.current_reward_category.payout_date);
+      this.elements.$statCurrentRewardCategory.text(AdblockCash.visitor.current_reward_category.rank);
+      this.elements.$statCurrentCashcoins.text(AdblockCash.visitor.cashcoins);
+      this.elements.$statCurrentPriceMoney.text(AdblockCash.visitor.current_reward_category.price_money + " $");
+      this.elements.$statCurrentPayoutDate.text(AdblockCash.visitor.current_reward_category.payout_date);
     }
     this.elements.$statNextRow.toggle(!!(AdblockCash.visitor && AdblockCash.visitor.next_reward_category));
     if (AdblockCash.visitor && AdblockCash.visitor.next_reward_category) {
-      this.elements.$statNextRewardCategory.html(AdblockCash.visitor.next_reward_category.rank);
-      this.elements.$statNextCashcoins.html(AdblockCash.visitor.next_reward_category.required_cashcoins);
-      this.elements.$statNextPriceMoney.html(AdblockCash.visitor.next_reward_category.price_money + " $");
+      this.elements.$statNextRewardCategory.text(AdblockCash.visitor.next_reward_category.rank);
+      this.elements.$statNextCashcoins.text(AdblockCash.visitor.next_reward_category.required_cashcoins);
+      this.elements.$statNextPriceMoney.text(AdblockCash.visitor.next_reward_category.price_money + " $");
     }
 
-    this.elements.$topEarnedCashcoinsRowsContainer.html("");
+    this.elements.$topEarnedCashcoinsRowsContainer.text("");
 
     if (AdblockCash.visitor
       && AdblockCash.visitor.top_5_websites_by_earned_cc
@@ -1129,8 +1148,8 @@ var RewardsModule = {
       AdblockCash.visitor.top_5_websites_by_earned_cc.forEach(function(website){
         var rowTemplate = $(this._templates.topEarnedCashcoinsRow);
 
-        rowTemplate.find(".js-website-name").html(website.domain);
-        rowTemplate.find(".js-website-earned_cc").html((website.earned_cashcoins || 0) + " CC");
+        rowTemplate.find(".js-website-name").text(website.domain);
+        rowTemplate.find(".js-website-earned_cc").text((website.earned_cashcoins || 0) + " CC");
 
         this.elements.$topEarnedCashcoinsRowsContainer.append(rowTemplate);
       }.bind(this));
@@ -1159,13 +1178,13 @@ var StatisticsModule = {
   },
 
   render: function(){
-    $("#js-stat-total_blocked_ads").html(Prefs.stats_total.blocked || 0);
-    $("#js-stat-total_whitelisted_ads").html(Prefs.stats_total.earned || 0);
-    $("#js-stat-total_missed_ads").html(Prefs.stats_total.missed || 0);
-    $("#js-stat-earned_cc").html(((AdblockCash.visitor && AdblockCash.visitor.total_earned_cashcoins) || 0) + " CC");
-    $("#js-stat-missed_cc").html(((AdblockCash.visitor && AdblockCash.visitor.total_missed_cashcoins) || 0) + " CC");
+    $("#js-stat-total_blocked_ads").text(Prefs.stats_total.blocked || 0);
+    $("#js-stat-total_whitelisted_ads").text(Prefs.stats_total.earned || 0);
+    $("#js-stat-total_missed_ads").text(Prefs.stats_total.missed || 0);
+    $("#js-stat-earned_cc").text(((AdblockCash.visitor && AdblockCash.visitor.total_earned_cashcoins) || 0) + " CC");
+    $("#js-stat-missed_cc").text(((AdblockCash.visitor && AdblockCash.visitor.total_missed_cashcoins) || 0) + " CC");
 
-    this.elements.$topBlockedAdsRowsContainer.html("");
+    this.elements.$topBlockedAdsRowsContainer.text("");
     var domains = Object.keys(Prefs.stats_by_domain);
     domains.sort(function(domainA, domainB){
       return (Prefs.stats_by_domain[domainB].blocked || 0) - (Prefs.stats_by_domain[domainA].blocked || 0);
@@ -1173,8 +1192,8 @@ var StatisticsModule = {
     domains.slice(0, 10).forEach(function(domain){
       var rowTemplate = $(this._templates.topBlockedAdsRow);
 
-      rowTemplate.find(".js-website-name").html(domain);
-      rowTemplate.find(".js-website-blocked_ads").html(Prefs.stats_by_domain[domain].blocked);
+      rowTemplate.find(".js-website-name").text(domain);
+      rowTemplate.find(".js-website-blocked_ads").text(Prefs.stats_by_domain[domain].blocked);
 
       this.elements.$topBlockedAdsRowsContainer.append(rowTemplate);
     }.bind(this));

@@ -100,13 +100,13 @@ function rerender() {
   var cashableWebsite = AdblockCash.isDomainCashable(page.domain);
   if (adblockStatus === "whitelisted") {
     $("#js-website-cc-stats").show();
-    $("#js-website-cc-stats").html("<strong>" + cashableWebsite.cashcoins_per_visit + "</strong> CC earned");
+    $("#js-website-cc-stats").html("<strong>" + (+cashableWebsite.cashcoins_per_visit) + "</strong> CC earned");
   } else {
     $("#js-website-cc-stats").hide();
   }
 
   if (cashableWebsite) {
-    $(".js-website-cashcoins_per_visit").html(cashableWebsite.cashcoins_per_visit);
+    $(".js-website-cashcoins_per_visit").text(+cashableWebsite.cashcoins_per_visit);
   }
 }
 
