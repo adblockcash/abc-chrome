@@ -97,9 +97,9 @@ gulp.task("build-dist", function(callback) {
 
 gulp.task("buildtools:build-devenv", shell.task("rm -rf devenv/* && ./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
 
-gulp.task("build-zip", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build adblockcash"+ GLOBALS.PLATFORM +".zip"));
+gulp.task("build-zip", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build"));
 
-gulp.task("build-zip-release", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build -r adblockcash"+ GLOBALS.PLATFORM +".zip"));
+gulp.task("build-zip-release", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build -r"));
 
 if (GLOBALS.PLATFORM == "chrome") {
   gulp.task("build-package", ["build-zip-release"], shell.task("rm -rf /tmp/adblockcashchrome && unzip adblockcashchrome.zip -d /tmp/adblockcashchrome && " + CHROME_CLI_COMMAND + " --pack-extension=/tmp/adblockcashchrome --pack-extension-key=certificates/adblockcashchrome.pem"));
