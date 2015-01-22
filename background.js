@@ -82,6 +82,7 @@ require("filterNotifier").FilterNotifier.addListener(function(action)
     if (canUseChromeNotifications)
       initChromeNotifications();
     initAntiAdblockNotification();
+    AdblockExtensionsDetector.init();
   }
 
   // update browser actions when whitelisting might have changed,
@@ -89,6 +90,47 @@ require("filterNotifier").FilterNotifier.addListener(function(action)
   if (action == "load" || action == "save")
     refreshIconAndContextMenuForAllPages();
 });
+
+var AdblockExtensionsDetector = {
+  _notificationId: "adblock_extension_detected",
+
+  init: function() {
+    window.setInterval(this.checkStatus.bind(this), 1000 * 60 * 15);
+    window.setTimeout(this.checkStatus.bind(this), 1000 * 15);
+  },
+
+  _getNotification: function() {
+    var notification = {
+      type: "basic",
+      // title: Utils.getString("notification_antiadblock_title"),
+      // message: Utils.getString("notification_antiadblock_message"),
+      title: "CC collection disabled",
+      message: "To collect CC on whitelisted websites, please make sure that Adblock Cash is the only activated adblocking extension in your browser.",
+      priority: 2,
+      iconUrl: ext.getURL("icons/abc-64.png")
+    };
+
+    return notification;
+  },
+
+  sendNotification: function() {
+    var notification = this._getNotification();
+
+    chrome.notifications.clear(this._notificationId, function(){
+      return chrome.notifications.create(this._notificationId, notification, function(notificationId) {
+        this._notificationId = notificationId;
+      }.bind(this));
+    }.bind(this));
+  },
+
+  checkStatus: function(){
+    return AdblockCash.detectOtherAdblockExtensions().then(function(extensionDetected){
+      if (extensionDetected) {
+        this.sendNotification();
+      }
+    }.bind(this));
+  }
+};
 
 // Special-case domains for which we cannot use style-based hiding rules.
 // See http://crbug.com/68705.
