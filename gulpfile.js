@@ -95,7 +95,7 @@ gulp.task("build-dist", function(callback) {
   return runSequence(["bower:install", "scripts:generate-env"], "styles", callback);
 });
 
-gulp.task("buildtools:build-devenv", shell.task("./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
+gulp.task("buildtools:build-devenv", shell.task("rm -rf devenv/* && ./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
 
 gulp.task("build-zip", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build adblockcash"+ GLOBALS.PLATFORM +".zip"));
 
@@ -119,6 +119,7 @@ gulp.task("watch", function(){
     "adblockplus/chrome/**",
     "adblockplus/defaults/**",
     "adblockplus/lib/**",
+    "buildtools/**",
     "chrome/**",
     "ext/**",
     "lib/**",
