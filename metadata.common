@@ -22,16 +22,16 @@ permissions = http://*/* https://*/*
 document_start = ext/common.js ext/content.js include.preload.js
 document_end = include.postload.js
 
-[removeAssets]
-skipPaths = ./assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js
-            ./assets/bower/flag-icon-css/css/flag-icon.css
-            ./assets/bower/flag-icon-css/flags/
-            ./assets/bower/font-awesome/css/font-awesome.css
-            ./assets/bower/font-awesome/fonts/
-            ./assets/bower/jquery/dist/jquery.js
-            ./assets/bower/switchery/dist/switchery.js
-            ./assets/images/
-            ./assets/jquery-ui/
+[buildConfig]
+requiredAssets = assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js
+               assets/bower/flag-icon-css/css/flag-icon.css
+               assets/bower/flag-icon-css/flags/
+               assets/bower/font-awesome/css/font-awesome.css
+               assets/bower/font-awesome/fonts/
+               assets/bower/jquery/dist/jquery.js
+               assets/bower/switchery/dist/switchery.js
+               assets/images/
+               assets/jquery-ui/
 
 [mapping]
 ext/content.js = chrome/ext/content.js
