@@ -17,7 +17,7 @@
   - along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<html>
+<html ng-csp>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Adblock Ca$h</title>
@@ -28,12 +28,16 @@
   <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
   <script src="assets/bower/switchery/dist/switchery.js"></script>
 
-  <script type="text/javascript" src="ext/common.js"></script>
-  <script type="text/javascript" src="ext/content.js"></script>
-  <script type="text/javascript" src="i18n.js" charset="utf-8"></script>
-  <script type="text/javascript" src="options.js" charset="utf-8"></script>
+  <script src="assets/bower/angular/angular.js"></script>
+
+  <script src="ext/common.js"></script>
+  <script src="ext/content.js"></script>
+  <script src="i18n.js"></script>
+  <script src="options.js"></script>
+
+  <script src="dist/scripts/options.js"></script>
 </head>
-<body class="options-page">
+<body class="options-page" ng-app="abc">
 
   <div class="settings-header">
     <div class="container">

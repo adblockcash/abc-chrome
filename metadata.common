@@ -23,7 +23,10 @@ document_start = ext/common.js ext/content.js include.preload.js
 document_end = include.postload.js
 
 [buildConfig]
-requiredAssets = assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js
+requiredAssets =
+               assets/bower/angular/angular-csp.css
+               assets/bower/angular/angular.js
+               assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js
                assets/bower/flag-icon-css/css/flag-icon.css
                assets/bower/flag-icon-css/flags/
                assets/bower/font-awesome/css/font-awesome.css
@@ -32,6 +35,7 @@ requiredAssets = assets/bower/bootstrap-sass-official/assets/javascripts/bootstr
                assets/bower/switchery/dist/switchery.js
                assets/images/
                assets/jquery-ui/
+               assets/scripts/options-angular.js
                assets/rollbar.js
 
 [mapping]

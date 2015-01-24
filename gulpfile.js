@@ -6,18 +6,23 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var notify = require('gulp-notify');
 var plumber = require('gulp-plumber');
+var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
 
 var CHROME_CLI_COMMAND = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome";
 
 var APP_ROOT = require("execSync").exec("pwd").stdout.trim() + "/";
 
-var PATHS = {
+var paths = {
   source: {
-    styles: "app/styles/**/*.{sass,scss}"
+    styles: "app/styles/**/*.{sass,scss}",
+    scripts: {
+      options: "app/scripts/options/**/*.js"
+    }
   },
   destination: {
-    styles: "dist/styles/"
+    styles: "dist/styles/",
+    scripts: "dist/scripts/"
   }
 };
 
@@ -83,16 +88,33 @@ gulp.task("scripts:generate-env", function(done) {
 });
 
 gulp.task("styles", function() {
-  return gulp.src(PATHS.source.styles)
+  return gulp.src(paths.source.styles)
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
     .pipe(sourcemaps.init())
       .pipe(sass())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(PATHS.destination.styles));
+    .pipe(gulp.dest(paths.destination.styles));
 });
 
+scriptTaskNames = Object.keys(paths.source.scripts).map(function(scriptName){
+  var scriptTaskName = "scripts:" + scriptName;
+
+  gulp.task(scriptTaskName, function() {
+    return gulp.src(paths.source.scripts[scriptName])
+      .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
+      .pipe(sourcemaps.init())
+        .pipe(concat(scriptName + ".js"))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest(paths.destination.scripts));
+  });
+
+  return scriptTaskName;
+});
+
+gulp.task("scripts", scriptTaskNames);
+
 gulp.task("build-dist", function(callback) {
-  return runSequence(["bower:install", "scripts:generate-env"], "styles", callback);
+  return runSequence(["bower:install", "scripts:generate-env"], ["styles", "scripts"], callback);
 });
 
 gulp.task("buildtools:build-devenv", shell.task("rm -rf devenv/* && ./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
@@ -126,12 +148,16 @@ gulp.task("watch", function(){
     "*.{html,js}",
     "metadata.*",
     "!gulpfile.js",
-    PATHS.destination.styles + "**/*.css"
+    paths.destination.styles + "**/*.css",
+    paths.destination.scripts + "**/*.js"
   ], ["buildtools:build-devenv"]);
 
-  gulp.watch([
-    PATHS.source.styles
-  ], ["styles"]);
+  gulp.watch(paths.source.styles, ["styles"]);
+
+  Object.keys(paths.source.scripts).forEach(function(scriptName){
+    var scriptTaskName = "scripts:" + scriptName;
+    gulp.watch(paths.source.scripts[scriptName], [scriptTaskName]);
+  });
 });
 
 
