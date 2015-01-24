@@ -46,6 +46,8 @@ var Utils = require("utils").Utils;
 var Notification = require("notification").Notification;
 var initAntiAdblockNotification = require("antiadblockInit").initAntiAdblockNotification;
 
+AdblockCash.setupErrorReporting(window, document);
+
 // Some types cannot be distinguished
 RegExpFilter.typeMap.OBJECT_SUBREQUEST = RegExpFilter.typeMap.OBJECT;
 RegExpFilter.typeMap.MEDIA = RegExpFilter.typeMap.FONT = RegExpFilter.typeMap.OTHER;

@@ -32,6 +32,7 @@ requiredAssets = assets/bower/bootstrap-sass-official/assets/javascripts/bootstr
                assets/bower/switchery/dist/switchery.js
                assets/images/
                assets/jquery-ui/
+               assets/rollbar.js
 
 [mapping]
 ext/content.js = chrome/ext/content.js

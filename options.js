@@ -39,6 +39,8 @@ var AdblockCash = require("adblockcash").AdblockCash;
 var subscriptionTemplate;
 var fakeCheckboxChangeEvent = 0;
 
+AdblockCash.setupErrorReporting(window, document);
+
 $.escapeHtml = (function(){
   var entityMap = {
     "&": "&amp;",
