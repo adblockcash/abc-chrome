@@ -335,10 +335,11 @@
   font-weight: 500;
 }
 .statgroup-title {
-  font-size: 16px;
+  font-size: 14px;
 }
 .statgroup-value {
-  font-size: 24px;
+  font-size: 28px;
+  color: $primary;
 }
 .statgroup-arrow {
   position: absolute;
