@@ -394,7 +394,7 @@ function onFilterChange(action, item, param1, param2)
         if (!AdblockCash.isDomainCashable(domain)) {
           appendToListBox("js-excludedDomainsBox", domain);
         } else {
-          $a("CashableWebsitesModule").render();
+          $a("WhitelistingModule").render();
         }
       } else {
         appendToListBox("js-userFiltersBox", item.text);
@@ -406,7 +406,7 @@ function onFilterChange(action, item, param1, param2)
         if (!AdblockCash.isDomainCashable(domain)) {
           removeFromListBox("js-excludedDomainsBox", domain);
         } else {
-          $a("CashableWebsitesModule").render();
+          $a("WhitelistingModule").render();
         }
       } else {
         removeFromListBox("js-userFiltersBox", item.text);

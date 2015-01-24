@@ -1,13 +1,13 @@
 angular.module("abc")
 
-.service("CashableWebsitesModule", function(Utils, AdblockCash, FilterNotifier, $log, refreshDOM) {
+.service("WhitelistingModule", function(Utils, AdblockCash, FilterNotifier, $log, refreshDOM) {
   return {
     _templates: {},
     elements: {},
 
     regionCategory: undefined,
     DEFAULT_REGION_CATEGORY: "global",
-    DEFAULT_OTHER_REGION_CATEGORY_COUNTRY_CODE: "AU",
+    DEFAULT_OTHER_REGION_CATEGORY_COUNTRY_CODE: "GB",
 
     init: function() {
       var _module = this;
@@ -185,7 +185,7 @@ angular.module("abc")
     },
 
     toggleAll: function(toggle){
-      $log.debug("CashableWebsitesModule.toggleAll(" + toggle + ")")
+      $log.debug("WhitelistingModule.toggleAll(" + toggle + ")")
 
       if (toggle) {
         this.getNonWhitelistedCashableWebsites()
@@ -209,6 +209,6 @@ angular.module("abc")
   };
 })
 
-.run(function(CashableWebsitesModule) {
-  CashableWebsitesModule.init();
+.run(function(WhitelistingModule) {
+  WhitelistingModule.init();
 });
