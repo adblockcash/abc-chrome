@@ -87,6 +87,10 @@
 }
 
 // customize boostrap
+label {
+  font-weight: inherit;
+}
+
 .form-horizontal .control-label {
   text-align: left;
 }

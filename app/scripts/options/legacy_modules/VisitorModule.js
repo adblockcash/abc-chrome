@@ -21,26 +21,6 @@ angular.module("abc")
         });
       };
 
-      // $(".js-visitor-disconnect-paypal").click(function(event){
-      //   event.preventDefault();
-
-      //   AdblockCash.updateVisitorAccount(window, {
-      //     paypal_email: null
-      //   }).catch(function(error) {
-      //     alert("An error occured while updating account settings: " + error);
-      //   });
-      // });
-
-      // $(".js-visitor-settings-form").submit(function(event){
-      //   event.preventDefault();
-
-      //   AdblockCash.updateVisitorAccount(window, {
-      //     paypal_email: $(".js-visitor-paypal_email-input").val()
-      //   }).catch(function(error) {
-      //     alert("An error occured while updating account settings: " + error);
-      //   });
-      // });
-
       debounced_updateVisitorNotificationSettings = Utils.debounce(this.updateVisitorNotificationSettings, 1000);
 
       AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
@@ -72,7 +52,7 @@ angular.module("abc")
         if (AdblockCash.visitor && $(".js-visitor-country_code-select").val() != AdblockCash.visitor.country_code) {
           this.setCurrentCountry(AdblockCash.visitor.country_code, false);
 
-          AdblockCash.updateVisitorAccount(window, {
+          AdblockCash.updateVisitorAccount({
             country_code: $(".js-visitor-country_code-select").val()
           }).catch(function(error) {
             alert("An error occured while updating account settings: " + error);
@@ -95,10 +75,6 @@ angular.module("abc")
     // Enable all handlers that should be called when the user will log in / log out.
     updateVisitorDependantViews: function () {
       if (AdblockCash.visitor) {
-        // $(".js-visitor-paypal-available").toggle( !!AdblockCash.visitor.paypal_email );
-        // $(".js-visitor-paypal-unavailable").toggle( !AdblockCash.visitor.paypal_email );
-        // $(".js-visitor-paypal_email").text(AdblockCash.visitor.paypal_email);
-        // $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
         this.setCurrentCountry(AdblockCash.visitor.country_code);
 
         AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
@@ -128,7 +104,7 @@ angular.module("abc")
 
       $log.debug("Calling AdblockCash.updateNotificationSettings with ", notification_settings);
 
-      AdblockCash.updateNotificationSettings(window, notification_settings);
+      AdblockCash.updateNotificationSettings(notification_settings);
     }
   };
 })
