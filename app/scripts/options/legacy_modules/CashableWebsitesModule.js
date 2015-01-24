@@ -29,8 +29,7 @@ angular.module("abc")
         AdblockCash.removeListener("cashableWebsites.updated", initialRender);
       }.bind(this), false);
 
-      $("#js-toggle-whitelisting-websites").parent().click(function(event){
-        event.preventDefault();
+      $("#js-toggle-whitelisting-websites").change(function(){
         _module.toggleAll( $("#js-toggle-whitelisting-websites").prop("checked") );
       });
 
@@ -131,12 +130,11 @@ angular.module("abc")
       $template.find(".js-whitelisted").toggle(isWhitelisted);
       $template.find(".js-nonwhitelisted").toggle(!isWhitelisted);
       $whitelistModeCheckbox.prop("checked", isWhitelisted);
-      $whitelistModeCheckbox.removeClass("js-hide");
-      $whitelistModeCheckbox[0].addEventListener("change", function(){
-        if ($whitelistModeCheckbox[0].checked) {
-          AdblockCash.removeWhitelistedDomain(website.domain);
-        } else {
+      $whitelistModeCheckbox.change(function(){
+        if ($(this).prop("checked")) {
           AdblockCash.addWhitelistedDomain(website.domain);
+        } else {
+          AdblockCash.removeWhitelistedDomain(website.domain);
         }
       });
 

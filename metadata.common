@@ -32,7 +32,6 @@ requiredAssets =
                assets/bower/font-awesome/css/font-awesome.css
                assets/bower/font-awesome/fonts/
                assets/bower/jquery/dist/jquery.js
-               assets/bower/switchery/dist/switchery.js
                assets/images/
                assets/jquery-ui/
                assets/scripts/options-angular.js

@@ -3,8 +3,9 @@
 
 @import "../../assets/bower/angular/angular-csp.css";
 
-@import "theme/_switchery";
 @import "theme/_theme";
+
+@import "components/_switch";
 
 @import "pages/options";
 @import "pages/firstRun";

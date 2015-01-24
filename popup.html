@@ -22,7 +22,6 @@
   <link type="text/css" href="dist/styles/main.css" rel="stylesheet" />
 
   <script src="assets/bower/jquery/dist/jquery.js"></script>
-  <script src="assets/bower/switchery/dist/switchery.js"></script>
 
   <script src="ext/popup.js"></script>
   <script src="i18n.js"></script>
@@ -94,78 +93,13 @@
     <div class="popup-controls">
       <label>
         Whitelist mode
-        <input class="switchery js-switch" type="checkbox" checked id="js-toggle-whitemode" />
+        <label class="switch">
+          <input type="checkbox" checked id="js-toggle-whitemode" />
+          <span class="switch-handle"></span>
+        </label>
       </label>
     </div>
   </div>
-
-<!-- <header>
-  <div id="logo"></div>
-</header>
-
-<div id="wrapper">
-  <div id="notification">
-    <h1>
-      <span id="notification-title"></span>
-      <span id="close-notification"></span>
-    </h1>
-    <div id="notification-message"></div>
-  </div>
-
-  <div id="clickhide-instructions" class="i18n_clickhide_instructions"></div>
-
-  <ul id="menu">
-    <li id="enabled" class="menu-item" role="button">
-      <div class="icon"></div>
-      <span id="enabled-yes" class="i18n_enabled_for_site"></span>
-      <span id="enabled-no" class="i18n_disabled_for_site"></span>
-    </li>
-
-    <li id="clickhide" class="menu-item" role="button">
-      <div class="icon"></div>
-      <span class="i18n_easy_create_filter"></span>
-    </li>
-    <li id="clickhide-cancel" class="menu-item" role="button">
-      <div class="icon"></div>
-      <span class="i18n_cancel"></span>
-    </li>
-
-    <li id="js-stats-container">
-      <div class="menu-item collapse" data-option="show_statsinpopup" data-collapsable="js-stats-container" role="button">
-        <div class="icon"></div>
-        <span class="i18n_stats_title"></span>
-        <div class="collapse-icon-placeholder safari-inline-block"></div>
-        <div class="collapse-icon"></div>
-      </div>
-      <ul id="stats" class="collapsable">
-        <li>
-          <div>
-            <div id="js-stats-page"></div>
-            <div id="stats-total"></div>
-          </div>
-
-          <div id="share">
-            <span class="i18n_stats_share_title"></span>
-            <div id="share-box">
-              <div data-social="facebook"></div>
-              <div data-social="twitter"></div>
-              <div data-social="gplus"></div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div id="show-iconnumber" class="checkbox" role="checkbox" aria-checked></div>
-          <label for="show-iconnumber" class="i18n_stats_show_iconnumber"></label>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-
-<footer id="options" role="button">
-  <div class="icon"></div>
-  <span class="i18n_options_short"></span>
-</footer> -->
 
 </body>
 </html>

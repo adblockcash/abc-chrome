@@ -1,49 +1,45 @@
 angular.module("abc")
 
-.service("VisitorModule", function(Utils, AdblockCash, $log) {
+.service("VisitorModule", function(Utils, AdblockCash, $log, $rootScope) {
   return {
     init: function() {
-      $(".js-visitor-logout").click(function(event){
-        event.preventDefault();
+      var _this = this;
 
+      $rootScope.logout = function(){
         AdblockCash.logout();
-      });
+      };
 
-      $(".js-login-with-facebook").click(function(event){
-        event.preventDefault();
-
+      $rootScope.loginWithFacebook = function(){
         AdblockCash.loginWithProvider(window, "facebook").catch(function(error){
           alert("An error occured while logging in with Facebook: " + error);
         });
-      });
+      };
 
-      $(".js-login-with-google").click(function(event){
-        event.preventDefault();
-
+      $rootScope.loginWithGoogle = function(){
         AdblockCash.loginWithProvider(window, "google").catch(function(error){
           alert("An error occured while logging in with Google: " + error);
         });
-      });
+      };
 
-      $(".js-visitor-disconnect-paypal").click(function(event){
-        event.preventDefault();
+      // $(".js-visitor-disconnect-paypal").click(function(event){
+      //   event.preventDefault();
 
-        AdblockCash.updateVisitorAccount(window, {
-          paypal_email: null
-        }).catch(function(error) {
-          alert("An error occured while updating account settings: " + error);
-        });
-      });
+      //   AdblockCash.updateVisitorAccount(window, {
+      //     paypal_email: null
+      //   }).catch(function(error) {
+      //     alert("An error occured while updating account settings: " + error);
+      //   });
+      // });
 
-      $(".js-visitor-settings-form").submit(function(event){
-        event.preventDefault();
+      // $(".js-visitor-settings-form").submit(function(event){
+      //   event.preventDefault();
 
-        AdblockCash.updateVisitorAccount(window, {
-          paypal_email: $(".js-visitor-paypal_email-input").val()
-        }).catch(function(error) {
-          alert("An error occured while updating account settings: " + error);
-        });
-      });
+      //   AdblockCash.updateVisitorAccount(window, {
+      //     paypal_email: $(".js-visitor-paypal_email-input").val()
+      //   }).catch(function(error) {
+      //     alert("An error occured while updating account settings: " + error);
+      //   });
+      // });
 
       debounced_updateVisitorNotificationSettings = Utils.debounce(this.updateVisitorNotificationSettings, 1000);
 
@@ -52,12 +48,10 @@ angular.module("abc")
         checkbox.addEventListener("change", debounced_updateVisitorNotificationSettings);
       });
 
-      var _updateVisitorDependantViews = this.updateVisitorDependantViews.bind(this);
-      AdblockCash.addListener("visitor.updated", _updateVisitorDependantViews);
-      window.addEventListener("unload", function() {
-        AdblockCash.removeListener("visitor.updated", _updateVisitorDependantViews);
-      }.bind(this), false);
-      _updateVisitorDependantViews();
+      $rootScope.$on("visitor.updated", function(){
+        _this.updateVisitorDependantViews();
+      });
+      this.updateVisitorDependantViews();
 
       AdblockCash.refreshCurrentVisitor();
 
@@ -100,24 +94,15 @@ angular.module("abc")
 
     // Enable all handlers that should be called when the user will log in / log out.
     updateVisitorDependantViews: function () {
-      $(".js-visitor-available").toggle(!!AdblockCash.visitor);
-      $(".js-visitor-unavailable").toggle(!AdblockCash.visitor);
-
       if (AdblockCash.visitor) {
-        $(".js-visitorEmail").text(AdblockCash.visitor.email);
-        $(".js-visitor-paypal-available").toggle( !!AdblockCash.visitor.paypal_email );
-        $(".js-visitor-paypal-unavailable").toggle( !AdblockCash.visitor.paypal_email );
-        $(".js-visitor-paypal_email").text(AdblockCash.visitor.paypal_email);
-        $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
+        // $(".js-visitor-paypal-available").toggle( !!AdblockCash.visitor.paypal_email );
+        // $(".js-visitor-paypal-unavailable").toggle( !AdblockCash.visitor.paypal_email );
+        // $(".js-visitor-paypal_email").text(AdblockCash.visitor.paypal_email);
+        // $(".js-visitor-paypal_email-input").val(AdblockCash.visitor.paypal_email);
         this.setCurrentCountry(AdblockCash.visitor.country_code);
 
-        if (AdblockCash.visitor.country_code) {
-          $(".js-cashable-choose-local-country_code").remove();
-        }
-
         AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
-          var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
-          Utils.setCheckboxValue(checkbox, (AdblockCash.visitor.notification_settings && !!AdblockCash.visitor.notification_settings[settingName]));
+          $(".js-visitor-notification-settings-" + settingName).prop("checked", (AdblockCash.visitor.notification_settings && !!AdblockCash.visitor.notification_settings[settingName]));
         });
       }
     },

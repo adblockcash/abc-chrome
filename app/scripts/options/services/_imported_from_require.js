@@ -1,6 +1,5 @@
 angular.module("abc")
 
-.service("AdblockCash", function(){              return require("adblockcash").AdblockCash; })
 .service("FilterStorage", function(){            return require("filterStorage").FilterStorage; })
 .service("FilterNotifier", function(){           return require("filterNotifier").FilterNotifier; })
 .service("Prefs", function(){                    return require("prefs").Prefs; })

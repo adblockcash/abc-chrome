@@ -26,7 +26,6 @@
 
   <script src="assets/bower/jquery/dist/jquery.js"></script>
   <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-  <script src="assets/bower/switchery/dist/switchery.js"></script>
 
   <script src="assets/bower/angular/angular.js"></script>
 
@@ -70,9 +69,10 @@
           <div class="settings-section">
             <h2 class="section-heading">
               <i class="fa fa-bullhorn fa-section-icon"></i> Ads
-              <!-- <span class="pull-right">
-                <input type="checkbox" class="js-switch" checked />
-              </span> -->
+              <!-- <label class="switch">
+                <input type="checkbox" />
+                <span class="switch-handle"></span>
+              </label>-->
             </h2>
             <p>Block all the ads (images, videos, popups) on all non-whitelisted websites you browse.</p>
 
@@ -109,7 +109,10 @@
                           (<span class="js-subscriptionUpdate"></span>)
                         </span>
                         <span class="pull-right">
-                          <input type="checkbox" class="js-switch js-subscriptionEnabled" />
+                          <label class="switch">
+                            <input type="checkbox" class="js-subscriptionEnabled" />
+                            <span class="switch-handle"></span>
+                          </label>
                         </span>
                       </li>
                     </ul>
@@ -189,9 +192,13 @@
 
 
           <div class="settings-section">
-            <h2 class="section-heading"><i class="fa fa-section-icon fa-crosshairs"></i> Tracking
+            <h2 class="section-heading">
+              <i class="fa fa-section-icon fa-crosshairs"></i> Tracking
               <span class="pull-right">
-                <input type="checkbox" class="js-switch" id="js-toggle-tracking" />
+                <label class="switch">
+                  <input type="checkbox" id="js-toggle-tracking" />
+                  <span class="switch-handle"></span>
+                </label>
               </span>
             </h2>
             <p>Protect yourself against advertising companies that would otherwise track every step you take online.</p>
@@ -200,7 +207,10 @@
           <div class="settings-section">
             <h2 class="section-heading"><i class="fa fa-section-icon fa-bug"></i> Malware
               <span class="pull-right">
-                <input type="checkbox" class="js-switch" id="js-toggle-malware" />
+                <label class="switch">
+                  <input type="checkbox" id="js-toggle-malware" />
+                  <span class="switch-handle"></span>
+                </label>
               </span>
             </h2>
             <p>Protect your computer against malware by blocking listed malware domains.</p>
@@ -209,7 +219,10 @@
           <div class="settings-section">
             <h2 class="section-heading"><i class="fa fa-section-icon fa-thumbs-up"></i> Social media
               <span class="pull-right">
-                <input type="checkbox" class="js-switch" id="js-toggle-social" />
+                <label class="switch">
+                  <input type="checkbox" id="js-toggle-social" />
+                  <span class="switch-handle"></span>
+                </label>
               </span>
             </h2>
             <p>Protect yourself against social networks that use social media buttons to create a profile of you based on your browsing history and behaviour.</p>
@@ -222,7 +235,10 @@
             <h2 class="section-heading">
               <i class="fa fa-section-icon fa-list"></i> Whitelisting
               <span class="pull-right">
-                <input type="checkbox" class="js-switch" checked id="js-toggle-whitelisting-websites" />
+                <label class="switch">
+                  <input type="checkbox" id="js-toggle-whitelisting-websites" />
+                  <span class="switch-handle"></span>
+                </label>
               </span>
             </h2>
 
@@ -238,7 +254,7 @@
                 <li>
                   <a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-global" data-region-category="global">Global</a>
                 </li>
-                <li class="js-visitor-available">
+                <li ng-show="currentVisitor.id">
                   <a href="#" class="js-cashable-toggle-region-category js-cashable-toggle-region-category-local" data-region-category="local">Local</a>
                 </li>
                 <li>
@@ -246,7 +262,7 @@
                 </li>
               </ul>
 
-              <div class="whitelisting-region-country-select js-cashable-toggle-region-category-when-active js-cashable-toggle-region-category-local-active js-cashable-choose-local-country_code">
+              <div class="whitelisting-region-country-select js-cashable-toggle-region-category-when-active js-cashable-toggle-region-category-local-active" ng-if="!currentVisitor.country_code">
                 <label id="cashable-choose-local-country_code-select">Choose your local country:</label>
                 <i class="flag-icon js-visitor-country_code-flag"></i>
                 <select class="form-control js-visitor-country_code-select" id="cashable-choose-local-country_code-select">
@@ -302,7 +318,10 @@
                   <div class="popup-controls">
                     <label>
                       Whitelist mode
-                      <input class="switchery js-switch js-toggle-whitemode js-hide" type="checkbox" checked />
+                      <label class="switch">
+                        <input type="checkbox" class="js-toggle-whitemode" />
+                        <span class="switch-handle"></span>
+                      </label>
                     </label>
                   </div>
                 </div>
@@ -353,7 +372,7 @@
               <i class="fa fa-money fa-section-icon"></i> Your CashCoins balance
             </h2>
 
-            <div class="sign-in text-center js-visitor-unavailable js-hide">
+            <div class="sign-in text-center" ng-show="!currentVisitor.id">
               <h3>Sign in to <strong>Adblock Ca<span class="dollar-logo">$</span>h</strong></h3>
               <h4 class="space-20">and start collecting your CashCoins right away.</h4>
 
@@ -366,7 +385,7 @@
                     <strong>AdblockCa<span class="dollar-logo">$</span>h</strong>
                   </span>
                 </button> -->
-                <button class="btn btn-default sign-in-button sign-in-button-facebook js-login-with-facebook">
+                <button class="btn btn-default sign-in-button sign-in-button-facebook" ng-click="loginWithFacebook()">
                   <i class="fa fa-facebook"></i>
                   <span>
                     sign in with
@@ -374,7 +393,7 @@
                     <strong>Facebook</strong>
                   </span>
                 </button>
-                <button class="btn btn-default sign-in-button sign-in-button-gplus js-login-with-google">
+                <button class="btn btn-default sign-in-button sign-in-button-gplus" ng-click="loginWithGoogle()">
                   <i class="fa fa-google-plus"></i>
                   <span>
                     sign in with
@@ -385,7 +404,7 @@
               </div>
             </div>
 
-            <div class="js-visitor-available">
+            <div ng-show="currentVisitor.id">
               <table class="table statgroups-table">
                 <tr>
                   <th>
@@ -580,7 +599,7 @@
               <i class="fa fa-user fa-section-icon"></i> Your CashCoins Account
             </h2>
 
-            <div class="sign-in text-center js-visitor-unavailable js-hide">
+            <div class="sign-in text-center" ng-show="!currentVisitor.id">
               <h3>Sign in to <strong>Adblock Ca<span class="dollar-logo">$</span>h</strong></h3>
               <h4 class="space-20">and start collecting your CashCoins right away.</h4>
 
@@ -593,7 +612,7 @@
                     <strong>AdblockCa<span class="dollar-logo">$</span>h</strong>
                   </span>
                 </button> -->
-                <button class="btn btn-default sign-in-button sign-in-button-facebook js-login-with-facebook">
+                <button class="btn btn-default sign-in-button sign-in-button-facebook" ng-click="loginWithFacebook()">
                   <i class="fa fa-facebook"></i>
                   <span>
                     sign in with
@@ -601,7 +620,7 @@
                     <strong>Facebook</strong>
                   </span>
                 </button>
-                <button class="btn btn-default sign-in-button sign-in-button-gplus js-login-with-google">
+                <button class="btn btn-default sign-in-button sign-in-button-gplus" ng-click="loginWithGoogle()">
                   <i class="fa fa-google-plus"></i>
                   <span>
                     sign in with
@@ -612,10 +631,10 @@
               </div>
             </div>
 
-            <div class="usercard js-visitor-available">
+            <div class="usercard " ng-show="currentVisitor.id">
               <img class="img-thumbnail avatar usercard-avatar" src="assets/images/avatar.png" />
               <div class="usercard-contents">
-                <h4 class="js-visitorEmail">john.doe@adblockcash.org</h4>
+                <h4 class="js-visitorEmail" ng-bind="currentVisitor.email">john.doe@adblockcash.org</h4>
 
                 <div class="form form-horizontal">
                   <div class="form-group">
@@ -632,7 +651,7 @@
                 </div>
 
                 <div class="usercard-links">
-                  <a href="#" class="js-visitor-logout">
+                  <a href="#" class="js-visitor-logout" ng-click="logout()">
                     <i class="fa fa-lock"></i> Logout
                   </a>
                 </div>
@@ -640,29 +659,38 @@
             </div>
           </div>
 
-          <div class="settings-section js-visitor-available">
+          <div class="settings-section " ng-show="currentVisitor.id">
             <h3 class="section-heading">Notify me about</h3>
-            <p>
+            <p class="clr">
               New features
               <span class="pull-right">
-                <input type="checkbox" class="js-switch js-visitor-notification-settings-new_features" />
+                <label class="switch">
+                  <input type="checkbox" class="js-visitor-notification-settings-new_features" />
+                  <span class="switch-handle"></span>
+                </label>
               </span>
             </p>
-            <p>
+            <p class="clr">
               Special rewards
               <span class="pull-right">
-                <input type="checkbox" class="js-switch js-visitor-notification-settings-special_rewards" />
+                <label class="switch">
+                  <input type="checkbox" class="js-visitor-notification-settings-special_rewards" />
+                  <span class="switch-handle"></span>
+                </label>
               </span>
             </p>
-            <p>
+            <p class="clr">
               New whitelisted websites
               <span class="pull-right">
-                <input type="checkbox" class="js-switch js-visitor-notification-settings-new_whitelisted_websites" />
+                <label class="switch">
+                  <input type="checkbox" class="js-visitor-notification-settings-new_whitelisted_websites" />
+                  <span class="switch-handle"></span>
+                </label>
               </span>
             </p>
           </div>
 
-          <div class="settings-section js-visitor-available">
+          <div class="settings-section " ng-show="currentVisitor.id">
             <h3 class="section-heading">Payouts</h3>
             <div class="js-visitor-paypal-available js-hide">
               <p>
@@ -723,7 +751,7 @@
                   <br>
                   on whitelisted websites
                 </div>
-                <i class="fa fa-long-arrow-down green statgroup-arrow js-visitor-available"></i>
+                <i class="fa fa-long-arrow-down green statgroup-arrow " ng-show="currentVisitor.id"></i>
               </div>
               <div class="statgroup">
                 <div class="statgroup-value" id="js-stat-total_missed_ads">0</div>
@@ -732,10 +760,10 @@
                   <br>
                   on non-whitelisted websites
                 </div>
-                <i class="fa fa-long-arrow-down red statgroup-arrow js-visitor-available"></i>
+                <i class="fa fa-long-arrow-down red statgroup-arrow " ng-show="currentVisitor.id"></i>
               </div>
             </div>
-            <div class="statgroups js-visitor-available">
+            <div class="statgroups " ng-show="currentVisitor.id">
               <div class="statgroup">
                 <!-- <div class="statgroup-title">Earned CashCoins</div> -->
                 <!-- <div class="statgroup-value" id="js-stat-total_blocked_ads">0 CC</div> -->
@@ -779,21 +807,6 @@
               <h3>Lorem ipsum?</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus iusto nam obcaecati odio possimus quidem? Esse, repellendus vero? Aperiam doloribus expedita maiores mollitia neque nobis odio praesentium sapiente sint unde.</p>
             </div>
-
-            <div class="single-question">
-              <h3>Lorem ipsum?</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus iusto nam obcaecati odio possimus quidem? Esse, repellendus vero? Aperiam doloribus expedita maiores mollitia neque nobis odio praesentium sapiente sint unde.</p>
-            </div>
-
-            <div class="single-question">
-              <h3>Lorem ipsum?</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus iusto nam obcaecati odio possimus quidem? Esse, repellendus vero? Aperiam doloribus expedita maiores mollitia neque nobis odio praesentium sapiente sint unde.</p>
-            </div>
-
-            <div class="single-question">
-              <h3>Lorem ipsum?</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus iusto nam obcaecati odio possimus quidem? Esse, repellendus vero? Aperiam doloribus expedita maiores mollitia neque nobis odio praesentium sapiente sint unde.</p>
-            </div>
           </div>
         </div> -->
       </div>
@@ -824,183 +837,6 @@
       </div>
     </div>
   </div>
-
-<!-- <table>
-  <tr>
-    <td style="padding-right: 8px">
-      <img src="icons/abc-32.png">
-    </td>
-    <td>
-      <h1><span class="i18n_options"></span></h1>
-    </td>
-  </tr>
-</table>
-
-<div id="tabs">
-  <ul>
-    <li><a href="#tab-adblocking">Adblocking</a></li>
-    <li><a href="#tab-whitelisting">Whitelisting</a></li>
-    <li><a href="#tab-rewards">Rewards</a></li>
-    <li><a href="#tab-settings">Settings</a></li>
-    <li><a href="#tab-statistics">Statistics</a></li>
-    <li><a href="#tab-faq">FAQ</a></li>
-  </ul>
-
-
-  <div id="tab-adblocking">
-    <p>
-      <span class="i18n_enable_only_the"></span>
-    </p>
-    <p>
-      <span class="i18n_out_of_date_lists"></span>
-      <button id="updateFilterLists" class="refreshButton"><span class="i18n_update_now"></span></button><br />
-
-      <div id="js-subscriptionTemplate" class="subscription">
-        <button class="i18n_filters_subscription_delete_label subscriptionRemoveButton"></button>
-        <label class="subscriptionEnabledContainer">
-          <input class="subscriptionEnabled" type="checkbox" /> <span class="i18n_filters_subscription_enabled_label"></span>
-        </label>
-        <a class="js-subscriptionTitle"></a>
-        <span class="js-subscriptionUpdate"></span>
-      </div>
-
-      <div id="js-filterLists"></div>
-      <br />
-
-      <div id="userFilterLists" style="margin-bottom: 8px"></div>
-
-      <p id="addSubscriptionButton">
-        <button id="startSubscriptionSelection" class="addButton"><span class="i18n_filters_addSubscription_label"></span></button>
-      </p>
-      <div id="addSubscriptionContainer">
-        <span class="i18n_subscriptionSelection_subscriptionSelector_label"></span><br />
-        <select id="js-subscriptionSelector" style="width:500px"></select>
-        <button id="js-addSubscription" class="addButton"><span class="i18n_filters_addSubscriptionAdd_label"></span></button>
-      </div>
-      <div id="customSubscriptionContainer">
-        <p>
-          <span class="i18n_subscriptionSelection_title_label"></span><br />
-          <input type="text" id="customSubscriptionTitle" style="width:500px" />
-        </p>
-        <p>
-          <span class="i18n_subscriptionSelection_location_label"></span><br />
-          <input type="text" id="customSubscriptionLocation" style="width:500px" />
-        </p>
-      </div>
-
-      <div id="acceptableAdsContainer">
-        <input type="checkbox" id="js-acceptableAds" />
-        <label for="js-acceptableAds" class="i18n_filters_acceptableAds2_label"></label>
-        <a id="acceptableAdsLink" href="#" target="_blank" class="i18n_filters_viewList_label"></a>
-        <a id="acceptableAdsDocs" href="#" target="_blank" class="i18n_filters_readMore_label"></a>
-      </div>
-    </p>
-  </div>
-
-
-  <div id="tab-whitelisting">
-    <p class="i18n_disabled_for_these_domains"></p>
-
-    <form id="js-whitelistForm" action="#">
-    <table>
-      <tr>
-        <td style="max-width:100%">
-          <input type="text" value="" id="newWhitelistDomain" style="width:100%">
-        </td>
-        <td>
-          <button class="addButton" type="submit"><span class="i18n_add_domain_button"></span></button>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <select id="js-excludedDomainsBox" size="10" multiple style="width:500px; background: white;"></select>
-        </td>
-        <td>
-          <button id="js-removeWhitelist" class="removeButton"><span class="i18n_remove_button"></span></button>
-        </td>
-      </tr>
-    </table>
-    </form>
-  </div>
-
-
-  <div id="tab-rewards">
-    <p id="filter-must-follow-syntax" class="i18n_filter_must_follow_syntax"></p>
-
-    <form id="js-customFilterForm" action="#">
-    <table>
-      <tr>
-        <td>
-          <input type="text" value="" id="newFilter" style="width:500px">
-        </td>
-        <td>
-          <button class="addButton" type="submit"><span class="i18n_add_filter_button"></span></button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <select id="js-userFiltersBox" size="20" multiple style="width: 500px; background: white;"></select>
-        </td>
-        <td>
-          <button id="js-removeCustomFilter" class="removeButton"><span class="i18n_remove_button"></span></button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div style="font-size: 90%; text-align: right"><a id="js-rawFiltersButton" href="#"><span class="i18n_edit_filters_raw"></span></a></div>
-        </td>
-      </tr>
-      <tr id="rawFilters">
-        <td>
-          <div style="width: 500px">
-            <textarea id="rawFiltersText" style="width: 100%; height: 300px"></textarea>
-          </div>
-        </td>
-        <td>
-          <div><button id="js-importRawFilters"><span class="i18n_apply_changes"></span></button></div>
-        </td>
-      </tr>
-    </table>
-    </form>
-  </div>
-
-
-  <div id="tab-settings">
-    <p>
-      <div id="shouldShowBlockElementMenuContainer">
-        <input type="checkbox" id="shouldShowBlockElementMenu" /><label for="shouldShowBlockElementMenu" class="i18n_show_block_element_menu"></label>
-      </div>
-      <div id="hidePlaceholdersContainer">
-        <input type="checkbox" id="hidePlaceholders" /><label for="hidePlaceholders" class="i18n_overlay_hideplaceholders_label"></label>
-      </div>
-    </p>
-  </div>
-
-
-  <div id="tab-statistics">
-    <p>
-      <div id="shouldShowBlockElementMenuContainer">
-        <input type="checkbox" id="shouldShowBlockElementMenu" /><label for="shouldShowBlockElementMenu" class="i18n_show_block_element_menu"></label>
-      </div>
-      <div id="hidePlaceholdersContainer">
-        <input type="checkbox" id="hidePlaceholders" /><label for="hidePlaceholders" class="i18n_overlay_hideplaceholders_label"></label>
-      </div>
-    </p>
-  </div>
-
-
-  <div id="tab-faq">
-    <p>
-      <div id="shouldShowBlockElementMenuContainer">
-        <input type="checkbox" id="shouldShowBlockElementMenu" /><label for="shouldShowBlockElementMenu" class="i18n_show_block_element_menu"></label>
-      </div>
-      <div id="hidePlaceholdersContainer">
-        <input type="checkbox" id="hidePlaceholders" /><label for="hidePlaceholders" class="i18n_overlay_hideplaceholders_label"></label>
-      </div>
-    </p>
-  </div>
-</div> -->
 
 </body>
 </html>
