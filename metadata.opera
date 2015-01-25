@@ -2,4 +2,4 @@
 inherit = metadata.chrome
 
 [general]
-basename = adblockplusopera
+basename = adblockcashopera

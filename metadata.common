@@ -34,7 +34,6 @@ requiredAssets =
                assets/bower/jquery/dist/jquery.js
                assets/images/
                assets/jquery-ui/
-               assets/scripts/options-angular.js
                assets/rollbar.js
 
 [mapping]
