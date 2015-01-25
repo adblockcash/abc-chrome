@@ -98,8 +98,11 @@ var AdblockExtensionsDetector = {
   init: function() {
     var updateStatus = Utils.debounce(this.checkStatus.bind(this), 1000 * 5);
 
-    window.setInterval(updateStatus, 1000 * 60 * 15);
+    // Check for status 15s after starting up the chrome/abc extension
     window.setTimeout(updateStatus, 1000 * 15);
+
+    // Check for status periodically once per hour
+    window.setInterval(updateStatus, 1000 * 60 * 60);
 
     chrome.management.onEnabled.addListener(updateStatus);
     chrome.management.onDisabled.addListener(updateStatus);
