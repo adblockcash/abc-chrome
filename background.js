@@ -103,6 +103,12 @@ var AdblockExtensionsDetector = {
 
     chrome.management.onEnabled.addListener(updateStatus);
     chrome.management.onDisabled.addListener(updateStatus);
+
+    chrome.notifications.onClicked.addListener(function(notificationId){
+      if (notificationId == this._notificationId) {
+        ext.pages.open("chrome://extensions");
+      }
+    }.bind(this));
   },
 
   _getNotification: function() {
