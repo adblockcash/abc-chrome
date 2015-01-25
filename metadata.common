@@ -23,18 +23,17 @@ document_start = ext/common.js ext/content.js include.preload.js
 document_end = include.postload.js
 
 [buildConfig]
-requiredAssets =
-               assets/bower/angular/angular-csp.css
-               assets/bower/angular/angular.js
-               assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js
-               assets/bower/flag-icon-css/css/flag-icon.css
-               assets/bower/flag-icon-css/flags/
-               assets/bower/font-awesome/css/font-awesome.css
-               assets/bower/font-awesome/fonts/
-               assets/bower/jquery/dist/jquery.js
-               assets/images/
-               assets/jquery-ui/
-               assets/rollbar.js
+requiredAssets = assets/bower/angular/angular-csp.css
+                 assets/bower/angular/angular.js
+                 assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js
+                 assets/bower/flag-icon-css/css/flag-icon.css
+                 assets/bower/flag-icon-css/flags/
+                 assets/bower/font-awesome/css/font-awesome.css
+                 assets/bower/font-awesome/fonts/
+                 assets/bower/jquery/dist/jquery.js
+                 assets/images/
+                 assets/jquery-ui/
+                 assets/rollbar.js
 
 [mapping]
 ext/content.js = chrome/ext/content.js
