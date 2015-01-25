@@ -69,10 +69,23 @@
 
     <div class="popup-body js-hide" id="js-stats-container">
       <span class="popup-body-stat" id="js-stats-page"><strong>0</strong> ads blocked</span>
-      <span class="popup-body-stat" id="js-website-cc-stats"><strong>0</strong> CC earned</span>
+      <span class="popup-body-stat js-hide-when-otheradblockdetected" id="js-website-cc-stats"><strong>0</strong> CC earned</span>
     </div>
 
-    <div class="popup-info green-info js-hide js-whitelisted">
+    <div class="popup-info red-info js-hide js-show-when-otheradblockdetected">
+      <p>
+        <i class="fa fa-exclamation-triangle"></i>
+        We have detected an adblock extension running simultaneously to Adblock Ca<span class="dollar-logo">$</span>h.
+      </p>
+      <p>
+        Whitelisting features, like collecting CashCoins have been disabled.
+      </p>
+      <p>
+        <strong>Please, turn off other adblock extensions while using Adblock Ca<span class="dollar-logo">$</span>h.</strong>
+      </p>
+    </div>
+
+    <div class="popup-info green-info js-hide js-whitelisted js-hide-when-otheradblockdetected">
       <p>
         <strong>You have whitelisted this website.</strong>
       </p>
@@ -81,7 +94,7 @@
       </ul>
     </div>
 
-    <div class="popup-info yellow-info js-hide js-nonwhitelisted">
+    <div class="popup-info yellow-info js-hide js-nonwhitelisted js-hide-when-otheradblockdetected">
       <p>
         <strong>Activate whitelisting for this website!</strong>
       </p>

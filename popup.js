@@ -27,6 +27,8 @@ var Prefs = require("prefs").Prefs;
 var isWhitelisted = require("whitelisting").isWhitelisted;
 var AdblockCash = require("adblockcash").AdblockCash;
 
+AdblockCash.setupErrorReporting(window, document);
+
 var page = null;
 
 function init()
@@ -41,20 +43,18 @@ function init()
     else if (!backgroundPage.htmlPages.has(page))
       document.body.classList.add("nohtml");
 
-    if (page)
-    {
+    if (page) {
       Utils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(page.url));
     }
+
+    rerender();
   });
 
   // Attach event listeners
   document.getElementById("js-toggle-whitemode").addEventListener("change", toggleEnabled, false);
-  document.getElementById("js-open-options").addEventListener("click", function()
-  {
+  document.getElementById("js-open-options").addEventListener("click", function() {
     ext.showOptions();
   }, false);
-
-  rerender();
 }
 window.addEventListener("DOMContentLoaded", init, false);
 
@@ -108,4 +108,13 @@ function rerender() {
   if (cashableWebsite) {
     $(".js-website-cashcoins_per_visit").text(+cashableWebsite.cashcoins_per_visit);
   }
+
+  $(".js-show-when-otheradblockdetected").each(function(){
+    $(this).toggle(AdblockCash.isOtherAdblockEnabled);
+  });
+  $(".js-hide-when-otheradblockdetected").each(function(){
+    if ($(this).is(":visible") && AdblockCash.isOtherAdblockEnabled) {
+      $(this).hide();
+    }
+  });
 }

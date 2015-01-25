@@ -84,7 +84,6 @@ require("filterNotifier").FilterNotifier.addListener(function(action)
     if (canUseChromeNotifications)
       initChromeNotifications();
     initAntiAdblockNotification();
-    AdblockExtensionsDetector.init();
   }
 
   // update browser actions when whitelisting might have changed,
@@ -97,8 +96,13 @@ var AdblockExtensionsDetector = {
   _notificationId: "adblock_extension_detected",
 
   init: function() {
-    window.setInterval(this.checkStatus.bind(this), 1000 * 60 * 15);
-    window.setTimeout(this.checkStatus.bind(this), 1000 * 15);
+    var updateStatus = Utils.debounce(this.checkStatus.bind(this), 1000 * 5);
+
+    window.setInterval(updateStatus, 1000 * 60 * 15);
+    window.setTimeout(updateStatus, 1000 * 15);
+
+    chrome.management.onEnabled.addListener(updateStatus);
+    chrome.management.onDisabled.addListener(updateStatus);
   },
 
   _getNotification: function() {
@@ -133,6 +137,7 @@ var AdblockExtensionsDetector = {
     }.bind(this));
   }
 };
+AdblockExtensionsDetector.init();
 
 // Special-case domains for which we cannot use style-based hiding rules.
 // See http://crbug.com/68705.
