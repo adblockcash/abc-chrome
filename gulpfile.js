@@ -177,4 +177,6 @@ gulp.task("deploy-package", ["build-package"], shell.task("scp /tmp/adblockcash"
 
 gulp.task("deploy", ["deploy-zip", "deploy-package"]);
 
+gulp.task("release", ["build-zip-release"]);
+
 gulp.task("default", ["build-devenv", "watch"]);
