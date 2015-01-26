@@ -27,15 +27,20 @@ var paths = {
 };
 
 var _ENV_GLOBALS = {
-  "default": {
+  "defaults": {
     // Call `gulp --platform=firefox` to change current browser destination.
     // Supported platforms: chrome|firefox|opera|safari
     PLATFORM: gutil.env.platform || "chrome",
+
+    ROLLBAR_CLIENT_ACCESS_TOKEN: "cbd7cce4dc3e409eada424e7fb88d16d"
   },
+
   "development": {
     ENV: "development",
-    ABC_BACKEND_ORIGIN: "http://localhost:3000"
+    ABC_BACKEND_ORIGIN: "http://localhost:3000",
+    ROLLBAR_CLIENT_ACCESS_TOKEN: null
   },
+
   "production": {
     ENV: "production",
     ABC_BACKEND_ORIGIN: "http://backend.adblockcash.org"
@@ -46,10 +51,10 @@ var _ENV_GLOBALS = {
 // You change it like this: `gulp --env=production build`
 //
 // In summary, GLOBALS are build in this way:
-// 1) Take the defaults (GLOBALS.default)
+// 1) Take the defaults (GLOBALS.defaults)
 // 2) Merge with current GLOBALS[env] (f.e. GLOBALS.production)
 // 3) Replace existing GLOBALS with existing and matched ENV variables.
-var GLOBALS = require('extend')(true, {}, _ENV_GLOBALS["default"], _ENV_GLOBALS[gutil.env.env || "development"] || {}, {
+var GLOBALS = require('extend')(true, {}, _ENV_GLOBALS["defaults"], _ENV_GLOBALS[gutil.env.env || "development"] || {}, {
   CACHE_TAG: Date.now()
 });
 
@@ -66,7 +71,12 @@ for (var k in GLOBALS) {
 //
 // Only those will be actually passed into the frontend's application
 // (the rest of globals are used only during the compilation in gulp and shell scripts)
-var PUBLIC_GLOBALS_KEYS = ["ENV", "ABC_BACKEND_ORIGIN", "CACHE_TAG"];
+var PUBLIC_GLOBALS_KEYS = [
+  "ENV",
+  "ABC_BACKEND_ORIGIN",
+  "CACHE_TAG",
+  "ROLLBAR_CLIENT_ACCESS_TOKEN"
+];
 var PUBLIC_GLOBALS = {};
 for (var _i = 0, _len = PUBLIC_GLOBALS_KEYS.length; _i < _len; _i++) {
   var key = PUBLIC_GLOBALS_KEYS[_i];

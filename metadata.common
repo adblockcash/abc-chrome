@@ -82,6 +82,7 @@ lib/adblockplus.js = lib/prefs.js
   adblockplus/lib/notification.js
   adblockplus/lib/antiadblockInit.js
   adblockplus/lib/adblockcash.js
+  adblockplus/lib/rollbar-shimload.js
   lib/stats.js
   lib/whitelisting.js
   --arg module=true source_repo=https://hg.adblockplus.org/adblockplus/
