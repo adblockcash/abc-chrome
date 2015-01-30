@@ -120,9 +120,9 @@ var AdblockExtensionsDetector = {
       // title: Utils.getString("notification_antiadblock_title"),
       // message: Utils.getString("notification_antiadblock_message"),
       title: "CC collection disabled",
-      message: "To collect CC on whitelisted websites, please make sure that Adblock Cash is the only activated adblocking extension in your browser.",
+      message: "To collect CC on whitelisted websites, please make sure that Adblock Cash is the only enabled adblocking extension in your browser.",
       priority: 2,
-      iconUrl: ext.getURL("icons/abc-64.png")
+      iconUrl: ext.getURL("assets/images/logo-icon-whitebg.png")
     };
 
     return notification;
