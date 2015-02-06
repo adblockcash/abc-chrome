@@ -100,7 +100,7 @@
   margin: 20px 0px;
   overflow: hidden;
 
-  + .settings-section {
+  + .settings-section:not(.faq-section) {
     margin-top: 40px;
   }
 }
