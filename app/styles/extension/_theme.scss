@@ -1,57 +1,7 @@
-// helper classes
-.space-20 {
-  margin-top: 20px;
-}
-
-.clr {
-  clear: both;
-}
-
-.js-hide {
-  display: none;
-}
-
 .avatar {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-}
-
-.green {
-  color: $green;
-}
-.yellow {
-  color: $yellow;
-}
-.red {
-  color: $red;
-}
-
-.green-info {
-  background: lighten($green, 35%);
-}
-.yellow-info {
-  background: lighten($yellow, 25%);
-}
-.red-info {
-  background: lighten($red, 35%);
-}
-
-.note {
-  font-size: .9em;
-  color: #666;
-  margin-bottom: 60px;
-  a {
-    color: $primary;
-  }
-}
-
-.btn-primary {
-  background: $primary;
-}
-
-.dollar-logo {
-  font-size: 0.8em;
 }
 
 // customize boostrap

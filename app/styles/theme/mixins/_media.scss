@@ -1,0 +1,116 @@
+@mixin media-width-below($max) {
+  @media (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin media-width-between($min, $max) {
+  @media (max-width: $max) and (min-width: $min) {
+    @content;
+  }
+}
+
+@mixin media-width-above($min) {
+  @media (min-width: $min) {
+    @content;
+  }
+}
+
+@mixin media-min-xxs {
+  @include media-width-above($screen-xxs-min) {
+    @content;
+  }
+}
+@mixin media-min-xs {
+  @include media-width-above($screen-xs-min) {
+    @content;
+  }
+}
+@mixin media-min-sm {
+  @include media-width-above($screen-sm-min) {
+    @content;
+  }
+}
+@mixin media-min-md {
+  @include media-width-above($screen-md-min) {
+    @content;
+  }
+}
+@mixin media-min-lg {
+  @include media-width-above($screen-lg-min) {
+    @content;
+  }
+}
+
+@mixin media-max-xxs {
+  @include media-width-below($screen-xxs-max) {
+    @content;
+  }
+}
+@mixin media-max-xs {
+  @include media-width-below($screen-xs-max) {
+    @content;
+  }
+}
+@mixin media-max-sm {
+  @include media-width-below($screen-sm-max) {
+    @content;
+  }
+}
+@mixin media-max-md {
+  @include media-width-below($screen-md-max) {
+    @content;
+  }
+}
+
+@mixin media-xxs {
+  @include media-max-xxs {
+    @content;
+  }
+}
+@mixin media-xs {
+  @include media-max-xs {
+    @content;
+  }
+}
+@mixin media-sm {
+  @include media-width-between($screen-sm-min, $screen-md-min) {
+    @content;
+  }
+}
+@mixin media-md {
+  @include media-width-between($screen-md-min, $screen-lg-min) {
+    @content;
+  }
+}
+@mixin media-lg {
+  @include media-min-lg {
+    @content;
+  }
+}
+
+@mixin media-not-xxs {
+  @include media-min-xs {
+    @content;
+  }
+}
+@mixin media-not-xs {
+  @media (max-width: $screen-xxs-max), (min-width: $screen-sm-min) {
+    @content;
+  }
+}
+@mixin media-not-sm {
+  @media (max-width: $screen-xs-max), (min-width: $screen-md-min) {
+    @content;
+  }
+}
+@mixin media-not-md {
+  @media (max-width: $screen-sm-max), (min-width: $screen-lg-min) {
+    @content;
+  }
+}
+@mixin media-not-lg {
+  @include media-max-md {
+    @content;
+  }
+}
