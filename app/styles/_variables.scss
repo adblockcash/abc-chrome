@@ -1,5 +1,5 @@
-// NOTE: remember to replace switchery's color in scripts/app.js,
-//       when updating the $primary.
+// CUSTOM VARIABLES
+
 $red: #c0392b;
 $green: #45C02B;
 $yellow: #EDB916;
@@ -13,3 +13,21 @@ $main-font: 'Open Sans', sans-serif;
 $header-font: $main-font;
 
 $section-heading-height: 55px;
+
+
+// BOOTSTRAP VARIABLES
+
+$brand-primary:         $blue;
+$brand-success:         $green;
+$brand-warning:         $yellow;
+$brand-danger:          $red;
+
+$font-family-sans-serif:  $main-font;
+$headings-font-family:    $header-font;
+
+@import "../../assets/bower/bootstrap-sass-official/assets/stylesheets/bootstrap/variables";
+
+
+// MIXINS
+
+@import "mixins";

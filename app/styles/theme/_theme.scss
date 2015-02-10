@@ -2,7 +2,7 @@
 @import "../../assets/bower/font-awesome/css/font-awesome.css";
 @import "../../assets/bower/flag-icon-css/css/flag-icon.css";
 
-@import "bootstrap/_bootstrap";
+@import "_bootstrap";
 
 .container {
   max-width: 980px;
@@ -56,28 +56,6 @@
   }
 }
 
-.single-question {
-  margin-top: 10px;
-
-  + .single-question {
-    border-top: 1px solid #f0f0f0;
-  }
-}
-.question-title {
-  cursor: pointer;
-  position: relative;
-  font-size: 16px;
-  font-weight: 500;
-
-  &:after {
-    @include fa-icon;
-    content: "\f0dd";
-    position: absolute;
-    right: 0;
-    font-size: .8em;
-  }
-}
-
 .btn-primary {
   background: $primary;
 }
@@ -93,70 +71,4 @@ label {
 
 .form-horizontal .control-label {
   text-align: left;
-}
-
-// layout
-.header {
-  background: $gray-light;
-  padding: 40px 15px;
-  margin: 0px 0px 40px 0px;
-  text-align: center;
-  h1 {
-    padding: 30px 10px 50px 10px;
-  }
-}
-
-.content-container {
-  font-size: 15px;
-  color: #333;
-  font-weight: 300;
-}
-
-.footer {
-  background: #fff;
-  color: #333;
-  padding: 40px 0;
-
-  a {
-    color: #666;
-
-    &:hover {
-      text-decoration: none;
-      color: $red;
-    }
-  }
-
-  ul.nav-pills {
-    margin-top: 20px;
-
-    li {
-      border-right: 1px solid #adadad;
-
-      a {
-        padding: 5px 10px 5px 0;
-      }
-
-      + li a {
-        padding-left: 10px;
-      }
-
-      &:last-child {
-        border-right: 0px;
-      }
-    }
-  }
-
-  .share-icon {
-    padding: 10px;
-    text-align: center;
-  }
-}
-
-.faq-header {
-  font-size: 22px;
-  display: block;
-  font-weight: 300;
-  line-height: 1.25em;
-  margin: 1em 0;
-  color: $primary;
 }

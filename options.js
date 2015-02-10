@@ -625,12 +625,12 @@ function setLinks(id)
 
 
 function initializeQuestionCollapses() {
-  $(".question-body").addClass("collapse").removeClass("js-hide");
+  $(".faq-question-body").addClass("collapse").removeClass("js-hide");
 
-  $(document).on("click", ".single-question .question-title", function(event){
+  $(document).on("click", ".faq-question .faq-question-title", function(event){
     event.preventDefault();
 
-    console.log($(this).closest(".single-question"));
-    $(this).closest(".single-question").find(".question-body").collapse("toggle");
+    console.log($(this).closest(".faq-question"));
+    $(this).closest(".faq-question").find(".faq-question-body").collapse("toggle");
   });
 }

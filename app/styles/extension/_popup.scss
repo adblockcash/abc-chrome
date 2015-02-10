@@ -3,32 +3,32 @@ $popup-box-padding: 10px;
 $popup-box-header-height: 80px;
 $popup-box-header-padding: $popup-box-padding;
 
-$hexagon-height: 40px;
-$hexagon-width: $hexagon-height / 2 / 173.21 * 300;
-$hexagon-borders: $hexagon-width *  86.60/300;
+$popup-hexagon-height: 40px;
+$popup-hexagon-width: $popup-hexagon-height / 2 / 173.21 * 300;
+$popup-hexagon-borders: $popup-hexagon-width *  86.60/300;
 
 $popup-controls-height: 42px;
 $popup-controls-padding: $popup-box-padding;
 
-.hexagon {
+.popup-hexagon {
   position: relative;
-  width: $hexagon-width;
-  height: $hexagon-height;
+  width: $popup-hexagon-width;
+  height: $popup-hexagon-height;
   text-align: center;
   color: #fff;
   font-weight: bold;
   background: url(../../assets/images/logo-icon.svg) no-repeat center center transparent;
   background-size: contain;
 
-  &.hexagon-gray {
+  &.popup-hexagon-gray {
     background-image: url(../../assets/images/logo-icon-gray.svg);
   }
 
-  &.hexagon-yellow {
+  &.popup-hexagon-yellow {
     background-image: url(../../assets/images/logo-icon-yellow.svg);
   }
 
-  &.hexagon-green {
+  &.popup-hexagon-green {
     background-image: url(../../assets/images/logo-icon-green.svg);
   }
 }
@@ -63,7 +63,7 @@ $popup-controls-padding: $popup-box-padding;
   }
 
   .popup-header-contents {
-    margin-left: $hexagon-width + 15px;
+    margin-left: $popup-hexagon-width + 15px;
   }
 
   .adblock-status-name {

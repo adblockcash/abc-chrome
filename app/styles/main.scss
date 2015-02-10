@@ -1,12 +1,13 @@
 @import "variables";
-@import "mixins";
 
 @import "../../assets/bower/angular/angular-csp.css";
 
-@import "theme/_theme";
+@import "theme/theme";
 
-@import "components/_switch";
+@import "components/faq";
+@import "components/switch";
 
-@import "pages/options";
-@import "pages/firstRun";
-@import "pages/popup";
+@import "extension/layout";
+@import "extension/options";
+@import "extension/firstRun";
+@import "extension/popup";
