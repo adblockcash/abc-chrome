@@ -17,19 +17,19 @@ $popup-controls-padding: $popup-box-padding;
   text-align: center;
   color: #fff;
   font-weight: bold;
-  background: url(../../assets/images/logo-icon.svg) no-repeat center center transparent;
+  background: image-url("logo-icon.svg") no-repeat center center transparent;
   background-size: contain;
 
   &.popup-hexagon-gray {
-    background-image: url(../../assets/images/logo-icon-gray.svg);
+    background-image: image-url("logo-icon-gray.svg");
   }
 
   &.popup-hexagon-yellow {
-    background-image: url(../../assets/images/logo-icon-yellow.svg);
+    background-image: image-url("logo-icon-yellow.svg");
   }
 
   &.popup-hexagon-green {
-    background-image: url(../../assets/images/logo-icon-green.svg);
+    background-image: image-url("logo-icon-green.svg");
   }
 }
 

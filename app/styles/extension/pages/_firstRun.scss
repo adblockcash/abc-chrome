@@ -238,10 +238,10 @@
   }
 
   &.full-image-section-1 {
-    background-image: url(../../assets/images/sample-image-1.jpg);
+    background-image: image-url("sample-image-1.jpg");
   }
   &.full-image-section-2 {
-    background-image: url(../../assets/images/sample-image-2.jpg);
+    background-image: image-url("sample-image-2.jpg");
   }
 
   &:before {

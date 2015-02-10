@@ -101,7 +101,9 @@ gulp.task("styles", function() {
   return gulp.src(paths.source.styles)
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
     .pipe(sourcemaps.init())
-      .pipe(sass())
+      .pipe(sass({
+        imagePath: "/assets/images"
+      }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.destination.styles));
 });
