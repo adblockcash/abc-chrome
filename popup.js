@@ -93,7 +93,7 @@ function toggleEnabled()
 function rerender() {
   // Hide all and turn on only one of those divs, depending on adblockStatus
   var adblockStatus = Utils.getAdblockStatus(page);
-  $(".js-whitelisted, .js-nonwhitelisted, .js-adblocked, .js-nonadblocked").hide();
+  $(".js-whitelisted, .js-nonwhitelisted, .js-adblocked, .js-nonadblocked").hide().removeClass("js-hide");
   $(".js-" + adblockStatus).show();
 
   // Disable / Fill in "x CC earned"
