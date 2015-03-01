@@ -696,7 +696,10 @@
             <div class="usercard " ng-show="currentVisitor.id">
               <img class="img-thumbnail avatar usercard-avatar" src="assets/images/avatar.png" />
               <div class="usercard-contents">
-                <h4 class="js-visitorEmail" ng-bind="currentVisitor.email">john.doe@adblockcash.org</h4>
+                <h4>
+                  {{ currentVisitor.email }}
+                  (#{{ currentVisitor.id }})
+                </h4>
 
                 <div class="form form-horizontal">
                   <div class="row form-group">
