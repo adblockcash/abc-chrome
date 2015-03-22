@@ -757,10 +757,10 @@
 
           <div class="settings-section" ng-if="currentVisitor.id">
             <h3 class="section-heading">Payouts</h3>
-            <p>Fill in your bank account details or PayPal account's name below, so we will be able to pass you the prize money in case you win!</p>
+            <p>Fill in your <!-- bank account details or --> PayPal account's name below, so we will be able to pass you the prize money in case you win!</p>
 
             <form ng-controller="VisitorPaymentDetailsFormController" ng-submit="submit()">
-              <div class="row form-group">
+              <!-- <div class="row form-group">
                 <div class="col-sm-2 control-label">Choose payment method</div>
                 <div class="col-sm-10">
                   <label class="radio-inline">
@@ -770,9 +770,9 @@
                     <input type="radio" ng-model="paymentMethod" value="bank"> Bank transfer
                   </label>
                 </div>
-              </div>
+              </div> -->
 
-              <div ng-if="paymentMethod == 'paypal'">
+              <!-- <div ng-if="paymentMethod == 'paypal'"> -->
                 <div class="row form-group">
                   <label class="col-sm-2 control-label">
                     PayPal account
@@ -781,9 +781,9 @@
                     <input type="email" class="form-control" ng-model="visitor.paypal_email" placeholder="john@doe.com" />
                   </div>
                 </div>
-              </div>
+              <!-- </div> -->
 
-              <div ng-if="paymentMethod == 'bank'">
+              <!-- <div ng-if="paymentMethod == 'bank'">
                 <div class="row form-group" ng-repeat="paymentField in paymentDetails.payment_fields">
                   <label class="col-sm-2 control-label" ng-bind="paymentField.name"></label>
                   <div class="col-sm-10">
@@ -791,7 +791,7 @@
                     <span class="help help-block" ng-bind="paymentField.help"></span>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div class="row form-group">
                 <div class="col-sm-offset-2 col-sm-10">
