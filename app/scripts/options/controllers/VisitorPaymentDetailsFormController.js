@@ -8,11 +8,11 @@ angular.module("abc")
     }
 
     $scope.visitor = angular.copy(AdblockCash.visitor);
-    if ($scope.visitor.paypal_email) {
+    // if ($scope.visitor.paypal_email) {
       $scope.paymentMethod = "paypal";
-    } else {
-      $scope.paymentMethod = "bank";
-    }
+    // } else {
+    //   $scope.paymentMethod = "bank";
+    // }
   }
   $scope.$on("visitor.updated", updateVisitor);
   updateVisitor();
@@ -36,7 +36,7 @@ angular.module("abc")
     }
     $scope.status = "loading";
 
-    if ($scope.paymentMethod != "paypal") {
+    if ($scope.paymentMethod == "bank") {
       $scope.visitor.paypal_email = null;
     }
 
