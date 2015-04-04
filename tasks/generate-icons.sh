@@ -10,8 +10,8 @@ if ! which convert > /dev/null; then
   exit 1
 fi
 
-LOGO="assets/images/logo-icon.svg"
-LOGO_DISABLED="assets/images/logo-icon-gray.svg"
+LOGO="shared/images/logo-icon.svg"
+LOGO_DISABLED="shared/images/logo-icon-gray.svg"
 
 convert -density 19 \
   -background transparent $LOGO +antialias "icons/abc-16.png"

@@ -23,47 +23,45 @@ document_start = ext/common.js ext/content.js include.preload.js
 document_end = include.postload.js
 
 [buildConfig]
-requiredAssets = assets/bower/angular/angular-csp.css
-                 assets/bower/angular/angular.js
-                 assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js
-                 assets/bower/flag-icon-css/css/flag-icon.css
-                 assets/bower/flag-icon-css/flags/
-                 assets/bower/font-awesome/css/font-awesome.css
-                 assets/bower/font-awesome/fonts/
-                 assets/bower/jquery/dist/jquery.js
-                 assets/images/
-                 assets/jquery-ui/
-                 assets/rollbar.js
+requiredAssetsPath = shared/vendor/
+requiredAssets = shared/vendor/bower/angular/angular-csp.css
+                 shared/vendor/bower/angular/angular.js
+                 shared/vendor/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js
+                 shared/vendor/bower/flag-icon-css/css/flag-icon.css
+                 shared/vendor/bower/flag-icon-css/flags/
+                 shared/vendor/bower/font-awesome/css/font-awesome.css
+                 shared/vendor/bower/font-awesome/fonts/
+                 shared/vendor/bower/jquery/dist/jquery.js
+                 shared/vendor/jquery-ui/
 
 [mapping]
-ext/content.js = chrome/ext/content.js
-ext/popup.js = chrome/ext/popup.js
-notification.html = chrome/notification.html
-subscriptions.xml = adblockcash/chrome/content/ui/subscriptions.xml
-firstRun.html = adblockcash/chrome/content/ui/firstRun.html
-firstRun.js = adblockcash/chrome/content/ui/firstRun.js
-i18n.js = adblockcash/chrome/content/ui/i18n.js
-skin/abc-icon-big.png = adblockcash/chrome/skin/abc-icon-big.png
-skin/ajax-loader.gif = adblockcash/chrome/skin/ajax-loader.gif
-skin/background.png = adblockcash/chrome/skin/background.png
-skin/background-main.png = adblockcash/chrome/skin/background-main.png
-skin/background-share.png = adblockcash/chrome/skin/background-share.png
-skin/donate.png = adblockcash/chrome/skin/donate.png
-skin/features/malware.png = adblockcash/chrome/skin/features/malware.png
-skin/features/social.png = adblockcash/chrome/skin/features/social.png
-skin/features/tracking.png = adblockcash/chrome/skin/features/tracking.png
-skin/fonts/CreteRound-Italic.otf = adblockcash/chrome/skin/fonts/CreteRound-Italic.otf
+ext/content.js                    = chrome/ext/content.js
+ext/popup.js                      = chrome/ext/popup.js
+notification.html                 = chrome/notification.html
+skin/abc-icon-big.png             = adblockcash/chrome/skin/abc-icon-big.png
+skin/ajax-loader.gif              = adblockcash/chrome/skin/ajax-loader.gif
+skin/background.png               = adblockcash/chrome/skin/background.png
+skin/background-main.png          = adblockcash/chrome/skin/background-main.png
+skin/background-share.png         = adblockcash/chrome/skin/background-share.png
+skin/donate.png                   = adblockcash/chrome/skin/donate.png
+skin/features/malware.png         = adblockcash/chrome/skin/features/malware.png
+skin/features/social.png          = adblockcash/chrome/skin/features/social.png
+skin/features/tracking.png        = adblockcash/chrome/skin/features/tracking.png
+skin/fonts/CreteRound-Italic.otf  = adblockcash/chrome/skin/fonts/CreteRound-Italic.otf
 skin/fonts/CreteRound-Regular.otf = adblockcash/chrome/skin/fonts/CreteRound-Regular.otf
-skin/social/facebook.png = adblockcash/chrome/skin/social/facebook.png
-skin/social/googleplus.png = adblockcash/chrome/skin/social/googleplus.png
-skin/social/renren.png = adblockcash/chrome/skin/social/renren.png
-skin/social/twitter.png = adblockcash/chrome/skin/social/twitter.png
-skin/social/weibo.png = adblockcash/chrome/skin/social/weibo.png
-qunit/qunit.js = adblockcashtests/chrome/content/qunit.js
-qunit/qunit.css = adblockcashtests/chrome/content/qunit.css
+skin/social/facebook.png          = adblockcash/chrome/skin/social/facebook.png
+skin/social/googleplus.png        = adblockcash/chrome/skin/social/googleplus.png
+skin/social/renren.png            = adblockcash/chrome/skin/social/renren.png
+skin/social/twitter.png           = adblockcash/chrome/skin/social/twitter.png
+skin/social/weibo.png             = adblockcash/chrome/skin/social/weibo.png
+qunit/qunit.js                    = adblockcashtests/chrome/content/qunit.js
+qunit/qunit.css                   = adblockcashtests/chrome/content/qunit.css
 
 [preprocess]
-firstRun.html =
+shared/block.html =
+shared/firstRun.html =
+shared/options.html =
+shared/popup.html =
 
 [convert_js]
 lib/adblockcash.js = lib/prefs.js

@@ -393,7 +393,7 @@
   {
     chrome.windows.getLastFocused(function(win)
     {
-      var optionsUrl = chrome.extension.getURL("options.html");
+      var optionsUrl = chrome.extension.getURL("shared/options.html");
       var queryInfo = {url: optionsUrl};
 
       // extension pages can't be accessed in incognito windows. In order to

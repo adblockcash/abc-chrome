@@ -13,10 +13,10 @@ permissions = tabs
   unlimitedStorage
   notifications
   management
-options = options.html
-browserAction = icons/abc-19.png icons/abc-38.png popup.html
+options = shared/options.html
+browserAction = icons/abc-19.png icons/abc-38.png shared/popup.html
 icons = icons/abc-16.png icons/abc-32.png icons/abc-48.png icons/abc-128.png
-webAccessible = block.html
+webAccessible = shared/block.html
 
 [compat]
 chrome = 28.0

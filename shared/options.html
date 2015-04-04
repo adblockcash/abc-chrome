@@ -22,26 +22,27 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Adblock Ca$h</title>
 
-  <link type="text/css" href="/dist/styles/extension/main.css" rel="stylesheet"/>
+  <link type="text/css" href="../dist/styles/extension/main.css" rel="stylesheet"/>
 
-  <script src="assets/bower/jquery//dist/jquery.js"></script>
-  <script src="assets/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+  <script src="vendor/bower/jquery/dist/jquery.js"></script>
+  <script src="vendor/bower/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+  <script src="vendor/bower/angular/angular.js"></script>
 
-  <script src="assets/bower/angular/angular.js"></script>
+  {%- if needsExt %}
+  <script type="text/javascript" src="../ext/common.js"></script>
+  <script type="text/javascript" src="../ext/content.js"></script>
+  {%- endif %}
 
-  <script src="ext/common.js"></script>
-  <script src="ext/content.js"></script>
-  <script src="i18n.js"></script>
-  <script src="options.js"></script>
-
-  <script src="/dist/scripts/options.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/options.js"></script>
+  <script src="../dist/scripts/options.js"></script>
 </head>
 <body class="options-page" ng-app="abc">
-
+{% raw %}
   <div class="settings-header">
     <div class="container">
       <h1 class="pull-left">
-        <img class="logo pull-left" src="assets/images/logo-icon.svg" alt="" />
+        <img class="logo pull-left" src="images/logo-icon.svg" alt="" />
         Adblock<strong>Ca<span class="dollar-logo">$</span>h</strong>
       </h1>
     </div>
@@ -694,7 +695,7 @@
             </div>
 
             <div class="usercard " ng-show="currentVisitor.id">
-              <img class="img-thumbnail avatar usercard-avatar" src="assets/images/avatar.png" />
+              <img class="img-thumbnail avatar usercard-avatar" src="images/avatar.png" />
               <div class="usercard-contents">
                 <h4>
                   {{ currentVisitor.email }}
@@ -1068,7 +1069,7 @@
       <div class="row footer-inner">
         <div class="col-sm-6">
           <a href="http://adblockcash.org/">
-            <strong><img src="assets/images/logo-icon.svg" alt="" height="35"/> adblockcash.org</strong>
+            <strong><img src="images/logo-icon.svg" alt="" height="35"/> adblockcash.org</strong>
           </a>
           <ul class="list-unstyled nav-pills">
             <li><a href="http://adblockcash.org/privacy-policy.html">Privacy Policy</a></li>
@@ -1086,6 +1087,6 @@
       </div>
     </div>
   </div>
-
+{% endraw %}
 </body>
 </html>

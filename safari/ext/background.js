@@ -659,7 +659,7 @@
 
   ext.showOptions = function(callback)
   {
-    var optionsUrl = safari.extension.baseURI + "options.html";
+    var optionsUrl = safari.extension.baseURI + "shared/options.html";
 
     for (var id in pages)
     {

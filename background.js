@@ -122,7 +122,7 @@ var AdblockExtensionsDetector = {
       title: "CC collection disabled",
       message: "To collect CC on whitelisted websites, please make sure that Adblock Cash is the only enabled adblocking extension in your browser.",
       priority: 2,
-      iconUrl: ext.getURL("assets/images/logo-icon-whitebg.png")
+      iconUrl: ext.getURL("shared/images/logo-icon-whitebg.png")
     };
 
     return notification;
@@ -184,19 +184,19 @@ function getIconFilename(page) {
     // There is no grayscale version of the icon for whitelisted pages
     // when using Safari, because icons are grayscale already and icons
     // aren't per page in Safari.
-    return "assets/images/logo-icon-gray.svg";
+    return "shared/images/logo-icon-gray.svg";
   }
 
   switch(Utils.getAdblockStatus(page)) {
     case "whitelisted":
-      return "assets/images/logo-icon-green.svg";
+      return "shared/images/logo-icon-green.svg";
     case "nonwhitelisted":
-      return "assets/images/logo-icon-yellow.svg";
+      return "shared/images/logo-icon-yellow.svg";
     case "nonadblocked":
-      return "assets/images/logo-icon-gray.svg";
+      return "shared/images/logo-icon-gray.svg";
     case "adblocked":
     default:
-      return "assets/images/logo-icon-red.svg";
+      return "shared/images/logo-icon-red.svg";
   }
 }
 
@@ -271,7 +271,7 @@ function addSubscription(prevVersion)
 
   function notifyUser()
   {
-    ext.pages.open(ext.getURL("firstRun.html"));
+    ext.pages.open(ext.getURL("shared/firstRun.html"));
   }
 
   if (addSubscription)
@@ -288,7 +288,7 @@ function addSubscription(prevVersion)
     // Load subscriptions data,
     // and add a preferred filter subscription for the current locale
     var request = new XMLHttpRequest();
-    request.open("GET", "subscriptions.xml");
+    request.open("GET", ext.getURL("shared/data/subscriptions.xml"));
     request.addEventListener("load", function()
     {
       var node = Utils.chooseFilterSubscription(request.responseXML.getElementsByTagName("subscription"));

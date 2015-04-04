@@ -154,7 +154,7 @@ var delayedSubscriptionSelection = null;
 function loadRecommendations()
 {
   var request = new XMLHttpRequest();
-  request.open("GET", "subscriptions.xml");
+  request.open("GET", ext.getURL("shared/data/subscriptions.xml"));
   request.onload = function()
   {
     var selectedIndex = 0;

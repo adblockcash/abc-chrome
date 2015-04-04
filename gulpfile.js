@@ -102,7 +102,7 @@ gulp.task("styles", function() {
     .pipe(plumber({errorHandler: notify.onError("Error: <%= error.message %>")}))
     .pipe(sourcemaps.init())
       .pipe(sass({
-        imagePath: "/assets/images"
+        imagePath: "../../../shared/images"
       }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.destination.styles));
@@ -161,15 +161,17 @@ gulp.task("build-zip-release", function(callback) {
 gulp.task("watch", function(){
   gulp.watch([
     "_locales/**",
-    "assets/**",
-    "adblockcashtests/chrome/**/*.js",
     "adblockcash/chrome/**",
     "adblockcash/defaults/**",
     "adblockcash/lib/**",
+    "adblockcash/chrome.manifest",
+    "adblockcash/metadata.*",
+    "adblockcashtests/chrome/**/*.js",
     "buildtools/**",
     "chrome/**",
     "ext/**",
     "lib/**",
+    "shared/**",
     "*.{html,js}",
     "metadata.*",
     "!gulpfile.js",

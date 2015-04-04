@@ -4,6 +4,6 @@ devenv
 *.pyc
 *.safariextension
 node_modules
-assets/bower
+shared/vendor/bower
 dist
 certificates/*
