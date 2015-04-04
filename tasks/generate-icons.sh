@@ -30,16 +30,16 @@ convert -density 55 \
   -background transparent $LOGO +antialias "chrome/icons/abc-48.png"
 
 convert -density 115 \
-  -background transparent $LOGO +antialias "adblockplus/chrome/skin/abc-icon-big.png"
-# convert -density 16 -background transparent $LOGO +antialias "adblockplus/chrome/skin/abc-status-16.png"
-convert -density 19 -background transparent $LOGO +antialias "adblockplus/chrome/skin/abc-status-16-enabled.png"
-convert -density 19 -background transparent $LOGO_DISABLED +antialias "adblockplus/chrome/skin/abc-status-16-disabled.png"
-# convert -density 16 -background transparent $LOGO +antialias "adblockplus/chrome/skin/abc-status-32.png"
-convert -density 37 -background transparent $LOGO +antialias "adblockplus/chrome/skin/abc-status-32-enabled.png"
-convert -density 37 -background transparent $LOGO_DISABLED +antialias "adblockplus/chrome/skin/abc-status-32-disabled.png"
-# convert -density 16 -background transparent $LOGO +antialias "adblockplus/chrome/skin/abc-status.png"
-convert -density 28 -background transparent $LOGO +antialias "adblockplus/chrome/skin/abc-status-24-enabled.png"
-convert -density 28 -background transparent $LOGO_DISABLED +antialias "adblockplus/chrome/skin/abc-status-24-disabled.png"
+  -background transparent $LOGO +antialias "adblockcash/chrome/skin/abc-icon-big.png"
+# convert -density 16 -background transparent $LOGO +antialias "adblockcash/chrome/skin/abc-status-16.png"
+convert -density 19 -background transparent $LOGO +antialias "adblockcash/chrome/skin/abc-status-16-enabled.png"
+convert -density 19 -background transparent $LOGO_DISABLED +antialias "adblockcash/chrome/skin/abc-status-16-disabled.png"
+# convert -density 16 -background transparent $LOGO +antialias "adblockcash/chrome/skin/abc-status-32.png"
+convert -density 37 -background transparent $LOGO +antialias "adblockcash/chrome/skin/abc-status-32-enabled.png"
+convert -density 37 -background transparent $LOGO_DISABLED +antialias "adblockcash/chrome/skin/abc-status-32-disabled.png"
+# convert -density 16 -background transparent $LOGO +antialias "adblockcash/chrome/skin/abc-status.png"
+convert -density 28 -background transparent $LOGO +antialias "adblockcash/chrome/skin/abc-status-24-enabled.png"
+convert -density 28 -background transparent $LOGO_DISABLED +antialias "adblockcash/chrome/skin/abc-status-24-disabled.png"
 
 convert -density 32 \
   -background transparent $LOGO +antialias "safari/icons/abc-32.png"

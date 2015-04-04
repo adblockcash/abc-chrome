@@ -5,7 +5,7 @@ backgroundScripts = ext/common.js
   lib/compat.js
   lib/info.js
   lib/io.js
-  lib/adblockplus.js
+  lib/adblockcash.js
   lib/punycode.js
   lib/publicSuffixList.js
   lib/basedomain.js
@@ -39,78 +39,78 @@ requiredAssets = assets/bower/angular/angular-csp.css
 ext/content.js = chrome/ext/content.js
 ext/popup.js = chrome/ext/popup.js
 notification.html = chrome/notification.html
-subscriptions.xml = adblockplus/chrome/content/ui/subscriptions.xml
-firstRun.html = adblockplus/chrome/content/ui/firstRun.html
-firstRun.js = adblockplus/chrome/content/ui/firstRun.js
-i18n.js = adblockplus/chrome/content/ui/i18n.js
-skin/abc-icon-big.png = adblockplus/chrome/skin/abc-icon-big.png
-skin/ajax-loader.gif = adblockplus/chrome/skin/ajax-loader.gif
-skin/background.png = adblockplus/chrome/skin/background.png
-skin/background-main.png = adblockplus/chrome/skin/background-main.png
-skin/background-share.png = adblockplus/chrome/skin/background-share.png
-skin/donate.png = adblockplus/chrome/skin/donate.png
-skin/features/malware.png = adblockplus/chrome/skin/features/malware.png
-skin/features/social.png = adblockplus/chrome/skin/features/social.png
-skin/features/tracking.png = adblockplus/chrome/skin/features/tracking.png
-skin/fonts/CreteRound-Italic.otf = adblockplus/chrome/skin/fonts/CreteRound-Italic.otf
-skin/fonts/CreteRound-Regular.otf = adblockplus/chrome/skin/fonts/CreteRound-Regular.otf
-skin/social/facebook.png = adblockplus/chrome/skin/social/facebook.png
-skin/social/googleplus.png = adblockplus/chrome/skin/social/googleplus.png
-skin/social/renren.png = adblockplus/chrome/skin/social/renren.png
-skin/social/twitter.png = adblockplus/chrome/skin/social/twitter.png
-skin/social/weibo.png = adblockplus/chrome/skin/social/weibo.png
-qunit/qunit.js = adblockplustests/chrome/content/qunit.js
-qunit/qunit.css = adblockplustests/chrome/content/qunit.css
+subscriptions.xml = adblockcash/chrome/content/ui/subscriptions.xml
+firstRun.html = adblockcash/chrome/content/ui/firstRun.html
+firstRun.js = adblockcash/chrome/content/ui/firstRun.js
+i18n.js = adblockcash/chrome/content/ui/i18n.js
+skin/abc-icon-big.png = adblockcash/chrome/skin/abc-icon-big.png
+skin/ajax-loader.gif = adblockcash/chrome/skin/ajax-loader.gif
+skin/background.png = adblockcash/chrome/skin/background.png
+skin/background-main.png = adblockcash/chrome/skin/background-main.png
+skin/background-share.png = adblockcash/chrome/skin/background-share.png
+skin/donate.png = adblockcash/chrome/skin/donate.png
+skin/features/malware.png = adblockcash/chrome/skin/features/malware.png
+skin/features/social.png = adblockcash/chrome/skin/features/social.png
+skin/features/tracking.png = adblockcash/chrome/skin/features/tracking.png
+skin/fonts/CreteRound-Italic.otf = adblockcash/chrome/skin/fonts/CreteRound-Italic.otf
+skin/fonts/CreteRound-Regular.otf = adblockcash/chrome/skin/fonts/CreteRound-Regular.otf
+skin/social/facebook.png = adblockcash/chrome/skin/social/facebook.png
+skin/social/googleplus.png = adblockcash/chrome/skin/social/googleplus.png
+skin/social/renren.png = adblockcash/chrome/skin/social/renren.png
+skin/social/twitter.png = adblockcash/chrome/skin/social/twitter.png
+skin/social/weibo.png = adblockcash/chrome/skin/social/weibo.png
+qunit/qunit.js = adblockcashtests/chrome/content/qunit.js
+qunit/qunit.css = adblockcashtests/chrome/content/qunit.css
 
 [preprocess]
 firstRun.html =
 
 [convert_js]
-lib/adblockplus.js = lib/prefs.js
+lib/adblockcash.js = lib/prefs.js
   lib/utils.js
   lib/elemHideHitRegistration.js
-  adblockplus/lib/env.js
-  adblockplus/lib/downloader.js
-  adblockplus/lib/filterNotifier.js
-  adblockplus/lib/filterClasses.js
-  adblockplus/lib/subscriptionClasses.js
-  adblockplus/lib/filterStorage.js
-  adblockplus/lib/elemHide.js
-  adblockplus/lib/matcher.js
-  adblockplus/lib/filterListener.js
-  adblockplus/lib/synchronizer.js
-  adblockplus/lib/notification.js
-  adblockplus/lib/antiadblockInit.js
-  adblockplus/lib/adblockcash.js
-  adblockplus/lib/rollbar-shimload.js
+  adblockcash/lib/env.js
+  adblockcash/lib/downloader.js
+  adblockcash/lib/filterNotifier.js
+  adblockcash/lib/filterClasses.js
+  adblockcash/lib/subscriptionClasses.js
+  adblockcash/lib/filterStorage.js
+  adblockcash/lib/elemHide.js
+  adblockcash/lib/matcher.js
+  adblockcash/lib/filterListener.js
+  adblockcash/lib/synchronizer.js
+  adblockcash/lib/notification.js
+  adblockcash/lib/antiadblockInit.js
+  adblockcash/lib/adblockcash.js
+  adblockcash/lib/rollbar-shimload.js
   lib/stats.js
   lib/whitelisting.js
-  --arg module=true source_repo=https://hg.adblockplus.org/adblockplus/
+  --arg module=true source_repo=https://github.com/adblockcash/abc-firefox/
 ext/common.js = ext/common.js chrome/ext/common.js
 ext/background.js = ext/background.js chrome/ext/background.js --arg brace_style=expand
 
-qunit/tests/adblockplus.js = adblockplustests/chrome/content/tests/domainRestrictions.js
-  adblockplustests/chrome/content/tests/filterClasses.js
-  adblockplustests/chrome/content/tests/filterNotifier.js
-  adblockplustests/chrome/content/tests/filterStorage.js
-  adblockplustests/chrome/content/tests/matcher.js
-  adblockplustests/chrome/content/tests/prefs.js
-  adblockplustests/chrome/content/tests/regexpFilters_matching.js
-  adblockplustests/chrome/content/tests/subscriptionClasses.js
-  --arg source_repo=https://hg.adblockplus.org/adblockplustests/
+qunit/tests/adblockcash.js = adblockcashtests/chrome/content/tests/domainRestrictions.js
+  adblockcashtests/chrome/content/tests/filterClasses.js
+  adblockcashtests/chrome/content/tests/filterNotifier.js
+  adblockcashtests/chrome/content/tests/filterStorage.js
+  adblockcashtests/chrome/content/tests/matcher.js
+  adblockcashtests/chrome/content/tests/prefs.js
+  adblockcashtests/chrome/content/tests/regexpFilters_matching.js
+  adblockcashtests/chrome/content/tests/subscriptionClasses.js
+  --arg source_repo=https://github.com/adblockcash/abc-firefoxtests/
 
 [import_locales]
-adblockplus/chrome/locale/*/global.properties = subscription_invalid_location
+adblockcash/chrome/locale/*/global.properties = subscription_invalid_location
   remove_subscription_warning
   notification_antiadblock_title
   notification_antiadblock_message
   filter_elemhide_duplicate_id
   filter_elemhide_nocriteria
-adblockplus/chrome/locale/*/overlay.dtd = hideplaceholders.label
+adblockcash/chrome/locale/*/overlay.dtd = hideplaceholders.label
   notification.button.yes
   notification.button.no
   notification.button.close
-adblockplus/chrome/locale/*/filters.dtd = subscription.lastDownload.inProgress
+adblockcash/chrome/locale/*/filters.dtd = subscription.lastDownload.inProgress
   subscription.lastDownload.invalidURL
   subscription.lastDownload.connectionError
   subscription.lastDownload.invalidData
@@ -122,7 +122,7 @@ adblockplus/chrome/locale/*/filters.dtd = subscription.lastDownload.inProgress
   addSubscriptionOther.label
   viewList.label
   readMore.label
-adblockplus/chrome/locale/*/subscriptionSelection.dtd = location.label
+adblockcash/chrome/locale/*/subscriptionSelection.dtd = location.label
   title.label
-adblockplus/chrome/locale/*/meta.properties = =name
-adblockplus/chrome/locale/*/firstRun.properties = =*
+adblockcash/chrome/locale/*/meta.properties = =name
+adblockcash/chrome/locale/*/firstRun.properties = =*

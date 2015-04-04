@@ -148,7 +148,7 @@
     }
   },
   "stats_share_download": {
-    "description": "Label for link to adblockplus.org that is attached when the user wants to share the stats on Facebook.",
+    "description": "Label for link to adblockcash.org that is attached when the user wants to share the stats on Facebook.",
     "message": "Download Adblock Cash"
   },
   "stats_share_message": {

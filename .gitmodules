@@ -1,9 +1,9 @@
-[submodule "adblockplus"]
-  path = adblockplus
-  url = git@github.com:adblockcash/abc-firefox.git
+[submodule "adblockcash"]
+	path = adblockcash
+	url = git@github.com:adblockcash/abc-firefox.git
 [submodule "buildtools"]
   path = buildtools
   url = git@github.com:adblockcash/abc-buildtools.git
-[submodule "adblockplustests"]
-  path = adblockplustests
-  url = git@github.com:adblockcash/abc-adblocktests.git
+[submodule "adblockcashtests"]
+	path = adblockcashtests
+	url = git@github.com:adblockcash/abc-adblocktests.git

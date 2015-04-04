@@ -202,7 +202,7 @@ function addElementOverlay(elt) {
   var overlay = document.createElement('div');
   overlay.prisoner = elt;
   overlay.prisonerURL = url;
-  overlay.className = "__adblockplus__overlay";
+  overlay.className = "__adblockcash__overlay";
   overlay.setAttribute('style', 'opacity:0.4; background-color:#ffffff; display:inline-box; ' + 'width:' + thisStyle.width + '; height:' + thisStyle.height + '; position:absolute; overflow:hidden; -webkit-box-sizing:border-box; z-index: 99999');
   var pos = getAbsolutePosition(elt);
   overlay.style.left = pos[0] + "px";
@@ -313,7 +313,7 @@ function clickHide_deactivate()
   // Remove overlays
   // For some reason iterating over the array returend by getElementsByClassName() doesn't work
   var elt;
-  while(elt = document.querySelector('.__adblockplus__overlay'))
+  while(elt = document.querySelector('.__adblockcash__overlay'))
     elt.parentNode.removeChild(elt);
 }
 
@@ -384,7 +384,7 @@ function clickHide_mouseClick(e)
 
   var elt = currentElement;
   var url = null;
-  if (currentElement.classList.contains("__adblockplus__overlay"))
+  if (currentElement.classList.contains("__adblockcash__overlay"))
   {
     elt = currentElement.prisoner;
     url = currentElement.prisonerURL;

@@ -94,7 +94,7 @@ gulp.task("generate-icons", shell.task("tasks/generate-icons.sh"));
 gulp.task("bower:install", shell.task("bower install"));
 
 gulp.task("scripts:generate-env", function(done) {
-  return fs.writeFile(APP_ROOT + "adblockplus/lib/env.js", "exports.GLOBALS = " + JSON.stringify(PUBLIC_GLOBALS), done);
+  return fs.writeFile(APP_ROOT + "adblockcash/lib/env.js", "exports.GLOBALS = " + JSON.stringify(PUBLIC_GLOBALS), done);
 });
 
 gulp.task("styles", function() {
@@ -149,10 +149,10 @@ gulp.task("watch", function(){
   gulp.watch([
     "_locales/**",
     "assets/**",
-    "adblockplustests/chrome/**/*.js",
-    "adblockplus/chrome/**",
-    "adblockplus/defaults/**",
-    "adblockplus/lib/**",
+    "adblockcashtests/chrome/**/*.js",
+    "adblockcash/chrome/**",
+    "adblockcash/defaults/**",
+    "adblockcash/lib/**",
     "buildtools/**",
     "chrome/**",
     "ext/**",
