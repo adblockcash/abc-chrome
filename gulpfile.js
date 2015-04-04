@@ -129,18 +129,31 @@ gulp.task("build-dist", function(callback) {
   return runSequence(["bower:install", "scripts:generate-env"], ["styles", "scripts"], callback);
 });
 
-gulp.task("buildtools:build-devenv", shell.task("rm -rf devenv/* && ./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
-
-gulp.task("build-zip", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build"));
-
-gulp.task("build-zip-release", ["build-dist"], shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build -r"));
-
-if (GLOBALS.PLATFORM == "chrome") {
-  gulp.task("build-package", ["build-zip-release"], shell.task("rm -rf /tmp/adblockcashchrome && unzip adblockcashchrome.zip -d /tmp/adblockcashchrome && " + CHROME_CLI_COMMAND + " --pack-extension=/tmp/adblockcashchrome --pack-extension-key=certificates/adblockcashchrome.pem"));
+if (GLOBALS.PLATFORM == "gecko") {
+  gulp.task("buildtools:autoinstall", shell.task("cd adblockcash && ./build.py -t "+ GLOBALS.PLATFORM +" autoinstall 8888"));
+  gulp.task("buildtools:devenv", ["buildtools:autoinstall"]);
+} else {
+  gulp.task("buildtools:devenv", shell.task("rm -rf devenv/* && ./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
 }
 
-gulp.task("build-devenv", function(callback) {
-  return runSequence("build-dist", "buildtools:build-devenv", callback);
+gulp.task("buildtools:build", shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build"));
+
+gulp.task("buildtools:build-release", shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build -r"));
+
+if (GLOBALS.PLATFORM == "chrome") {
+  gulp.task("build-package", ["buildtools:build-release"], shell.task("rm -rf /tmp/adblockcashchrome && unzip adblockcashchrome.zip -d /tmp/adblockcashchrome && " + CHROME_CLI_COMMAND + " --pack-extension=/tmp/adblockcashchrome --pack-extension-key=certificates/adblockcashchrome.pem"));
+}
+
+gulp.task("build-dev", function(callback) {
+  return runSequence("build-dist", "buildtools:devenv", callback);
+});
+
+gulp.task("build-zip", function(callback) {
+  return runSequence("build-dist", "buildtools:build", callback);
+});
+
+gulp.task("build-zip-release", function(callback) {
+  return runSequence("build-dist", "buildtools:build-release", callback);
 });
 
 // GENERAL USE TASKS
@@ -162,7 +175,7 @@ gulp.task("watch", function(){
     "!gulpfile.js",
     paths.destination.styles + "**/*.css",
     paths.destination.scripts + "**/*.js"
-  ], ["buildtools:build-devenv"]);
+  ], ["buildtools:devenv"]);
 
   gulp.watch(paths.source.styles, ["styles"]);
 
@@ -181,4 +194,4 @@ gulp.task("deploy", ["deploy-zip", "deploy-package"]);
 
 gulp.task("release", ["build-zip-release"]);
 
-gulp.task("default", ["build-devenv", "watch"]);
+gulp.task("default", ["build-dev", "watch"]);
