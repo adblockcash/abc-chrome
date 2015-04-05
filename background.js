@@ -16,35 +16,35 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-with(require("filterClasses"))
+with(require("./filterClasses"))
 {
   this.Filter = Filter;
   this.RegExpFilter = RegExpFilter;
   this.BlockingFilter = BlockingFilter;
   this.WhitelistFilter = WhitelistFilter;
 }
-with(require("subscriptionClasses"))
+with(require("./subscriptionClasses"))
 {
   this.Subscription = Subscription;
   this.DownloadableSubscription = DownloadableSubscription;
   this.SpecialSubscription = SpecialSubscription;
 }
-with(require("whitelisting"))
+with(require("./whitelisting"))
 {
   this.isWhitelisted = isWhitelisted;
   this.isFrameWhitelisted = isFrameWhitelisted;
   this.processKey = processKey;
   this.getKey = getKey;
 }
-var AdblockCash = require("adblockcash").AdblockCash;
-var FilterStorage = require("filterStorage").FilterStorage;
-var ElemHide = require("elemHide").ElemHide;
-var defaultMatcher = require("matcher").defaultMatcher;
-var Prefs = require("prefs").Prefs;
-var Synchronizer = require("synchronizer").Synchronizer;
-var Utils = require("utils").Utils;
-var Notification = require("notification").Notification;
-var initAntiAdblockNotification = require("antiadblockInit").initAntiAdblockNotification;
+var AdblockCash = require("./adblockcash").AdblockCash;
+var FilterStorage = require("./filterStorage").FilterStorage;
+var ElemHide = require("./elemHide").ElemHide;
+var defaultMatcher = require("./matcher").defaultMatcher;
+var Prefs = require("./prefs").Prefs;
+var Synchronizer = require("./synchronizer").Synchronizer;
+var Utils = require("./utils").Utils;
+var Notification = require("./notification").Notification;
+var initAntiAdblockNotification = require("./antiadblockInit").initAntiAdblockNotification;
 
 // AdblockCash.setupErrorReporting(window, document);
 
@@ -54,17 +54,17 @@ RegExpFilter.typeMap.MEDIA = RegExpFilter.typeMap.FONT = RegExpFilter.typeMap.OT
 
 // Chrome on Linux does not fully support chrome.notifications until version 35
 // https://code.google.com/p/chromium/issues/detail?id=291485
-var canUseChromeNotifications = require("info").platform == "chromium"
+var canUseChromeNotifications = require("./info").platform == "chromium"
   && "notifications" in chrome
-  && (navigator.platform.indexOf("Linux") == -1 || parseInt(require("info").applicationVersion, 10) > 34);
+  && (navigator.platform.indexOf("Linux") == -1 || parseInt(require("./info").applicationVersion, 10) > 34);
 
 var seenDataCorruption = false;
 var filterlistsReinitialized = false;
-require("filterNotifier").FilterNotifier.addListener(function(action)
+require("./filterNotifier").FilterNotifier.addListener(function(action)
 {
   if (action == "load")
   {
-    var addonVersion = require("info").addonVersion;
+    var addonVersion = require("./info").addon.version;
     var prevVersion = ext.storage.currentVersion;
 
     // There are no filters stored so we need to reinitialize all filterlists
@@ -180,7 +180,7 @@ var contextMenuItem = {
 };
 
 function getIconFilename(page) {
-  if (require("info").platform == "safari") {
+  if (require("./info").platform == "safari") {
     // There is no grayscale version of the icon for whitelisted pages
     // when using Safari, because icons are grayscale already and icons
     // aren't per page in Safari.

@@ -1,35 +1,34 @@
 {
-  "name": "abc-chrome",
-  "description": "Adblock Cash for Chrome",
-  "main": "background.js",
-  "scripts": {
-    "test": "echo 'Not implemented yet!' && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/adblockcash/adblockcashchrome"
-  },
-  "keywords": [
-    "adblock",
-    "adblockcash"
-  ],
-  "author": "adblockcash.org",
-  "license": "GPL3",
-  "bugs": {
-    "url": "https://github.com/adblockcash/adblockcashchrome/issues"
-  },
-  "homepage": "https://github.com/adblockcash/adblockcashchrome",
-  "devDependencies": {
-    "execSync": "^1.0.2",
-    "extend": "^2.0.0",
-    "gulp": "^3.8.10",
-    "gulp-concat": "^2.4.3",
-    "gulp-notify": "^2.1.0",
-    "gulp-plumber": "^0.6.6",
-    "gulp-sass": "^1.2.4",
-    "gulp-shell": "^0.2.11",
-    "gulp-sourcemaps": "^1.2.8",
-    "gutil": "^1.5.5",
-    "run-sequence": "^1.0.2"
-  }
+    "id": "jid1-0CBUAPDXlRjBnQ",
+    "license": "GPL3",
+    "name": "abc-chrome",
+    "description": "Adblock Ca$h for Chrome",
+    "homepage": "http://adblockcash.org",
+    "repository": {
+        "url": "https://github.com/adblockcash/abc-chrome",
+        "type": "git"
+    },
+    "author": "adblockcash.org",
+    "bugs": {
+        "url": "https://github.com/adblockcash/abc-chrome/issues"
+    },
+    "keywords": [
+        "adblock",
+        "adblockcash",
+        "chrome"
+    ],
+    "devDependencies": {
+        "gulp-notify": "^2.1.0",
+        "extend": "^2.0.0",
+        "execSync": "^1.0.2",
+        "gulp-sourcemaps": "^1.2.8",
+        "gulp-concat": "^2.4.3",
+        "gulp": "^3.8.10",
+        "gulp-plumber": "^0.6.6",
+        "gutil": "^1.5.5",
+        "gulp-shell": "^0.2.11",
+        "run-sequence": "^1.0.2",
+        "gulp-sass": "^1.2.4"
+    },
+    "main": "background.js"
 }

@@ -20,9 +20,9 @@
 {
   var backgroundPage = ext.backgroundPage.getWindow();
   var require = backgroundPage.require;
-  var getStats = require("stats").getStats;
-  var FilterNotifier = require("filterNotifier").FilterNotifier;
-  var Prefs = require("prefs").Prefs;
+  var getStats = require("./stats").getStats;
+  var FilterNotifier = require("./filterNotifier").FilterNotifier;
+  var Prefs = require("./prefs").Prefs;
 
   var currentPage;
 

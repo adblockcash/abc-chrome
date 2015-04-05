@@ -25,8 +25,8 @@ if (typeof ext === "undefined")
 var backgroundPage = ext.backgroundPage.getWindow();
 var require = backgroundPage.require;
 
-var Utils = require("utils").Utils;
-var Notification = require("notification").Notification;
+var Utils = require("./utils").Utils;
+var Notification = require("./notification").Notification;
 
 function getDocLinks(notification)
 {

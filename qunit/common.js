@@ -17,14 +17,14 @@
  */
 
 
-importAll("filterClasses", this);
-importAll("subscriptionClasses", this);
-importAll("matcher", this);
-importAll("filterStorage", this);
-importAll("filterNotifier", this);
-importAll("elemHide", this);
-importAll("prefs", this);
-importAll("utils", this);
+importAll("./filterClasses", this);
+importAll("./subscriptionClasses", this);
+importAll("./matcher", this);
+importAll("./filterStorage", this);
+importAll("./filterNotifier", this);
+importAll("./elemHide", this);
+importAll("./prefs", this);
+importAll("./utils", this);
 
 function prepareFilterComponents(keepListeners)
 {

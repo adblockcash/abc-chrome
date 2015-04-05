@@ -16,8 +16,8 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var FilterNotifier = require("filterNotifier").FilterNotifier;
-var platform = require("info").platform;
+var FilterNotifier = require("./filterNotifier").FilterNotifier;
+var platform = require("./info").platform;
 
 var onFilterChangeTimeout = null;
 function onFilterChange()

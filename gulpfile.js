@@ -172,6 +172,7 @@ gulp.task("watch", function(){
     "ext/**",
     "lib/**",
     "shared/**",
+    "qunit/**",
     "*.{html,js}",
     "metadata.*",
     "!gulpfile.js",

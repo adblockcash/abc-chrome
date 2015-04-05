@@ -21,11 +21,11 @@
  for (var i = 0; i < imports.length; i++)
   window[imports[i]] = backgroundPage[imports[i]];
 
-var Filter = require("filterClasses").Filter;
-var FilterStorage = require("filterStorage").FilterStorage;
-var Prefs = require("prefs").Prefs;
-var isWhitelisted = require("whitelisting").isWhitelisted;
-var AdblockCash = require("adblockcash").AdblockCash;
+var Filter = require("./filterClasses").Filter;
+var FilterStorage = require("./filterStorage").FilterStorage;
+var Prefs = require("./prefs").Prefs;
+var isWhitelisted = require("./whitelisting").isWhitelisted;
+var AdblockCash = require("./adblockcash").AdblockCash;
 
 AdblockCash.setupErrorReporting(window, document);
 

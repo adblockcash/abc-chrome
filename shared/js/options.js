@@ -19,23 +19,23 @@
 var backgroundPage = ext.backgroundPage.getWindow();
 var require = backgroundPage.require;
 
-with(require("filterClasses"))
+with(require("./filterClasses"))
 {
   this.Filter = Filter;
   this.WhitelistFilter = WhitelistFilter;
 }
-with(require("subscriptionClasses"))
+with(require("./subscriptionClasses"))
 {
   this.Subscription = Subscription;
   this.SpecialSubscription = SpecialSubscription;
   this.DownloadableSubscription = DownloadableSubscription;
 }
-var FilterStorage = require("filterStorage").FilterStorage;
-var FilterNotifier = require("filterNotifier").FilterNotifier;
-var Prefs = require("prefs").Prefs;
-var Synchronizer = require("synchronizer").Synchronizer;
-var Utils = require("utils").Utils;
-var AdblockCash = require("adblockcash").AdblockCash;
+var FilterStorage = require("./filterStorage").FilterStorage;
+var FilterNotifier = require("./filterNotifier").FilterNotifier;
+var Prefs = require("./prefs").Prefs;
+var Synchronizer = require("./synchronizer").Synchronizer;
+var Utils = require("./utils").Utils;
+var AdblockCash = require("./adblockcash").AdblockCash;
 var subscriptionTemplate;
 var fakeCheckboxChangeEvent = 0;
 

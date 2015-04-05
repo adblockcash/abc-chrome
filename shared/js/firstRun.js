@@ -18,7 +18,7 @@
 
 "use strict";
 
-var AdblockCash = require("adblockcash").AdblockCash;
+var AdblockCash = require("./adblockcash").AdblockCash;
 
 AdblockCash.setupErrorReporting(window, document);
 

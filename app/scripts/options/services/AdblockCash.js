@@ -1,6 +1,6 @@
 angular.module("abc")
 
-.service("AdblockCash", function(){              return require("adblockcash").AdblockCash; })
+.service("AdblockCash", function(){              return require("./adblockcash").AdblockCash; })
 
 // Set & automatically update $rootScope.currentVisitor
 .run(function(AdblockCash, $window, $rootScope){
