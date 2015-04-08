@@ -16,14 +16,17 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+var UriUtils = require("./utilsUri");
+let {Page, getFrame} = require("./pages");
+
 if (require("./info").platform == "chromium")
 {
   var tabsLoading = {};
 
   chrome.webNavigation.onCreatedNavigationTarget.addListener(function(details)
   {
-    var sourcePage = new ext.Page({id: details.sourceTabId});
-    var sourceFrame = ext.getFrame(details.sourceTabId, details.sourceFrameId);
+    var sourcePage = new Page({id: details.sourceTabId});
+    var sourceFrame = getFrame(details.sourceTabId, details.sourceFrameId);
 
     if (!sourceFrame || isFrameWhitelisted(sourcePage, sourceFrame))
       return;
@@ -57,9 +60,9 @@ if (require("./info").platform == "chromium")
 
 function checkPotentialPopup(tabId, url, opener)
 {
-  var requestHost = extractHostFromURL(url);
-  var documentHost = extractHostFromURL(opener);
-  var thirdParty = isThirdParty(requestHost, documentHost);
+  var requestHost = UriUtils.extractHostFromURL(url);
+  var documentHost = UriUtils.extractHostFromURL(opener);
+  var thirdParty = UriUtils.isThirdParty(requestHost, documentHost);
   var filter = defaultMatcher.matchesAny(url || "about:blank", "POPUP", documentHost, thirdParty);
   if (filter instanceof BlockingFilter)
     chrome.tabs.remove(tabId);

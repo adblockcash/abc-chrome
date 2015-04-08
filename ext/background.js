@@ -16,51 +16,270 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-(function()
+//
+// Module framework stuff
+//
+
+function require(module)
 {
-  var nonEmptyPageMaps = {__proto__: null};
-  var pageMapCounter = 0;
+  return require.scopes[module];
+}
+require.scopes = {__proto__: null};
 
-  var PageMap = ext.PageMap = function()
+function importAll(module, globalObj)
+{
+  var exports = require(module);
+  for (var key in exports)
+    globalObj[key] = exports[key];
+}
+
+//
+// XPCOM emulation
+//
+
+var components =
+{
+  interfaces:
   {
-    this._map = {__proto__: null};
-    this._id = ++pageMapCounter;
-  };
-  PageMap.prototype = {
-    _delete: function(id)
+    nsIFile: {DIRECTORY_TYPE: 0},
+    nsIFileURL: function() {},
+    nsIHttpChannel: function() {},
+    nsITimer: {TYPE_REPEATING_SLACK: 0},
+    nsIInterfaceRequestor: null,
+    nsIChannelEventSink: null
+  },
+  classes:
+  {
+    "@mozilla.org/timer;1":
     {
-      delete this._map[id];
-
-      if (Object.keys(this._map).length == 0)
-        delete nonEmptyPageMaps[this._id];
+      createInstance: function()
+      {
+        return new FakeTimer();
+      }
     },
-    get: function(page)
+    "@mozilla.org/xmlextras/xmlhttprequest;1":
     {
-      return this._map[page._id];
-    },
-    set: function(page, value)
-    {
-      this._map[page._id] = value;
-      nonEmptyPageMaps[this._id] = this;
-    },
-    has: function(page)
-    {
-      return page._id in this._map;
-    },
-    clear: function()
-    {
-      for (var id in this._map)
-        this._delete(id);
-    },
-    delete: function(page)
-    {
-      this._delete(page._id);
+      createInstance: function()
+      {
+        return new XMLHttpRequest();
+      }
     }
-  };
-
-  ext._removeFromAllPageMaps = function(pageId)
+  },
+  results: {},
+  utils: {
+    reportError: function(e)
+    {
+      console.error(e);
+      console.trace();
+    }
+  },
+  manager: null,
+  ID: function()
   {
-    for (var pageMapId in nonEmptyPageMaps)
-      nonEmptyPageMaps[pageMapId]._delete(pageId);
-  };
-})();
+    return null;
+  }
+};
+const Cc = components.classes;
+const Ci = components.interfaces;
+const Cr = components.results;
+const Cu = components.utils;
+
+var XPCOMUtils =
+{
+  generateQI: function() {}
+};
+
+//
+// Fake nsIFile implementation for our I/O
+//
+
+function FakeFile(path)
+{
+  this.path = path;
+}
+FakeFile.prototype =
+{
+  get leafName()
+  {
+    return this.path;
+  },
+  set leafName(value)
+  {
+    this.path = value;
+  },
+  append: function(path)
+  {
+    this.path += path;
+  },
+  clone: function()
+  {
+    return new FakeFile(this.path);
+  },
+  get parent()
+  {
+    return {create: function() {}};
+  },
+  normalize: function() {}
+};
+
+//
+// Services.jsm module emulation
+//
+
+var Services =
+{
+  io: {
+    newURI: function(uri)
+    {
+      if (!uri.length || uri[0] == "~")
+        throw new Error("Invalid URI");
+
+      /^([^:\/]*)/.test(uri);
+      var scheme = RegExp.$1.toLowerCase();
+
+      return {
+        scheme: scheme,
+        spec: uri,
+        QueryInterface: function()
+        {
+          return this;
+        }
+      };
+    },
+    newFileURI: function(file)
+    {
+      var result = this.newURI("file:///" + file.path);
+      result.file = file;
+      return result;
+    }
+  },
+  obs: {
+    addObserver: function() {},
+    removeObserver: function() {}
+  },
+  vc: {
+    compare: function(v1, v2)
+    {
+      function parsePart(s)
+      {
+        if (!s)
+          return parsePart("0");
+
+        var part = {
+          numA: 0,
+          strB: "",
+          numC: 0,
+          extraD: ""
+        };
+
+        if (s === "*")
+        {
+          part.numA = Number.MAX_VALUE;
+          return part;
+        }
+
+        var matches = s.match(/(\d*)(\D*)(\d*)(.*)/);
+        part.numA = parseInt(matches[1], 10) || part.numA;
+        part.strB = matches[2] || part.strB;
+        part.numC = parseInt(matches[3], 10) || part.numC;
+        part.extraD = matches[4] || part.extraD;
+
+        if (part.strB == "+")
+        {
+          part.numA++;
+          part.strB = "pre";
+        }
+
+        return part;
+      }
+
+      function comparePartElement(s1, s2)
+      {
+        if (s1 === "" && s2 !== "")
+          return 1;
+        if (s1 !== "" && s2 === "")
+          return -1;
+        return s1 === s2 ? 0 : (s1 > s2 ? 1 : -1);
+      }
+
+      function compareParts(p1, p2)
+      {
+        var result = 0;
+        var elements = ["numA", "strB", "numC", "extraD"];
+        elements.some(function(element)
+        {
+          result = comparePartElement(p1[element], p2[element]);
+          return result;
+        });
+        return result;
+      }
+
+      var parts1 = v1.split(".");
+      var parts2 = v2.split(".");
+      for (var i = 0; i < Math.max(parts1.length, parts2.length); i++)
+      {
+        var result = compareParts(parsePart(parts1[i]), parsePart(parts2[i]));
+        if (result)
+          return result;
+      }
+      return 0;
+    }
+  }
+}
+
+//
+// FileUtils.jsm module emulation
+//
+
+var FileUtils =
+{
+  PERMS_DIRECTORY: 0
+};
+
+function FakeTimer()
+{
+}
+FakeTimer.prototype =
+{
+  delay: 0,
+  callback: null,
+  initWithCallback: function(callback, delay)
+  {
+    this.callback = callback;
+    this.delay = delay;
+    this.scheduleTimeout();
+  },
+  scheduleTimeout: function()
+  {
+    var me = this;
+    window.setTimeout(function()
+    {
+      try
+      {
+        me.callback();
+      }
+      catch(e)
+      {
+        Cu.reportError(e);
+      }
+      me.scheduleTimeout();
+    }, this.delay);
+  }
+};
+
+//
+// Add a channel property to XMLHttpRequest, Synchronizer needs it
+//
+
+XMLHttpRequest.prototype.channel =
+{
+  status: -1,
+  notificationCallbacks: {},
+  loadFlags: 0,
+  INHIBIT_CACHING: 0,
+  VALIDATE_ALWAYS: 0,
+  QueryInterface: function()
+  {
+    return this;
+  }
+};

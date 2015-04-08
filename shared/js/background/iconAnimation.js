@@ -16,9 +16,11 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+let {PageMap, Pages} = require("./pages");
+
 iconAnimation = {
-  _icons: new ext.PageMap(),
-  _animatedPages: new ext.PageMap(),
+  _icons: new PageMap(),
+  _animatedPages: new PageMap(),
   _step: 0,
 
   update: function(type)
@@ -51,7 +53,7 @@ iconAnimation = {
   {
     this._interval = setInterval(function()
     {
-      ext.pages.query({active: true}, function(pages)
+      Pages.query({active: true}, function(pages)
       {
         if (pages.length == 0)
           return;

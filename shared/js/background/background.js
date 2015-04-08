@@ -36,7 +36,8 @@ with(require("./whitelisting"))
   this.processKey = processKey;
   this.getKey = getKey;
 }
-var AdblockCash = require("./adblockcash").AdblockCash;
+var AdblockCash = require("./adblockCash").AdblockCash;
+var AdblockCashUtils = require("./adblockCashUtils").AdblockCashUtils;
 var FilterStorage = require("./filterStorage").FilterStorage;
 var ElemHide = require("./elemHide").ElemHide;
 var defaultMatcher = require("./matcher").defaultMatcher;
@@ -45,6 +46,9 @@ var Synchronizer = require("./synchronizer").Synchronizer;
 var Utils = require("./utils").Utils;
 var Notification = require("./notification").Notification;
 var initAntiAdblockNotification = require("./antiadblockInit").initAntiAdblockNotification;
+var UriUtils = require("./utilsUri");
+let {ExtensionStorage, showOptions} = require("./browserUtils");
+let {PageMap, Pages} = require("./pages");
 
 // AdblockCash.setupErrorReporting(window, document);
 
@@ -65,7 +69,7 @@ require("./filterNotifier").FilterNotifier.addListener(function(action)
   if (action == "load")
   {
     var addonVersion = require("./info").addon.version;
-    var prevVersion = ext.storage.currentVersion;
+    var prevVersion = ExtensionStorage.currentVersion;
 
     // There are no filters stored so we need to reinitialize all filterlists
     if (!FilterStorage.firstRun && FilterStorage.subscriptions.length === 0)
@@ -77,7 +81,7 @@ require("./filterNotifier").FilterNotifier.addListener(function(action)
     if (prevVersion != addonVersion || FilterStorage.firstRun)
     {
       seenDataCorruption = prevVersion && FilterStorage.firstRun;
-      ext.storage.currentVersion = addonVersion;
+      ExtensionStorage.currentVersion = addonVersion;
       addSubscription(prevVersion);
     }
 
@@ -109,7 +113,7 @@ var AdblockExtensionsDetector = {
 
     chrome.notifications.onClicked.addListener(function(notificationId){
       if (notificationId == this._notificationId) {
-        ext.pages.open("chrome://extensions");
+        Pages.open("chrome://extensions");
       }
     }.bind(this));
   },
@@ -122,7 +126,7 @@ var AdblockExtensionsDetector = {
       title: "CC collection disabled",
       message: "To collect CC on whitelisted websites, please make sure that Adblock Cash is the only enabled adblocking extension in your browser.",
       priority: 2,
-      iconUrl: ext.getURL("shared/images/logo-icon-whitebg.png")
+      iconUrl: Utils.getURL("shared/images/logo-icon-whitebg.png")
     };
 
     return notification;
@@ -152,15 +156,15 @@ AdblockExtensionsDetector.init();
 // See http://crbug.com/68705.
 var noStyleRulesHosts = ["mail.google.com", "mail.yahoo.com", "www.google.com"];
 
-var htmlPages = new ext.PageMap();
+var htmlPages = new PageMap();
 
 function removeDeprecatedOptions()
 {
   var deprecatedOptions = ["specialCaseYouTube", "experimental", "disableInlineTextAds"];
   deprecatedOptions.forEach(function(option)
   {
-    if (option in ext.storage)
-      delete ext.storage[option];
+    if (option in ExtensionStorage)
+      delete ExtensionStorage[option];
   });
 }
 
@@ -170,7 +174,7 @@ removeDeprecatedOptions();
 var activeNotification = null;
 
 var contextMenuItem = {
-  title: ext.i18n.getMessage("block_element"),
+  title: Utils.i18n.getMessage("block_element"),
   contexts: ["image", "video", "audio"],
   onclick: function(srcUrl, page)
   {
@@ -187,7 +191,7 @@ function getIconFilename(page) {
     return "shared/images/logo-icon-gray.svg";
   }
 
-  switch(Utils.getAdblockStatus(page)) {
+  switch(AdblockCashUtils.getAdblockStatus(page)) {
     case "whitelisted":
       return "shared/images/logo-icon-green.svg";
     case "nonwhitelisted":
@@ -204,8 +208,6 @@ function getIconFilename(page) {
 function refreshIconAndContextMenu(page)
 {
   var whitelisted = isWhitelisted(page.url);
-
-
   var iconFilename = getIconFilename(page);
 
   page.browserAction.setIcon(iconFilename);
@@ -221,7 +223,7 @@ function refreshIconAndContextMenu(page)
 
 function refreshIconAndContextMenuForAllPages()
 {
-  ext.pages.query({}, function(pages)
+  Pages.query({}, function(pages)
   {
     pages.forEach(refreshIconAndContextMenu);
   });
@@ -271,7 +273,7 @@ function addSubscription(prevVersion)
 
   function notifyUser()
   {
-    ext.pages.open(ext.getURL("shared/firstRun.html"));
+    Pages.open(Utils.getURL("shared/firstRun.html"));
   }
 
   if (addSubscription)
@@ -288,7 +290,7 @@ function addSubscription(prevVersion)
     // Load subscriptions data,
     // and add a preferred filter subscription for the current locale
     var request = new XMLHttpRequest();
-    request.open("GET", ext.getURL("shared/data/subscriptions.xml"));
+    request.open("GET", Utils.getURL("shared/data/subscriptions.xml"));
     request.addEventListener("load", function()
     {
       var node = Utils.chooseFilterSubscription(request.responseXML.getElementsByTagName("subscription"));
@@ -319,7 +321,7 @@ Prefs.addListener(function(name)
 
 // TODO: This hack should be removed, however currently
 // the firstRun page still calls backgroundPage.openOptions()
-openOptions = ext.showOptions;
+openOptions = showOptions;
 
 function prepareNotificationIconAndPopup()
 {
@@ -430,7 +432,7 @@ function showNotification(notification)
     var texts = Notification.getLocalizedTexts(notification);
     var title = texts.title || "";
     var message = texts.message ? texts.message.replace(/<\/?(a|strong)>/g, "") : "";
-    var iconUrl = ext.getURL("icons/abc-128.png");
+    var iconUrl = Utils.getURL("icons/abc-128.png");
     var hasLinks = activeNotification.links && activeNotification.links.length > 0;
 
     if (canUseChromeNotifications)
@@ -444,8 +446,8 @@ function showNotification(notification)
       };
       if (activeNotification.type === "question")
       {
-        opts.buttons.push({title: ext.i18n.getMessage("overlay_notification_button_yes")});
-        opts.buttons.push({title: ext.i18n.getMessage("overlay_notification_button_no")});
+        opts.buttons.push({title: Utils.i18n.getMessage("overlay_notification_button_yes")});
+        opts.buttons.push({title: Utils.i18n.getMessage("overlay_notification_button_no")});
       }
       else
       {
@@ -465,7 +467,7 @@ function showNotification(notification)
     else if (hasWebkitNotifications && "createNotification" in webkitNotifications && activeNotification.type !== "question")
     {
       if (hasLinks)
-        message += " " + ext.i18n.getMessage("notification_without_buttons");
+        message += " " + Utils.i18n.getMessage("notification_without_buttons");
 
       imgToBase64(iconUrl, function(iconData)
       {
@@ -479,7 +481,7 @@ function showNotification(notification)
     {
       var message = title + "\n" + message;
       if (hasLinks)
-        message += "\n\n" + ext.i18n.getMessage("notification_with_buttons");
+        message += "\n\n" + Utils.i18n.getMessage("notification_with_buttons");
 
       var approved = confirm(message);
       if (activeNotification.type === "question")
@@ -518,7 +520,7 @@ function getUserFilters()
   return {filters: filters, exceptions: exceptions};
 }
 
-ext.onMessage.addListener(function (msg, sender, sendResponse)
+Utils.onMessage.addListener(function (msg, sender, sendResponse)
 {
   switch (msg.type)
   {
@@ -558,9 +560,9 @@ ext.onMessage.addListener(function (msg, sender, sendResponse)
         break;
       }
 
-      var requestHost = extractHostFromURL(msg.url);
-      var documentHost = extractHostFromFrame(sender.frame);
-      var thirdParty = isThirdParty(requestHost, documentHost);
+      var requestHost = UriUtils.extractHostFromURL(msg.url);
+      var documentHost = UriUtils.extractHostFromFrame(sender.frame);
+      var thirdParty = UriUtils.isThirdParty(requestHost, documentHost);
       var filter = defaultMatcher.matchesAny(msg.url, msg.mediatype, documentHost, thirdParty);
       if (filter instanceof BlockingFilter)
       {
@@ -589,7 +591,7 @@ ext.onMessage.addListener(function (msg, sender, sendResponse)
       }
       break;
     case "add-subscription":
-      ext.showOptions(function(page)
+      showOptions(function(page)
       {
         page.sendMessage(msg);
       });
@@ -617,7 +619,7 @@ ext.onMessage.addListener(function (msg, sender, sendResponse)
 });
 
 // update icon when page changes location
-ext.pages.onLoading.addListener(function(page)
+Pages.onLoading.addListener(function(page)
 {
   page.sendMessage({type: "clickhide-deactivate"});
   refreshIconAndContextMenu(page);

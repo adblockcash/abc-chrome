@@ -16,17 +16,19 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var FilterNotifier = require("./filterNotifier").FilterNotifier;
-var platform = require("./info").platform;
+let {FilterNotifier} = require("./filterNotifier");
+let {platform} = require("./info");
+let UriUtils = require("./utilsUri");
+let {Page, getFrame, webRequest} = require("./pages");
 
-var onFilterChangeTimeout = null;
+let onFilterChangeTimeout = null;
 function onFilterChange()
 {
   onFilterChangeTimeout = null;
-  ext.webRequest.handlerBehaviorChanged();
+  webRequest.handlerBehaviorChanged();
 }
 
-var importantNotifications = {
+let importantNotifications = {
   'filter.added': true,
   'filter.removed': true,
   'filter.disabled': true,
@@ -50,13 +52,13 @@ FilterNotifier.addListener(function(action)
 
 function onBeforeRequest(url, type, page, frame)
 {
-  var docDomain = extractHostFromFrame(frame);
-  var key = getKey(page, frame);
-  var filter = defaultMatcher.matchesAny(
+  let docDomain = UriUtils.extractHostFromFrame(frame);
+  let key = getKey(page, frame);
+  let filter = defaultMatcher.matchesAny(
     url,
     type == "sub_frame" ? "SUBDOCUMENT" : type.toUpperCase(),
     docDomain,
-    isThirdParty(extractHostFromURL(url), docDomain),
+    UriUtils.isThirdParty(UriUtils.extractHostFromURL(url), docDomain),
     key
   );
 
@@ -69,7 +71,7 @@ function onBeforeRequest(url, type, page, frame)
   // check for notifications here
   if (platform != "chromium" && type == "sub_frame")
   {
-    var notificationToShow = Notification.getNextToShow(url);
+    let notificationToShow = Notification.getNextToShow(url);
     if (notificationToShow)
       showNotification(notificationToShow);
   }
@@ -77,7 +79,7 @@ function onBeforeRequest(url, type, page, frame)
   return !(filter instanceof BlockingFilter);
 }
 
-ext.webRequest.onBeforeRequest.addListener(onBeforeRequest);
+webRequest.onBeforeRequest.addListener(onBeforeRequest);
 
 if (platform == "chromium")
 {
@@ -89,20 +91,20 @@ if (platform == "chromium")
     if (details.type != "main_frame" && details.type != "sub_frame")
       return;
 
-    var page = new ext.Page({id: details.tabId});
-    var frame = ext.getFrame(details.tabId, details.frameId);
+    let page = new Page({id: details.tabId});
+    let frame = getFrame(details.tabId, details.frameId);
 
     if (!frame || frame.url != details.url)
       return;
 
-    for (var i = 0; i < details.responseHeaders.length; i++)
+    for (let i = 0; i < details.responseHeaders.length; i++)
     {
-      var header = details.responseHeaders[i];
+      let header = details.responseHeaders[i];
       if (header.name.toLowerCase() == "x-adblock-key" && header.value)
         processKey(header.value, page, frame);
     }
 
-    var notificationToShow = Notification.getNextToShow(details.url);
+    let notificationToShow = Notification.getNextToShow(details.url);
     if (notificationToShow)
       showNotification(notificationToShow);
   }

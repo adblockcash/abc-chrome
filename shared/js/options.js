@@ -16,9 +16,6 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var backgroundPage = ext.backgroundPage.getWindow();
-var require = backgroundPage.require;
-
 with(require("./filterClasses"))
 {
   this.Filter = Filter;
@@ -35,7 +32,7 @@ var FilterNotifier = require("./filterNotifier").FilterNotifier;
 var Prefs = require("./prefs").Prefs;
 var Synchronizer = require("./synchronizer").Synchronizer;
 var Utils = require("./utils").Utils;
-var AdblockCash = require("./adblockcash").AdblockCash;
+var AdblockCash = require("./adblockCash").AdblockCash;
 var subscriptionTemplate;
 var fakeCheckboxChangeEvent = 0;
 
@@ -82,7 +79,7 @@ function loadOptions()
   // initCheckbox("shouldShowBlockElementMenu");
   // initCheckbox("hidePlaceholders");
 
-  ext.onMessage.addListener(onMessage);
+  Utils.onMessage.addListener(onMessage);
 
   // Load recommended subscriptions
   loadRecommendations();
@@ -154,7 +151,7 @@ var delayedSubscriptionSelection = null;
 function loadRecommendations()
 {
   var request = new XMLHttpRequest();
-  request.open("GET", ext.getURL("shared/data/subscriptions.xml"));
+  request.open("GET", Utils.getURL("shared/data/subscriptions.xml"));
   request.onload = function()
   {
     var selectedIndex = 0;

@@ -16,10 +16,12 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+var Utils = require("./utils").Utils;
+
 var i18n;
 
-if (typeof ext != "undefined")
-  i18n = ext.i18n;
+if (Utils.i18n)
+  i18n = Utils.i18n;
 else if (typeof chrome != "undefined")
   // TODO: This check only exist for backwards compatibility, while the Safari
   // port isn't merged into the adblockcashchrome repo. So this branch should

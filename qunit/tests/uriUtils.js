@@ -17,8 +17,10 @@
  */
 
 
+
 (function()
 {
+  var UriUtils = require("./utilsUri");
   module("URL/host tools");
 
   test("Host name extraction", function()
@@ -39,7 +41,7 @@
     ];
 
     for (var i = 0; i < tests.length; i++)
-      equal(extractHostFromURL(tests[i][0]), tests[i][1], tests[i][0]);
+      equal(UriUtils.extractHostFromURL(tests[i][0]), tests[i][1], tests[i][0]);
   });
 
   test("Invalid URI recognition", function()
@@ -55,7 +57,7 @@
     {
       raises(function()
       {
-        return new URI(tests[i]);
+        return new UriUtils.URI(tests[i]);
       }, tests[i]);
     }
   });
@@ -158,7 +160,7 @@
     for (var i = 0; i < tests.length; i++)
     {
       var url = tests[i][0];
-      var uri = new URI(url);
+      var uri = new UriUtils.URI(url);
       equal(uri.spec, url, "URI(" + url + ").spec");
       for (var k in tests[i][1])
         equal(uri[k], tests[i][1][k], "URI(" + url + ")." + k);
@@ -190,7 +192,7 @@
     ];
 
     for (var i = 0; i < tests.length; i++)
-      equal(getBaseDomain(tests[i][0]), tests[i][1], tests[i][0]);
+      equal(UriUtils.getBaseDomain(tests[i][0]), tests[i][1], tests[i][0]);
   });
 
   test("Third party checks", function()
@@ -209,6 +211,6 @@
     ];
 
     for (var i = 0; i < tests.length; i++)
-      equal(isThirdParty(tests[i][0], tests[i][1]), tests[i][2], tests[i][0] + " and " + tests[i][1]);
+      equal(UriUtils.isThirdParty(tests[i][0], tests[i][1]), tests[i][2], tests[i][0] + " and " + tests[i][1]);
   });
 })();

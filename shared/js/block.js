@@ -16,6 +16,8 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+let {Utils} = require("./utils");
+
 function init()
 {
   // Attach event listeners
@@ -30,7 +32,7 @@ function init()
   // Apply jQuery UI styles
   $("button").button();
 
-  ext.backgroundPage.sendMessage(
+  Utils.backgroundPage.sendMessage(
   {
     type: "forward",
     payload:
@@ -69,13 +71,13 @@ function addFilters()
   var filters = document.getElementById("filters").value.split(/[\r\n]+/)
                         .map(function(f) {return f.replace(/^\s+/, "").replace(/\s+$/, "");})
                         .filter(function(f) {return f != "";});
-  ext.backgroundPage.sendMessage({type: "add-filters", filters: filters});
+  Utils.backgroundPage.sendMessage({type: "add-filters", filters: filters});
   closeDialog(true);
 }
 
 function closeDialog(success)
 {
-  ext.backgroundPage.sendMessage(
+  Utils.backgroundPage.sendMessage(
     {
       type: "forward",
       payload:
@@ -104,7 +106,7 @@ function onDrag(event)
   var diff = [event.screenX - dragCoords[0], event.screenY - dragCoords[1]];
   if (diff[0] || diff[1])
   {
-    ext.backgroundPage.sendMessage(
+    Utils.backgroundPage.sendMessage(
       {
         type: "forward",
         payload:

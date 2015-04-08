@@ -227,7 +227,7 @@ function clickHide_showDialog(left, top, filters)
   clickHide_filters = filters;
 
   clickHideFiltersDialog = document.createElement("iframe");
-  clickHideFiltersDialog.src = ext.getURL("shared/block.html");
+  clickHideFiltersDialog.src = Utils.getURL("shared/block.html");
   clickHideFiltersDialog.setAttribute("style", "position: fixed !important; visibility: hidden; display: block !important; border: 0px !important;");
   clickHideFiltersDialog.style.WebkitBoxShadow = "5px 5px 20px rgba(0,0,0,0.5)";
   clickHideFiltersDialog.style.zIndex = 0x7FFFFFFF;
@@ -361,7 +361,7 @@ function clickHide_keyDown(e)
      clickHide_mouseClick(e);
   else if (!e.ctrlKey && !e.altKey && !e.shiftKey && e.keyCode == 27 /*DOM_VK_ESCAPE*/)
   {
-    ext.backgroundPage.sendMessage(
+    Utils.backgroundPage.sendMessage(
     {
       type: "forward",
       payload:
@@ -577,14 +577,14 @@ if ("ext" in window && document instanceof HTMLDocument)
     if (!/^(https?|ftp):/.test(url))
       return;
 
-    ext.backgroundPage.sendMessage({
+    Utils.backgroundPage.sendMessage({
       type: "add-subscription",
       title: title,
       url: url
     });
   }, true);
 
-  ext.onMessage.addListener(function(msg, sender, sendResponse)
+  Utils.onMessage.addListener(function(msg, sender, sendResponse)
   {
     switch (msg.type)
     {
@@ -676,5 +676,5 @@ if ("ext" in window && document instanceof HTMLDocument)
   });
 
   if (window == window.top)
-    ext.backgroundPage.sendMessage({type: "report-html-page"});
+    Utils.backgroundPage.sendMessage({type: "report-html-page"});
 }

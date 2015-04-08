@@ -16,16 +16,15 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- var backgroundPage = ext.backgroundPage.getWindow();
- var imports = ["require", "extractHostFromURL"];
- for (var i = 0; i < imports.length; i++)
-  window[imports[i]] = backgroundPage[imports[i]];
-
 var Filter = require("./filterClasses").Filter;
 var FilterStorage = require("./filterStorage").FilterStorage;
 var Prefs = require("./prefs").Prefs;
 var isWhitelisted = require("./whitelisting").isWhitelisted;
-var AdblockCash = require("./adblockcash").AdblockCash;
+var AdblockCash = require("./adblockCash").AdblockCash;
+var AdblockCashUtils = require("./adblockCashUtils").AdblockCashUtils;
+let {Pages} = require("./pages");
+let {showOptions} = require("./browserUtils");
+let UriUtils = require("./utilsUri");
 
 AdblockCash.setupErrorReporting(window, document);
 
@@ -33,7 +32,7 @@ var page = null;
 
 function init()
 {
-  ext.pages.query({active: true, lastFocusedWindow: true}, function(pages)
+  Pages.query({active: true, lastFocusedWindow: true}, function(pages)
   {
     page = pages[0];
 
@@ -53,7 +52,7 @@ function init()
   // Attach event listeners
   document.getElementById("js-toggle-whitemode").addEventListener("change", toggleEnabled, false);
   document.getElementById("js-open-options").addEventListener("click", function() {
-    ext.showOptions();
+    showOptions();
   }, false);
 }
 window.addEventListener("DOMContentLoaded", init, false);
@@ -61,7 +60,7 @@ window.addEventListener("DOMContentLoaded", init, false);
 function toggleEnabled()
 {
   var toggleWhitemodeCheckbox = document.getElementById("js-toggle-whitemode");
-  var domain = extractHostFromURL(page.url).replace(/^www\./, "");
+  var domain = UriUtils.extractHostFromURL(page.url).replace(/^www\./, "");
 
   if (toggleWhitemodeCheckbox.checked) {
     var filter = Filter.fromText("@@||" + domain + "^$document");
@@ -92,7 +91,7 @@ function toggleEnabled()
 
 function rerender() {
   // Hide all and turn on only one of those divs, depending on adblockStatus
-  var adblockStatus = Utils.getAdblockStatus(page);
+  var adblockStatus = AdblockCashUtils.getAdblockStatus(page);
   $(".js-whitelisted, .js-nonwhitelisted, .js-adblocked, .js-nonadblocked").hide().removeClass("js-hide");
   $(".js-" + adblockStatus).show();
 

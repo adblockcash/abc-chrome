@@ -37,7 +37,7 @@ function checkCollapse(element)
     if (!url)
       return;
 
-    ext.backgroundPage.sendMessage(
+    Utils.backgroundPage.sendMessage(
       {
         type: "should-collapse",
         url: url,
@@ -74,7 +74,7 @@ function checkSitekey()
 {
   var attr = document.documentElement.getAttribute("data-adblockkey");
   if (attr)
-    ext.backgroundPage.sendMessage({type: "add-sitekey", token: attr});
+    Utils.backgroundPage.sendMessage({type: "add-sitekey", token: attr});
 }
 
 function hasInlineURL(element, attribute)
@@ -191,7 +191,7 @@ function init(document)
     }
   }, true);
 
-  ext.backgroundPage.sendMessage({type: "get-selectors"}, setElemhideCSSRules);
+  Utils.backgroundPage.sendMessage({type: "get-selectors"}, setElemhideCSSRules);
 }
 
 if (document instanceof HTMLDocument)

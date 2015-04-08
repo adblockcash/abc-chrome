@@ -18,18 +18,18 @@
 
 (function()
 {
-  var backgroundPage = ext.backgroundPage.getWindow();
-  var require = backgroundPage.require;
   var getStats = require("./stats").getStats;
   var FilterNotifier = require("./filterNotifier").FilterNotifier;
   var Prefs = require("./prefs").Prefs;
+  let {Pages} = require("./pages");
+  let {Utils} = require("./utils");
 
   var currentPage;
 
   function onLoad()
   {
     // Update stats
-    ext.pages.query({active: true, lastFocusedWindow: true}, function(pages)
+    Pages.query({active: true, lastFocusedWindow: true}, function(pages)
     {
       currentPage = pages[0];
       updateStats();

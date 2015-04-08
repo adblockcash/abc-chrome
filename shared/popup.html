@@ -24,8 +24,12 @@
 
   <script src="vendor/bower/jquery/dist/jquery.js"></script>
 
-  <script src="../ext/popup.js"></script>
-  <script src="js/i18n.js"></script>
+  {%- if needsExt %}
+  <script type="text/javascript" src="../ext/common.js"></script>
+  <script type="text/javascript" src="../ext/content.js"></script>
+  {%- endif %}
+
+  <script src="js/common/i18n.js"></script>
   <script src="js/popup.js"></script>
   <script src="js/popup_notification.js"></script>
   <script src="js/popup_stats.js"></script>

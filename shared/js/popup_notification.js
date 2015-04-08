@@ -16,17 +16,9 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//This case is true only for chrome when loading from notification.html
-if (typeof ext === "undefined")
-{
-  var ext = chrome.extension.getBackgroundPage().ext;
-}
-
-var backgroundPage = ext.backgroundPage.getWindow();
-var require = backgroundPage.require;
-
 var Utils = require("./utils").Utils;
 var Notification = require("./notification").Notification;
+let {Pages} = require("./pages");
 
 function getDocLinks(notification)
 {
@@ -89,7 +81,7 @@ window.addEventListener("load", function()
       return;
     event.preventDefault();
     event.stopPropagation();
-    ext.pages.open(link.href);
+    Pages.open(link.href);
   });
 
   if (notification.type == "question")

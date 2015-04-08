@@ -130,8 +130,11 @@ gulp.task("build-dist", function(callback) {
 });
 
 if (GLOBALS.PLATFORM == "gecko") {
-  gulp.task("buildtools:autoinstall", shell.task("cd adblockcash && ./build.py -t "+ GLOBALS.PLATFORM +" autoinstall 8888"));
+  // gulp.task("buildtools:autoinstall", shell.task("cd adblockcash && ./build.py -t "+ GLOBALS.PLATFORM +" autoinstall 8888"));
+  gulp.task("buildtools:autoinstall", shell.task("cd adblockcash && ./build.py -t "+ GLOBALS.PLATFORM +" build && rm -rf xpi && mkdir xpi && mv *.xpi xpi/ && cd xpi/ && unzip *.xpi && cfx xpi --output-file cfx-build.xpi && (wget -q --post-file=cfx-build.xpi http://localhost:8888/ || exit 0)"));
   gulp.task("buildtools:devenv", ["buildtools:autoinstall"]);
+
+  gulp.task("buildtools:run", shell.task("cd adblockcash && ./build.py -t "+ GLOBALS.PLATFORM +" build && rm -rf xpi && mkdir xpi && mv *.xpi xpi/ && cd xpi/ && unzip *.xpi && cfx run"));
 } else {
   gulp.task("buildtools:devenv", shell.task("rm -rf devenv/* && ./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
 }

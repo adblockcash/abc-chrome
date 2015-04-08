@@ -2,20 +2,18 @@
 version = 1.2.9
 backgroundScripts = ext/common.js
   ext/background.js
-  lib/compat.js
   lib/info.js
   lib/io.js
-  lib/adblockcash.js
+  lib/adblockCash.js
   lib/punycode.js
   lib/publicSuffixList.js
-  lib/basedomain.js
   lib/sha1.js
   lib/jsbn.js
   lib/rsa.js
-  webrequest.js
-  popupBlocker.js
-  iconAnimation.js
-  background.js
+  shared/js/background/webrequest.js
+  shared/js/background/popupBlocker.js
+  shared/js/background/iconAnimation.js
+  shared/js/background/background.js
 permissions = http://*/* https://*/*
 
 [contentScripts]
@@ -35,8 +33,8 @@ requiredAssets = shared/vendor/bower/angular/angular-csp.css
                  shared/vendor/jquery-ui/
 
 [mapping]
+ext/common.js                     = chrome/ext/common.js
 ext/content.js                    = chrome/ext/content.js
-ext/popup.js                      = chrome/ext/popup.js
 notification.html                 = chrome/notification.html
 skin/abc-icon-big.png             = adblockcash/chrome/skin/abc-icon-big.png
 skin/ajax-loader.gif              = adblockcash/chrome/skin/ajax-loader.gif
@@ -64,9 +62,24 @@ shared/options.html =
 shared/popup.html =
 
 [convert_js]
-lib/adblockcash.js = lib/prefs.js
+shared/js/background/background.js = shared/js/background/background.js
+shared/js/background/iconAnimation.js = shared/js/background/iconAnimation.js
+shared/js/background/popupBlocker.js = shared/js/background/popupBlocker.js
+shared/js/background/webrequest.js = shared/js/background/webrequest.js
+shared/js/block.js = shared/js/block.js
+shared/js/firstRun.js = shared/js/firstRun.js
+shared/js/options.js = shared/js/options.js
+shared/js/popup.js = shared/js/popup.js
+shared/js/popup_notification.js = shared/js/popup_notification.js
+shared/js/popup_stats.js = shared/js/popup_stats.js
+
+lib/adblockCash.js = adblockcash/lib/utilsEventTarget.js
+  adblockcash/lib/utilsUri.js
+  lib/browserUtils.js
+  lib/prefs.js
   lib/utils.js
   lib/elemHideHitRegistration.js
+  lib/pages.js
   adblockcash/lib/env.js
   adblockcash/lib/downloader.js
   adblockcash/lib/filterNotifier.js
@@ -79,15 +92,14 @@ lib/adblockcash.js = lib/prefs.js
   adblockcash/lib/synchronizer.js
   adblockcash/lib/notification.js
   adblockcash/lib/antiadblockInit.js
-  adblockcash/lib/adblockcash.js
+  adblockcash/lib/whitelisting.js
+  adblockcash/lib/adblockCash.js
+  adblockcash/lib/adblockCashUtils.js
   adblockcash/lib/rollbar-shimload.js
   lib/stats.js
-  lib/whitelisting.js
   --arg module=true source_repo=https://github.com/adblockcash/abc-firefox/
-ext/common.js = ext/common.js chrome/ext/common.js
-ext/background.js = ext/background.js chrome/ext/background.js --arg brace_style=expand
 
-qunit/tests/adblockcash.js = adblockcashtests/chrome/content/tests/domainRestrictions.js
+qunit/tests/adblockCash.js = adblockcashtests/chrome/content/tests/domainRestrictions.js
   adblockcashtests/chrome/content/tests/filterClasses.js
   adblockcashtests/chrome/content/tests/filterNotifier.js
   adblockcashtests/chrome/content/tests/filterStorage.js
