@@ -33,8 +33,29 @@ else
 
   // Randomize URI to work around bug 719376
   var pageName = location.pathname.replace(/.*\//, '').replace(/\..*?$/, '');
-  var stringBundle = Services.strings.createBundle("chrome://adblockcash/locale/" + pageName +
-    ".properties?" + Math.random());
+  if (["options", "block", "popup", "firstRun"].indexOf(pageName) >= 0) {
+    var localeMessagesJson = {};
+
+    var request = new XMLHttpRequest();
+    request.open("GET", "chrome://adblockcash/locale/messages.json");
+    request.onload = function() {
+      localeMessagesJson = JSON.parse(request.response);
+    };
+    request.send();
+
+    var stringBundle = {
+      GetStringFromName: function(key) {
+        if (localeMessagesJson[key]) {
+          return localeMessagesJson[key].message;
+        } else {
+          throw "Missing translation for '"+ key +"' in messages.json !";
+        }
+      }
+    };
+  } else {
+    var stringBundle = Services.strings.createBundle("chrome://adblockcash/locale/" + pageName +
+      ".properties?" + Math.random());
+  }
 
   function getI18nMessage(key)
   {
