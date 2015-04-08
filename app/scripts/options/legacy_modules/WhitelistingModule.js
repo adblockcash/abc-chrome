@@ -1,6 +1,6 @@
 angular.module("abc")
 
-.service("WhitelistingModule", function(Utils, AdblockCash, FilterNotifier, $log, refreshDOM) {
+.service("WhitelistingModule", function(CommonUtils, AdblockCash, FilterNotifier, $log, refreshDOM) {
   return {
     _templates: {},
     elements: {},
@@ -105,7 +105,7 @@ angular.module("abc")
       this.elements.$nonWhitelistedWebsitesSection.toggle( nonWhitelistedWebsites.length > 0 );
 
       fakeCheckboxChangeEvent++;
-      Utils.setCheckboxValue( $("#js-toggle-whitelisting-websites")[0], this.getWhitelistedCashableWebsites().length > 0 );
+      CommonUtils.setCheckboxValue( $("#js-toggle-whitelisting-websites")[0], this.getWhitelistedCashableWebsites().length > 0 );
       fakeCheckboxChangeEvent--;
 
       $(".js-cashable-other_country_code-flag").removeClass().addClass("js-cashable-other_country_code-flag flag-icon flag-icon-" + (this.otherRegionCountryCode || "").toLowerCase());

@@ -151,6 +151,10 @@ gulp.task("build-dev", function(callback) {
   return runSequence("build-dist", "buildtools:devenv", callback);
 });
 
+gulp.task("run", function(callback) {
+  return runSequence("build-dist", "buildtools:run", callback);
+});
+
 gulp.task("build-zip", function(callback) {
   return runSequence("build-dist", "buildtools:build", callback);
 });

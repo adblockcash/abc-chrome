@@ -5,6 +5,8 @@ angular.module("abc")
 .service("Prefs", function(){                    return require("./prefs").Prefs; })
 .service("Synchronizer", function(){             return require("./synchronizer").Synchronizer; })
 .service("Utils", function(){                    return require("./utils").Utils; })
+.service("CommonUtils", function(){              return require("./commonUtils").CommonUtils; })
+.service("Prefs", function(){                    return require("./prefs").Prefs; })
 
 .service("Filter", function(){                   return require("./filterClasses").Filter; })
 .service("WhitelistFilter", function(){          return require("./filterClasses").WhitelistFilter; })

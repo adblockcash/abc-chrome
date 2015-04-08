@@ -43,6 +43,7 @@ var ElemHide = require("./elemHide").ElemHide;
 var defaultMatcher = require("./matcher").defaultMatcher;
 var Prefs = require("./prefs").Prefs;
 var Synchronizer = require("./synchronizer").Synchronizer;
+var CommonUtils = require("./commonUtils").CommonUtils;
 var Utils = require("./utils").Utils;
 var Notification = require("./notification").Notification;
 var initAntiAdblockNotification = require("./antiadblockInit").initAntiAdblockNotification;
@@ -100,7 +101,7 @@ var AdblockExtensionsDetector = {
   _notificationId: "adblock_extension_detected",
 
   init: function() {
-    var updateStatus = Utils.debounce(this.checkStatus.bind(this), 1000 * 5);
+    var updateStatus = CommonUtils.debounce(this.checkStatus.bind(this), 1000 * 5);
 
     // Check for status 15s after starting up the chrome/abc extension
     window.setTimeout(updateStatus, 1000 * 15);
@@ -491,33 +492,6 @@ function showNotification(notification)
     }
   }
   prepareNotificationIconAndPopup();
-}
-
-// This is a hack to speedup loading of the options page on Safari.
-// Once we replaced the background page proxy with message passing
-// this global function should removed.
-function getUserFilters()
-{
-  var filters = [];
-  var exceptions = [];
-
-  for (var i = 0; i < FilterStorage.subscriptions.length; i++)
-  {
-    var subscription = FilterStorage.subscriptions[i];
-    if (!(subscription instanceof SpecialSubscription))
-      continue;
-
-    for (var j = 0; j < subscription.filters.length; j++)
-    {
-      var filter = subscription.filters[j];
-      if (filter instanceof WhitelistFilter &&  /^@@\|\|([^\/:]+)\^\$document$/.test(filter.text))
-        exceptions.push(RegExp.$1);
-      else
-        filters.push(filter.text);
-    }
-  }
-
-  return {filters: filters, exceptions: exceptions};
 }
 
 Utils.onMessage.addListener(function (msg, sender, sendResponse)

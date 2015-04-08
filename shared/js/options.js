@@ -31,6 +31,7 @@ var FilterStorage = require("./filterStorage").FilterStorage;
 var FilterNotifier = require("./filterNotifier").FilterNotifier;
 var Prefs = require("./prefs").Prefs;
 var Synchronizer = require("./synchronizer").Synchronizer;
+var CommonUtils = require("./commonUtils").CommonUtils;
 var Utils = require("./utils").Utils;
 var AdblockCash = require("./adblockCash").AdblockCash;
 var subscriptionTemplate;
@@ -105,6 +106,30 @@ function onMessage(msg)
   }
 };
 
+function getUserFilters()
+{
+  var filters = [];
+  var exceptions = [];
+
+  for (var i = 0; i < FilterStorage.subscriptions.length; i++)
+  {
+    var subscription = FilterStorage.subscriptions[i];
+    if (!(subscription instanceof SpecialSubscription))
+      continue;
+
+    for (var j = 0; j < subscription.filters.length; j++)
+    {
+      var filter = subscription.filters[j];
+      if (filter instanceof WhitelistFilter &&  /^@@\|\|([^\/:]+)\^\$document$/.test(filter.text))
+        exceptions.push(RegExp.$1);
+      else
+        filters.push(filter.text);
+    }
+  }
+
+  return {filters: filters, exceptions: exceptions};
+}
+
 // Reloads the displayed subscriptions and filters
 function reloadFilters()
 {
@@ -123,7 +148,7 @@ function reloadFilters()
   }
 
   // User-entered filters
-  var userFilters = backgroundPage.getUserFilters();
+  var userFilters = getUserFilters();
   populateList("js-userFiltersBox", userFilters.filters);
   populateList("js-excludedDomainsBox", userFilters.exceptions.filter(function(domain){
     return !AdblockCash.isDomainCashable(domain);
@@ -139,7 +164,7 @@ function unloadOptions()
 function initCheckbox(id)
 {
   var checkbox = document.getElementById(id);
-  Utils.setCheckboxValue(checkbox, Prefs[id]);
+  CommonUtils.setCheckboxValue(checkbox, Prefs[id]);
   checkbox.addEventListener("click", function()
   {
     Prefs[id] = checkbox.checked;
@@ -318,7 +343,7 @@ function updateSubscriptionInfo(element)
     title.href = subscription.url;
 
   var enabled = element.getElementsByClassName("js-subscriptionEnabled")[0];
-  Utils.setCheckboxValue(enabled, !subscription.disabled);
+  CommonUtils.setCheckboxValue(enabled, !subscription.disabled);
 
   var lastUpdate = element.getElementsByClassName("js-subscriptionUpdate")[0];
   lastUpdate.classList.remove("error");

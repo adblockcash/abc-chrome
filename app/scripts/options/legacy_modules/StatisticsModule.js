@@ -1,6 +1,6 @@
 angular.module("abc")
 
-.service("StatisticsModule", function(AdblockCash) {
+.service("StatisticsModule", function(Prefs, AdblockCash) {
   return {
     init: function(){
       this._templates = {

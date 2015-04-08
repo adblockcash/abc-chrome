@@ -17,7 +17,7 @@ backgroundScripts = ext/common.js
 permissions = http://*/* https://*/*
 
 [contentScripts]
-document_start = ext/common.js ext/content.js include.preload.js
+document_start = ext/common.js lib/helpers.js include.preload.js
 document_end = include.postload.js
 
 [buildConfig]
@@ -34,7 +34,6 @@ requiredAssets = shared/vendor/bower/angular/angular-csp.css
 
 [mapping]
 ext/common.js                     = chrome/ext/common.js
-ext/content.js                    = chrome/ext/content.js
 notification.html                 = chrome/notification.html
 skin/abc-icon-big.png             = adblockcash/chrome/skin/abc-icon-big.png
 skin/ajax-loader.gif              = adblockcash/chrome/skin/ajax-loader.gif
@@ -76,6 +75,7 @@ shared/js/popup_stats.js = shared/js/popup_stats.js
 lib/adblockCash.js = adblockcash/lib/utilsEventTarget.js
   adblockcash/lib/utilsUri.js
   lib/browserUtils.js
+  lib/commonUtils.js
   lib/prefs.js
   lib/utils.js
   lib/elemHideHitRegistration.js

@@ -1,6 +1,6 @@
 angular.module("abc")
 
-.service("VisitorModule", function(Utils, AdblockCash, $log, $rootScope) {
+.service("VisitorModule", function(CommonUtils, AdblockCash, $log, $rootScope) {
   return {
     init: function() {
       var _this = this;
@@ -21,7 +21,7 @@ angular.module("abc")
         });
       };
 
-      debounced_updateVisitorNotificationSettings = Utils.debounce(this.updateVisitorNotificationSettings, 1000);
+      debounced_updateVisitorNotificationSettings = CommonUtils.debounce(this.updateVisitorNotificationSettings, 1000);
 
       AdblockCash.VISITOR_NOTIFICATION_TYPES.forEach(function(settingName){
         var checkbox = $(".js-visitor-notification-settings-" + settingName)[0];
@@ -45,7 +45,7 @@ angular.module("abc")
         });
 
         $(".js-visitor-country_code-select").html(optionsHtml);
-        this.setCurrentCountry(AdblockCash.visitor.country_code);
+        this.setCurrentCountry(AdblockCash.visitor && AdblockCash.visitor.country_code);
       }.bind(this));
 
       $(".js-visitor-country_code-select").change(function(){

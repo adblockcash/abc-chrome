@@ -24,6 +24,7 @@ var AdblockCash = require("./adblockCash").AdblockCash;
 var AdblockCashUtils = require("./adblockCashUtils").AdblockCashUtils;
 let {Pages} = require("./pages");
 let {showOptions} = require("./browserUtils");
+var CommonUtils = require("./commonUtils").CommonUtils;
 let UriUtils = require("./utilsUri");
 
 AdblockCash.setupErrorReporting(window, document);
@@ -43,7 +44,7 @@ function init()
       document.body.classList.add("nohtml");
 
     if (page) {
-      Utils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(page.url));
+      CommonUtils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(page.url));
     }
 
     rerender();

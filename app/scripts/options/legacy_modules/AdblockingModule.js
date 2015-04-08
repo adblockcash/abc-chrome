@@ -1,6 +1,6 @@
 angular.module("abc")
 
-.service("AdblockingModule", function(Utils, FilterStorage, FilterNotifier, Subscription) {
+.service("AdblockingModule", function(CommonUtils, FilterStorage, FilterNotifier, Subscription) {
   return {
     init: function() {
       // Load subscriptions for features
@@ -37,7 +37,7 @@ angular.module("abc")
         var feature = featureSubscription.feature;
 
         var checkboxElement = document.querySelector("#js-toggle-" + feature);
-        Utils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
+        CommonUtils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
 
         checkboxElement.addEventListener("change", function(event) {
           var subscription = Subscription.fromURL(featureSubscription.url);
@@ -62,7 +62,7 @@ angular.module("abc")
             var featureSubscription = featureSubscriptions[i];
             if (featureSubscription.url === item.url) {
               var checkboxElement = document.querySelector("#js-toggle-" + featureSubscription.feature);
-              Utils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
+              CommonUtils.setCheckboxValue(checkboxElement, isSubscriptionEnabled(featureSubscription));
             }
           }
         }
