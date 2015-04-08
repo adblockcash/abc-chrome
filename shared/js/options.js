@@ -227,7 +227,7 @@ function loadRecommendations()
     }
 
     var option = new Option();
-    option.text = i18n.getMessage("filters_addSubscriptionOther_label") + "\u2026";
+    option.text = "Add a different subscription" + "\u2026";
     option._data = null;
     list.appendChild(option);
 
