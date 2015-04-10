@@ -46,7 +46,7 @@ else
     var stringBundle = {
       GetStringFromName: function(key) {
         if (localeMessagesJson[key]) {
-          return localeMessagesJson[key].message;
+          return localeMessagesJson[key];
         } else {
           throw "Missing translation for '"+ key +"' in messages.json !";
         }
@@ -59,9 +59,7 @@ else
 
   function getI18nMessage(key)
   {
-    return {
-      "message": stringBundle.GetStringFromName(key)
-    };
+    return stringBundle.GetStringFromName(key);
   }
 
   i18n = (function()
