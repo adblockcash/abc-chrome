@@ -1,6 +1,6 @@
 angular.module("abc")
 
-.service("WhitelistingModule", function(CommonUtils, AdblockCash, FilterNotifier, $log, refreshDOM) {
+.service("WhitelistingModule", function(CommonUtils, AdblockCash, FilterNotifier, $log, refreshDOM, onShutdown) {
   return {
     _templates: {},
     elements: {},
@@ -26,6 +26,10 @@ angular.module("abc")
       var initialRender = this.initialRender.bind(this);
       AdblockCash.addListener("cashableWebsites.updated", initialRender);
       window.addEventListener("unload", function() {
+        if (onShutdown.done) {
+          return;
+        }
+
         AdblockCash.removeListener("cashableWebsites.updated", initialRender);
       }.bind(this), false);
 

@@ -18,13 +18,13 @@
 
 (function()
 {
-  var getStats = require("./stats").getStats;
-  var FilterNotifier = require("./filterNotifier").FilterNotifier;
-  var Prefs = require("./prefs").Prefs;
+  let {getStats} = require("./stats");
+  let {FilterNotifier} = require("./filterNotifier");
+  let {Prefs} = require("./prefs");
   let {Pages} = require("./pages");
-  let {Utils} = require("./utils");
+  let {Utils, onShutdown} = require("./utils");
 
-  var currentPage;
+  let currentPage;
 
   function onLoad()
   {
@@ -42,6 +42,10 @@
 
   function onUnload()
   {
+    if (onShutdown.done) {
+      return;
+    }
+
     FilterNotifier.removeListener(onNotify);
   }
 
@@ -53,8 +57,8 @@
 
   function updateStats()
   {
-    var statsPage = document.getElementById("js-stats-page");
-    var blockedPage = getStats("blocked", currentPage).toLocaleString();
+    let statsPage = document.getElementById("js-stats-page");
+    let blockedPage = getStats("blocked", currentPage).toLocaleString();
     i18n.setElementText(statsPage, "stats_label_page", [blockedPage]);
   }
 

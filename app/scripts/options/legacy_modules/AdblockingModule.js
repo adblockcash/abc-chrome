@@ -1,6 +1,6 @@
 angular.module("abc")
 
-.service("AdblockingModule", function(CommonUtils, FilterStorage, FilterNotifier, Subscription) {
+.service("AdblockingModule", function(CommonUtils, FilterStorage, FilterNotifier, Subscription, onShutdown) {
   return {
     init: function() {
       // Load subscriptions for features
@@ -70,6 +70,10 @@ angular.module("abc")
 
       FilterNotifier.addListener(filterListener);
       window.addEventListener("unload", function() {
+        if (onShutdown.done) {
+          return;
+        }
+
         FilterNotifier.removeListener(filterListener);
       }, false);
     }

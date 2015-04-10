@@ -27,13 +27,13 @@ with(require("./subscriptionClasses"))
   this.SpecialSubscription = SpecialSubscription;
   this.DownloadableSubscription = DownloadableSubscription;
 }
-var FilterStorage = require("./filterStorage").FilterStorage;
-var FilterNotifier = require("./filterNotifier").FilterNotifier;
-var Prefs = require("./prefs").Prefs;
-var Synchronizer = require("./synchronizer").Synchronizer;
-var CommonUtils = require("./commonUtils").CommonUtils;
-var Utils = require("./utils").Utils;
-var AdblockCash = require("./adblockCash").AdblockCash;
+var {FilterStorage} = require("./filterStorage");
+var {FilterNotifier} = require("./filterNotifier");
+var {Prefs} = require("./prefs");
+var {Synchronizer} = require("./synchronizer");
+var {CommonUtils} = require("./commonUtils");
+var {Utils, onShutdown} = require("./utils");
+var {AdblockCash} = require("./adblockCash");
 var subscriptionTemplate;
 var fakeCheckboxChangeEvent = 0;
 
@@ -158,6 +158,10 @@ function reloadFilters()
 // Cleans up when the options window is closed
 function unloadOptions()
 {
+  if (onShutdown.done) {
+    return;
+  }
+
   FilterNotifier.removeListener(onFilterChange);
 }
 

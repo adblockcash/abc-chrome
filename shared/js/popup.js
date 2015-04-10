@@ -16,15 +16,15 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var Filter = require("./filterClasses").Filter;
-var FilterStorage = require("./filterStorage").FilterStorage;
-var Prefs = require("./prefs").Prefs;
-var isWhitelisted = require("./whitelisting").isWhitelisted;
-var AdblockCash = require("./adblockCash").AdblockCash;
-var AdblockCashUtils = require("./adblockCashUtils").AdblockCashUtils;
+let {Filter} = require("./filterClasses");
+let {FilterStorage} = require("./filterStorage");
+let {Prefs} = require("./prefs");
+let {isWhitelisted} = require("./whitelisting");
+let {AdblockCash} = require("./adblockCash");
+let {AdblockCashUtils} = require("./adblockCashUtils");
 let {Pages} = require("./pages");
 let {showOptions} = require("./browserUtils");
-var CommonUtils = require("./commonUtils").CommonUtils;
+let {CommonUtils} = require("./commonUtils");
 let UriUtils = require("./utilsUri");
 
 AdblockCash.setupErrorReporting(window, document);

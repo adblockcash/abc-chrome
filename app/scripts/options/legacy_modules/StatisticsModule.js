@@ -1,6 +1,6 @@
 angular.module("abc")
 
-.service("StatisticsModule", function(Prefs, AdblockCash) {
+.service("StatisticsModule", function(Prefs, AdblockCash, onShutdown) {
   return {
     init: function(){
       this._templates = {
@@ -15,6 +15,10 @@ angular.module("abc")
       var render = this.render.bind(this);
       AdblockCash.addListener("visitor.updated", render);
       window.addEventListener("unload", function() {
+        if (onShutdown.done) {
+          return;
+        }
+
         AdblockCash.removeListener("visitor.updated", render);
       }, false);
 

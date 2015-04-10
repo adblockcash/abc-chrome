@@ -16,8 +16,8 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var Utils = require("./utils").Utils;
-var Notification = require("./notification").Notification;
+let {Utils} = require("./utils");
+let {Notification} = require("./notification");
 let {Pages} = require("./pages");
 
 function getDocLinks(notification)
