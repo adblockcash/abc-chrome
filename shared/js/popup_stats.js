@@ -18,20 +18,20 @@
 
 (function()
 {
-  let {getStats} = require("./stats");
-  let {FilterNotifier} = require("./filterNotifier");
-  let {Prefs} = require("./prefs");
-  let {Pages} = require("./pages");
-  let {Utils, onShutdown} = require("./utils");
+  var {getStats} = require("./stats");
+  var {FilterNotifier} = require("./filterNotifier");
+  var {Prefs} = require("./prefs");
+  var {Pages} = require("./pages");
+  var {Utils, onShutdown} = require("./utils");
 
-  let currentPage;
+  var currentPage;
 
   function onLoad()
   {
     // Update stats
-    Pages.query({active: true, lastFocusedWindow: true}, function(pages)
+    Pages.getCurrentPage(function(page)
     {
-      currentPage = pages[0];
+      currentPage = page;
       updateStats();
 
       FilterNotifier.addListener(onNotify);
@@ -57,8 +57,8 @@
 
   function updateStats()
   {
-    let statsPage = document.getElementById("js-stats-page");
-    let blockedPage = getStats("blocked", currentPage).toLocaleString();
+    var statsPage = document.getElementById("js-stats-page");
+    var blockedPage = getStats("blocked", currentPage).toLocaleString();
     i18n.setElementText(statsPage, "stats_label_page", [blockedPage]);
   }
 

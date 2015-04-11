@@ -4,7 +4,7 @@
 <svg version="1.1"
 	 id="svg2" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" inkscape:export-ydpi="90" inkscape:version="0.48.4 r9939" inkscape:export-xdpi="90" inkscape:export-filename="/home/listmsz/Pobrane/adblockCash_2.png" sodipodi:docname="adblockCash_2_clean_svg.svg"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="61.312px"
-	 height="61.308px" viewBox="1.003 0.847 61.312 61.308" enable-background="new 1.003 0.847 61.312 61.308" xml:space="preserve">
+	 height="61.308px" viewBox="1.003 0.847 63 63" enable-background="new 1.003 0.847 63 63" xml:space="preserve">
 <sodipodi:namedview  fit-margin-top="2" fit-margin-left="2" showguides="true" showgrid="false" inkscape:cy="-111.73093" inkscape:cx="-64.199985" inkscape:zoom="0.9899495" borderopacity="1.0" bordercolor="#666666" pagecolor="#ffffff" id="base" inkscape:current-layer="layer1" inkscape:window-y="24" inkscape:guide-bbox="true" fit-margin-bottom="2" inkscape:window-height="744" inkscape:pageopacity="0.0" inkscape:window-width="1315" fit-margin-right="2" inkscape:snap-global="false" inkscape:window-maximized="1" inkscape:document-units="px" inkscape:window-x="45" inkscape:pageshadow="2">
 	<sodipodi:guide  position="-15.693085,36.153493" orientation="0,1" id="guide3880"></sodipodi:guide>
 	<sodipodi:guide  position="35.067075,66.205523" orientation="0,1" id="guide3882"></sodipodi:guide>
@@ -18,16 +18,16 @@
 	<sodipodi:guide  position="79.528267,20.323903" orientation="1,0" id="guide3217"></sodipodi:guide>
 </sodipodi:namedview>
 <g id="layer1" transform="translate(-412.93557,-538.73591)" inkscape:label="Layer 1" inkscape:groupmode="layer">
-	
+
 		<g id="g3219" transform="translate(96.638167,-42.911178)" inkscape:export-ydpi="125.72928" inkscape:export-xdpi="125.72928" inkscape:export-filename="/home/listmsz/adblockcash/app/adblockchash-static/images/logo-adblockcash.png">
-		
+
 			<path id="path2993" sodipodi:type="star" sodipodi:sides="6" sodipodi:cx="230.31477" sodipodi:cy="620.01691" sodipodi:r1="112.34059" sodipodi:r2="97.289803" sodipodi:arg1="0.78539816" sodipodi:arg2="1.3089969" inkscape:flatsided="true" inkscape:rounded="0" inkscape:randomized="0" inkscape:export-ydpi="90" inkscape:export-xdpi="90" inkscape:export-filename="/home/listmsz/adblockcash/app/images/logo-adblockcash.png" fill="#C0392B" d="
 			M370.398,635.588l-30.656,8.214L317.3,621.363l8.215-30.655l30.656-8.214l22.44,22.438L370.398,635.588z"/>
-		
-			<path id="path3903" inkscape:connector-curvature="0" inkscape:export-ydpi="90" inkscape:export-xdpi="90" inkscape:export-filename="/home/listmsz/adblockcash/app/images/logo-adblockcash.png" opacity="0.16" fill="#231F20" enable-background="new    " d="
+
+			<path id="path3903" inkscape:connector-curvature="0" inkscape:export-ydpi="90" inkscape:export-xdpi="90" inkscape:export-filename="/home/listmsz/adblockcash/app/images/logo-adblockcash.png" fill="#b31718" enable-background="new    " d="
 			M351.048,591.844l-2.345,2.656l-2.938,6.25l-2.156,6.531l6.625,5.53l5.094,6.595l-4.844,4.375l-14.719,1.969l14.5,15.25
 			l20.125-5.405l5.625-21.031l-17.031-17.188l-1.781,1.156L351.048,591.844z"/>
-		
+
 			<path id="currency-dollar-icon" inkscape:connector-curvature="0" inkscape:export-ydpi="90" inkscape:export-xdpi="90" inkscape:export-filename="/home/listmsz/adblockcash/app/images/logo-adblockcash.png" fill="#FFFFFF" d="
 			M347.13,606.688c-2.649-1.325-2.371-4.197,1.562-4.42c3.186-0.181,6.5,1.026,8.529,1.72c0,0,1.27-5.57,1.562-6.854
 			c-2.938-0.919-5.479-1.38-7.977-1.551v-3.788h-5.819v4.128c-6.41,1.399-8.99,6.131-8.99,9.573c0,8.31,9.937,9.665,12.822,10.962

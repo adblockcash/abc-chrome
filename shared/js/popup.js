@@ -16,35 +16,36 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-let {Filter} = require("./filterClasses");
-let {FilterStorage} = require("./filterStorage");
-let {Prefs} = require("./prefs");
-let {isWhitelisted} = require("./whitelisting");
-let {AdblockCash} = require("./adblockCash");
-let {AdblockCashUtils} = require("./adblockCashUtils");
-let {Pages} = require("./pages");
-let {showOptions} = require("./browserUtils");
-let {CommonUtils} = require("./commonUtils");
-let UriUtils = require("./utilsUri");
+var {Filter} = require("./filterClasses");
+var {FilterStorage} = require("./filterStorage");
+var {Prefs} = require("./prefs");
+var {isWhitelisted} = require("./whitelisting");
+var {AdblockCash} = require("./adblockCash");
+var {AdblockCashUtils} = require("./adblockCashUtils");
+var {Pages} = require("./pages");
+var {showOptions} = require("./browserUtils");
+var {CommonUtils} = require("./commonUtils");
+var UriUtils = require("./utilsUri");
+var {Utils} = require("./utils");
 
 AdblockCash.setupErrorReporting(window, document);
 
-var page = null;
+var currentPage = null;
 
 function init()
 {
-  Pages.query({active: true, lastFocusedWindow: true}, function(pages)
+  Pages.getCurrentPage(function(page)
   {
-    page = pages[0];
+    currentPage = page;
 
     // Mark page as 'local' or 'nohtml' to hide non-relevant elements
-    if (!page || !/^https?:\/\//.test(page.url))
+    if (!currentPage || !/^https?:\/\//.test(currentPage.url))
       document.body.classList.add("local");
-    else if (!backgroundPage.htmlPages.has(page))
+    else if (!Utils.backgroundPage.htmlPages.has(currentPage))
       document.body.classList.add("nohtml");
 
-    if (page) {
-      CommonUtils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(page.url));
+    if (currentPage) {
+      CommonUtils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(currentPage.url));
     }
 
     rerender();
@@ -61,7 +62,7 @@ window.addEventListener("DOMContentLoaded", init, false);
 function toggleEnabled()
 {
   var toggleWhitemodeCheckbox = document.getElementById("js-toggle-whitemode");
-  var domain = UriUtils.extractHostFromURL(page.url).replace(/^www\./, "");
+  var domain = UriUtils.extractHostFromURL(currentPage.url).replace(/^www\./, "");
 
   if (toggleWhitemodeCheckbox.checked) {
     var filter = Filter.fromText("@@||" + domain + "^$document");
@@ -75,13 +76,13 @@ function toggleEnabled()
     AdblockCash.blockCashableDomain(domain);
   } else {
     // Remove any exception rules applying to this URL
-    var filter = isWhitelisted(page.url);
+    var filter = isWhitelisted(currentPage.url);
     while (filter) {
       FilterStorage.removeFilter(filter);
       if (filter.subscriptions.length) {
         filter.disabled = true;
       }
-      filter = isWhitelisted(page.url);
+      filter = isWhitelisted(currentPage.url);
     }
 
     AdblockCash.unblockCashableDomain(domain);
@@ -92,12 +93,12 @@ function toggleEnabled()
 
 function rerender() {
   // Hide all and turn on only one of those divs, depending on adblockStatus
-  var adblockStatus = AdblockCashUtils.getAdblockStatus(page);
+  var adblockStatus = AdblockCashUtils.getAdblockStatus(currentPage);
   $(".js-whitelisted, .js-nonwhitelisted, .js-adblocked, .js-nonadblocked").hide().removeClass("js-hide");
   $(".js-" + adblockStatus).show();
 
   // Disable / Fill in "x CC earned"
-  var cashableWebsite = page && AdblockCash.isDomainCashable(page.domain);
+  var cashableWebsite = currentPage && AdblockCash.isDomainCashable(currentPage.domain);
   if (cashableWebsite && adblockStatus === "whitelisted") {
     $("#js-website-cc-stats").show();
     $("#js-website-cc-stats").html("<strong>" + (+cashableWebsite.cashcoins_per_visit) + "</strong> CC earned");

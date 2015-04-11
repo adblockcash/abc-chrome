@@ -16,9 +16,9 @@
  * along with Adblock Cash.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-let {Utils} = require("./utils");
-let {Notification} = require("./notification");
-let {Pages} = require("./pages");
+var {Utils} = require("./utils");
+var {Notification} = require("./notification");
+var {Pages} = require("./pages");
 
 function getDocLinks(notification)
 {
@@ -60,7 +60,7 @@ function insertMessage(element, text, links)
 
 window.addEventListener("load", function()
 {
-  var notification = backgroundPage.activeNotification;
+  var notification = Utils.backgroundPage.activeNotification;
   if (!notification)
     return;
 

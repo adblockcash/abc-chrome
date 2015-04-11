@@ -18,7 +18,7 @@
 
 "use strict";
 
-let {AdblockCash} = require("./adblockCash");
+var {AdblockCash} = require("./adblockCash");
 
 AdblockCash.setupErrorReporting(window, document);
 
