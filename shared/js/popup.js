@@ -23,9 +23,8 @@ var {isWhitelisted} = require("./whitelisting");
 var {AdblockCash} = require("./adblockCash");
 var {AdblockCashUtils} = require("./adblockCashUtils");
 var {Pages} = require("./pages");
-var {showOptions} = require("./browserUtils");
 var {CommonUtils} = require("./commonUtils");
-var {BrowserUtils} = require("./browserUtils");
+var BrowserUtils = require("./browserUtils");
 var UriUtils = require("./utilsUri");
 var {Utils, onShutdown} = require("./utils");
 
@@ -38,7 +37,7 @@ function init()
   // Attach event listeners
   document.getElementById("js-toggle-whitemode").addEventListener("change", toggleEnabled, false);
   document.getElementById("js-open-options").addEventListener("click", function() {
-    showOptions();
+    BrowserUtils.showOptions();
     BrowserUtils.closePopup();
   }, false);
 
