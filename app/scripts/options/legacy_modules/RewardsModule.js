@@ -8,7 +8,8 @@ angular.module("abc")
       };
 
       this.elements = {
-        $topEarnedCashcoinsRowsContainer: $("#js-top-earned-cc-rows"),
+        $topEarnedCashcoinsTableContainer: $("#js-top-earned-cc"),
+        $topEarnedCashcoinsTableRowsContainer: $("#js-top-earned-cc-rows"),
         $statCurrentRow: $(".js-rewards-current-row"),
         $statCurrentRewardCategory: $(".js-rewards-current-reward_category"),
         $statCurrentCashcoins: $(".js-rewards-current-cashcoins"),
@@ -48,18 +49,20 @@ angular.module("abc")
         this.elements.$statNextPriceMoney.text(AdblockCash.visitor.next_reward_category.price_money + " $");
       }
 
-      this.elements.$topEarnedCashcoinsRowsContainer.text("");
+      this.elements.$topEarnedCashcoinsTableRowsContainer.text("");
+      this.elements.$topEarnedCashcoinsTableContainer.hide();
 
       if (AdblockCash.visitor
         && AdblockCash.visitor.top_5_websites_by_earned_cc
         && AdblockCash.visitor.top_5_websites_by_earned_cc.length > 0) {
+        this.elements.$topEarnedCashcoinsTableContainer.show();
         AdblockCash.visitor.top_5_websites_by_earned_cc.forEach(function(website){
           var rowTemplate = $(this._templates.topEarnedCashcoinsRow);
 
           rowTemplate.find(".js-website-name").text(website.domain);
           rowTemplate.find(".js-website-earned_cc").text((website.earned_cashcoins || 0) + " CC");
 
-          this.elements.$topEarnedCashcoinsRowsContainer.append(rowTemplate);
+          this.elements.$topEarnedCashcoinsTableRowsContainer.append(rowTemplate);
         }.bind(this));
       }
     }

@@ -17,18 +17,18 @@ LOGO_YELLOW="shared/images/logo-icon-yellow.svg"
 
 convert -density 19 \
   -background transparent $LOGO_RED +antialias "icons/abc-16.png"
-convert -density 37 \
+convert -density 38 \
   -background transparent $LOGO_RED +antialias "icons/abc-32.png"
-convert -density 74 \
+convert -density 76 \
   -background transparent $LOGO_RED +antialias "icons/abc-64.png"
-convert -density 147 \
+convert -density 152 \
   -background transparent $LOGO_RED +antialias "icons/abc-128.png"
 
-convert -density 22 \
+convert -density 23 \
   -background transparent $LOGO_RED +antialias "chrome/icons/abc-19.png"
-convert -density 44 \
+convert -density 46 \
   -background transparent $LOGO_RED +antialias "chrome/icons/abc-38.png"
-convert -density 55 \
+convert -density 58 \
   -background transparent $LOGO_RED +antialias "chrome/icons/abc-48.png"
 
 convert -density 115 \

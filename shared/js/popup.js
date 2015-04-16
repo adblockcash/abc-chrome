@@ -45,8 +45,8 @@ function init()
   refresh();
 
   UI.addUpdateWindowStateCallback(refresh);
-  window.addEventListener("unload", function() UI.removeUpdateWindowStateCallback(refresh), false);
-  onShutdown.add(function() UI.removeUpdateWindowStateCallback(refresh), false);
+  window.addEventListener("unload", () => { UI.removeUpdateWindowStateCallback(refresh) }, false);
+  onShutdown.add(() => { UI.removeUpdateWindowStateCallback(refresh) }, false);
 }
 window.addEventListener("DOMContentLoaded", init, false);
 

@@ -75,7 +75,7 @@ shared/js/popup_stats.js = shared/js/popup_stats.js
 lib/adblockCash.js = adblockcash/lib/utilsEventTarget.js
   adblockcash/lib/utilsUri.js
   lib/browserUtils.js
-  lib/commonUtils.js
+  adblockcash/lib/commonUtils.js
   lib/prefs.js
   lib/utils.js
   lib/elemHideHitRegistration.js
