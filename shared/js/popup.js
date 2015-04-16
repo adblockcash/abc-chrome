@@ -25,9 +25,9 @@ var {AdblockCashUtils} = require("./adblockCashUtils");
 var {Pages} = require("./pages");
 var {showOptions} = require("./browserUtils");
 var {CommonUtils} = require("./commonUtils");
+var {BrowserUtils} = require("./browserUtils");
 var UriUtils = require("./utilsUri");
 var {Utils, onShutdown} = require("./utils");
-var {UI} = require("./ui");
 
 AdblockCash.setupErrorReporting(window, document);
 
@@ -39,14 +39,12 @@ function init()
   document.getElementById("js-toggle-whitemode").addEventListener("change", toggleEnabled, false);
   document.getElementById("js-open-options").addEventListener("click", function() {
     showOptions();
-    UI.popupPanel.hide();
+    BrowserUtils.closePopup();
   }, false);
 
   refresh();
 
-  UI.addUpdateWindowStateCallback(refresh);
-  window.addEventListener("unload", () => { UI.removeUpdateWindowStateCallback(refresh) }, false);
-  onShutdown.add(() => { UI.removeUpdateWindowStateCallback(refresh) }, false);
+  BrowserUtils.bindUpdateStateCallbackToWindow(window, refresh);
 }
 window.addEventListener("DOMContentLoaded", init, false);
 

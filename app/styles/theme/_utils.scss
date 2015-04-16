@@ -42,3 +42,7 @@
 .dollar-logo {
   font-size: 0.8em;
 }
+
+.form-row + .form-row {
+  margin-top: 20px;
+}
