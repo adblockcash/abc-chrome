@@ -1,3 +1,4 @@
+$popup-box-width: 250px;
 $popup-box-padding: 10px;
 
 $popup-box-header-height: 80px;
@@ -9,6 +10,10 @@ $popup-hexagon-borders: $popup-hexagon-width *  86.60/300;
 
 $popup-controls-height: 42px;
 $popup-controls-padding: $popup-box-padding;
+
+.popup-page {
+  width: $popup-box-width;
+}
 
 .popup-hexagon {
   position: relative;
@@ -34,7 +39,7 @@ $popup-controls-padding: $popup-box-padding;
 }
 
 .popup-box {
-  width: 250px;
+  width: $popup-box-width;
   font-size: 12px;
   font-weight: 400;
   line-height: 1.5;

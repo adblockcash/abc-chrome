@@ -26,7 +26,8 @@ var {Pages} = require("./pages");
 var {showOptions} = require("./browserUtils");
 var {CommonUtils} = require("./commonUtils");
 var UriUtils = require("./utilsUri");
-var {Utils} = require("./utils");
+var {Utils, onShutdown} = require("./utils");
+var {UI} = require("./ui");
 
 AdblockCash.setupErrorReporting(window, document);
 
@@ -34,6 +35,22 @@ var currentPage = null;
 
 function init()
 {
+  // Attach event listeners
+  document.getElementById("js-toggle-whitemode").addEventListener("change", toggleEnabled, false);
+  document.getElementById("js-open-options").addEventListener("click", function() {
+    showOptions();
+    UI.popupPanel.hide();
+  }, false);
+
+  refresh();
+
+  UI.addUpdateWindowStateCallback(refresh);
+  window.addEventListener("unload", function() UI.removeUpdateWindowStateCallback(refresh), false);
+  onShutdown.add(function() UI.removeUpdateWindowStateCallback(refresh), false);
+}
+window.addEventListener("DOMContentLoaded", init, false);
+
+function refresh() {
   Pages.getCurrentPage(function(page)
   {
     currentPage = page;
@@ -41,8 +58,8 @@ function init()
     // Mark page as 'local' or 'nohtml' to hide non-relevant elements
     if (!currentPage || !/^https?:\/\//.test(currentPage.url))
       document.body.classList.add("local");
-    else if (!Utils.backgroundPage.htmlPages.has(currentPage))
-      document.body.classList.add("nohtml");
+    // else if (!Utils.backgroundPage.htmlPages.has(currentPage))
+    //   document.body.classList.add("nohtml");
 
     if (currentPage) {
       CommonUtils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(currentPage.url));
@@ -50,14 +67,7 @@ function init()
 
     rerender();
   });
-
-  // Attach event listeners
-  document.getElementById("js-toggle-whitemode").addEventListener("change", toggleEnabled, false);
-  document.getElementById("js-open-options").addEventListener("click", function() {
-    showOptions();
-  }, false);
 }
-window.addEventListener("DOMContentLoaded", init, false);
 
 function toggleEnabled()
 {
