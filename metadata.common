@@ -96,7 +96,7 @@ lib/adblockCash.js = adblockcash/lib/utilsEventTarget.js
   adblockcash/lib/adblockCash.js
   adblockcash/lib/adblockCashUtils.js
   adblockcash/lib/rollbar-shimload.js
-  lib/stats.js
+  adblockcash/lib/stats.js
   --arg module=true source_repo=https://github.com/adblockcash/abc-firefox/
 
 qunit/tests/adblockCash.js = adblockcashtests/chrome/content/tests/domainRestrictions.js
