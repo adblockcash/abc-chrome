@@ -59,7 +59,7 @@ function refresh() {
     //   document.body.classList.add("nohtml");
 
     if (currentPage) {
-      CommonUtils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(currentPage.url));
+      CommonUtils.setCheckboxValue(document.getElementById("js-toggle-whitemode"), isWhitelisted(currentPage.url), false);
     }
 
     rerender();
@@ -80,7 +80,7 @@ function toggleEnabled()
       FilterStorage.addFilter(filter);
     }
 
-    AdblockCash.blockCashableDomain(domain);
+    AdblockCash.unblockCashableDomain(domain);
   } else {
     // Remove any exception rules applying to this URL
     var filter = isWhitelisted(currentPage.url);
@@ -92,7 +92,7 @@ function toggleEnabled()
       filter = isWhitelisted(currentPage.url);
     }
 
-    AdblockCash.unblockCashableDomain(domain);
+    AdblockCash.blockCashableDomain(domain);
   }
 
   rerender();
