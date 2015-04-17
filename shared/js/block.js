@@ -29,9 +29,6 @@ function init()
   $("#addButton").click(addFilters);
   $("#cancelButton").click(closeDialog.bind(null, false));
 
-  // Apply jQuery UI styles
-  $("button").button();
-
   Utils.backgroundPage.sendMessage(
   {
     type: "forward",

@@ -30,7 +30,6 @@ requiredAssets = shared/vendor/bower/angular/angular-csp.css
                  shared/vendor/bower/font-awesome/css/font-awesome.css
                  shared/vendor/bower/font-awesome/fonts/
                  shared/vendor/bower/jquery/dist/jquery.js
-                 shared/vendor/jquery-ui/
 
 [mapping]
 ext/common.js                     = chrome/ext/common.js
