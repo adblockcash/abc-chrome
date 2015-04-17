@@ -15,6 +15,11 @@ LOGO_GRAY="shared/images/logo-icon-gray.svg"
 LOGO_GREEN="shared/images/logo-icon-green.svg"
 LOGO_YELLOW="shared/images/logo-icon-yellow.svg"
 
+convert -density 57 \
+  -background transparent $LOGO_RED +antialias "adblockcash/icon.png"
+convert -density 76 \
+  -background transparent $LOGO_RED +antialias "adblockcash/icon64.png"
+
 convert -density 19 \
   -background transparent $LOGO_RED +antialias "icons/abc-16.png"
 convert -density 38 \
@@ -28,7 +33,7 @@ convert -density 23 \
   -background transparent $LOGO_RED +antialias "chrome/icons/abc-19.png"
 convert -density 46 \
   -background transparent $LOGO_RED +antialias "chrome/icons/abc-38.png"
-convert -density 58 \
+convert -density 57 \
   -background transparent $LOGO_RED +antialias "chrome/icons/abc-48.png"
 
 convert -density 115 \

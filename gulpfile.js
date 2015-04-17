@@ -135,13 +135,15 @@ if (GLOBALS.PLATFORM == "gecko") {
   gulp.task("buildtools:devenv", ["buildtools:autoinstall"]);
 
   gulp.task("buildtools:run", shell.task("cd adblockcash && ./build.py -t "+ GLOBALS.PLATFORM +" build && rm -rf xpi && mkdir xpi && mv *.xpi xpi/ && cd xpi/ && unzip *.xpi && cfx run"));
+
+  gulp.task("buildtools:build-release", shell.task("cd adblockcash && ./build.py -t "+ GLOBALS.PLATFORM +" build -r -b 0 && rm -rf xpi && mkdir xpi && mv *.xpi xpi/ && cd xpi/ && unzip *.xpi && cfx xpi && (wget -q --post-file=abc-firefox.xpi http://localhost:8888/ || exit 0)"));
 } else {
   gulp.task("buildtools:devenv", shell.task("rm -rf devenv/* && ./build.py -t "+ GLOBALS.PLATFORM +" devenv"));
+
+  gulp.task("buildtools:build", shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build"));
+
+  gulp.task("buildtools:build-release", shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build -r"));
 }
-
-gulp.task("buildtools:build", shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build"));
-
-gulp.task("buildtools:build-release", shell.task("./build.py -t "+ GLOBALS.PLATFORM +" build -r"));
 
 if (GLOBALS.PLATFORM == "chrome") {
   gulp.task("build-package", ["buildtools:build-release"], shell.task("rm -rf /tmp/adblockcashchrome && unzip adblockcashchrome.zip -d /tmp/adblockcashchrome && " + CHROME_CLI_COMMAND + " --pack-extension=/tmp/adblockcashchrome --pack-extension-key=certificates/adblockcashchrome.pem"));
@@ -155,11 +157,11 @@ gulp.task("run", function(callback) {
   return runSequence("build-dist", "buildtools:run", callback);
 });
 
-gulp.task("build-zip", function(callback) {
+gulp.task("build", function(callback) {
   return runSequence("build-dist", "buildtools:build", callback);
 });
 
-gulp.task("build-zip-release", function(callback) {
+gulp.task("build-release", function(callback) {
   return runSequence("build-dist", "buildtools:build-release", callback);
 });
 
@@ -196,12 +198,12 @@ gulp.task("watch", function(){
 });
 
 
-gulp.task("deploy-zip", ["build-zip-release"], shell.task("scp adblockcash"+ GLOBALS.PLATFORM +".zip jt:./public_html/tmp/abc/ && echo \"ABC "+ GLOBALS.PLATFORM +" extension has been built and deployed to http://jt/tmp/abc/adblockcash"+ GLOBALS.PLATFORM +".zip .\""));
+gulp.task("deploy-release", ["build-release"], shell.task("scp adblockcash"+ GLOBALS.PLATFORM +".zip jt:./public_html/tmp/abc/ && echo \"ABC "+ GLOBALS.PLATFORM +" extension has been built and deployed to http://jt/tmp/abc/adblockcash"+ GLOBALS.PLATFORM +".zip .\""));
 
 gulp.task("deploy-package", ["build-package"], shell.task("scp /tmp/adblockcash"+ GLOBALS.PLATFORM +".crx jt:./public_html/tmp/abc/ && echo \"ABC "+ GLOBALS.PLATFORM +" extension has been built and deployed to http://jt/tmp/abc/adblockcash"+ GLOBALS.PLATFORM +".crx .\""));
 
-gulp.task("deploy", ["deploy-zip", "deploy-package"]);
+gulp.task("deploy", ["deploy-release", "deploy-package"]);
 
-gulp.task("release", ["build-zip-release"]);
+gulp.task("release", ["build-release"]);
 
 gulp.task("default", ["build-dev", "watch"]);
