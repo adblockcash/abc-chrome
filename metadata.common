@@ -10,10 +10,10 @@ backgroundScripts = ext/common.js
   lib/sha1.js
   lib/jsbn.js
   lib/rsa.js
-  shared/js/background/webrequest.js
-  shared/js/background/popupBlocker.js
-  shared/js/background/iconAnimation.js
-  shared/js/background/background.js
+  js/background/webrequest.js
+  js/background/popupBlocker.js
+  js/background/iconAnimation.js
+  js/background/background.js
 permissions = http://*/* https://*/*
 
 [contentScripts]
@@ -44,10 +44,10 @@ shared/options.html =
 shared/popup.html =
 
 [convert_js]
-shared/js/background/background.js = shared/js/background/background.js
-shared/js/background/iconAnimation.js = shared/js/background/iconAnimation.js
-shared/js/background/popupBlocker.js = shared/js/background/popupBlocker.js
-shared/js/background/webrequest.js = shared/js/background/webrequest.js
+js/background/background.js = js/background/background.js
+js/background/iconAnimation.js = js/background/iconAnimation.js
+js/background/popupBlocker.js = js/background/popupBlocker.js
+js/background/webrequest.js = js/background/webrequest.js
 shared/js/block.js = shared/js/block.js
 shared/js/firstRun.js = shared/js/firstRun.js
 shared/js/options.js = shared/js/options.js
