@@ -36,8 +36,6 @@ convert -density 46 \
 convert -density 57 \
   -background transparent $LOGO_RED +antialias "chrome/icons/abc-48.png"
 
-convert -density 115 \
-  -background transparent $LOGO_RED +antialias "adblockcash/chrome/skin/abc-icon-big.png"
 convert -density 19 -background transparent $LOGO_RED +antialias "adblockcash/chrome/skin/abc-status-16-red.png"
 convert -density 19 -background transparent $LOGO_GRAY +antialias "adblockcash/chrome/skin/abc-status-16-gray.png"
 convert -density 19 -background transparent $LOGO_GREEN +antialias "adblockcash/chrome/skin/abc-status-16-green.png"
